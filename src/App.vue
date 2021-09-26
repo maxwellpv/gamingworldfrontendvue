@@ -10,13 +10,9 @@
         <v-text-field class="d-flex mt-auto " style="max-width: 250px" label="Search ..." append-icon="mdi-magnify"  solo  background-color="primary" dark></v-text-field>
 
         <v-spacer></v-spacer>
-
         <v-btn icon>
           <v-icon>mdi-heart</v-icon>
         </v-btn>
-
-
-
         <v-menu left bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -47,9 +43,7 @@
 
 
     <v-main>
-
-
-      <v-div >
+      <div>
         <v-row no-gutters>
           <v-col cols="12" sm="2">
             <v-card>
@@ -71,26 +65,81 @@
                 </v-list-item>
               </v-list>
             </v-card>
-
           </v-col>
-
           <v-col cols="12" sm="8">
             <v-container fluid>
               <main-content :articles="articles"></main-content>
             </v-container>
           </v-col>
-
           <v-col cols="12" sm="2">
             <v-card>
-              equisde
+              Twitch Themes
             </v-card>
+
+            <!--  Premium Ad Preview -->
+              <v-card class="mt-lg-5" >
+                <v-card-title>
+                  Support GamingWorld
+                </v-card-title>
+                <v-card-text>
+                  Become a premium member and get access to exclusive tools to find
+                  users with the same competitive level and interest than you for just 5$.
+                </v-card-text>
+                <v-icon size="75" class="d-flex justify-center">
+                  mdi-credit-card-outline
+                </v-icon>
+                <template>
+                  <div class="text-center pa-3">
+                    <v-dialog v-model="dialog" width="700">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn block color="primary" dark v-bind="attrs" v-on="on">
+                          More Information
+                        </v-btn>
+                      </template>
+                      <v-card>
+                        <v-card-title class="font-weight-black pb-10">
+                          Subscribe to GamingWorld
+                        </v-card-title>
+                        <v-card-subtitle>
+                          <h3>
+                            Are you a competitive player?
+                          </h3>
+                        </v-card-subtitle>
+                        <v-card-text class="pb-10">
+                          Be able to match with players with the same skill cap than you
+                          and improve your chance of success!
+                        </v-card-text>
+                        <v-card-subtitle>
+                          <h3>
+                            Are you a streamer?
+                          </h3>
+                        </v-card-subtitle>
+                        <v-card-text>
+                          Match with other videogame content creators and expand your
+                          community by sharing common events!
+                        </v-card-text>
+                        <v-card color="primary"  width="300" class="justify-center">
+                          <v-card-title class="justify-center">Premium Plan $5.00/Monthly</v-card-title>
+                        </v-card>
+
+
+                        <v-card-actions>
+                            <v-btn color="red" @click="dialog = false" dark>
+                              Close
+                            </v-btn>
+                            <v-btn color="primary" @click="dialog = false" dark>
+                              Purchase
+                            </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </div>
+                </template>
+              </v-card>
 
           </v-col>
         </v-row>
-
-
-
-      </v-div>
+      </div>
 
 
 
@@ -130,9 +179,10 @@ export default {
     drawer: false,
     apiKey: '30a01aa6438d4782906f35bb2f136a91',
     articles:[],
-    errors:[]
-  }),
+    errors:[],
+    dialog: false,
 
+  }),
   created() {
     axios.get(`https://newsapi.org/v2/everything?q=Gamer&language=es&apiKey=${this.apiKey}`)
         .then(response => {
@@ -141,7 +191,6 @@ export default {
           console.log(response.data.articles)
         })
   },
-
   methods:{
     searchArticles(theme){
       this.drawer = !this.drawer;
@@ -156,6 +205,5 @@ export default {
           })
     }
   }
-
 };
 </script>
