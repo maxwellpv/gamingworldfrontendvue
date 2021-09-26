@@ -118,9 +118,12 @@
                           Match with other videogame content creators and expand your
                           community by sharing common events!
                         </v-card-text>
-                        <v-card color="primary"  width="300" class="justify-center">
-                          <v-card-title class="justify-center">Premium Plan $5.00/Monthly</v-card-title>
-                        </v-card>
+                        <div class="d-flex justify-center">
+                          <v-card color="primary"  width="auto" class="align-center" dark>
+                            <v-card-title class="justify-center">Premium Plan <br> $5.00/Monthly</v-card-title>
+                          </v-card>
+                        </div>
+
 
 
                         <v-card-actions>
