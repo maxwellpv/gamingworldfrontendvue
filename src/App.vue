@@ -3,7 +3,6 @@
     <!--  Barra de navegacion  -->
     <v-container>
       <v-app-bar app color="primary" flat dark class=" red">
-
         <v-toolbar-title>GamingWorld</v-toolbar-title>
         <v-spacer></v-spacer>
         <template class="d-flex justify-center red">
@@ -37,9 +36,23 @@
       </v-app-bar>
     </v-container>
 
-
-
       <v-main class="background">
+        <!--  ScrollToTop Button  -->
+        <v-container>
+          <v-btn
+              v-scroll="onScroll"
+              v-show="fab"
+              fab
+              dark
+              fixed
+              bottom
+              right
+              color="primary"
+              @click="toTop"
+          >
+            <v-icon>mdi-chevron-up</v-icon>
+          </v-btn>
+        </v-container>
         <v-container >
         <div>
           <v-row no-gutters>
@@ -123,9 +136,6 @@
                             <v-card-title class="justify-center">Premium Plan <br> $5.00/Monthly</v-card-title>
                           </v-card>
                         </div>
-
-
-
                         <v-card-actions>
                           <v-btn color="warning" @click="dialog = false" dark>
                             Close
@@ -139,7 +149,6 @@
                   </div>
                 </template>
               </v-card>
-
             </v-col>
           </v-row>
         </div>
@@ -187,6 +196,7 @@ export default {
     articles:[],
     errors:[],
     dialog: false,
+    fab:false,
 
   }),
   created() {
@@ -215,7 +225,17 @@ export default {
           .catch(e=>{
             this.errors.push(e);
           })
+    },
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
     }
+
+
   }
 };
 </script>
