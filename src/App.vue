@@ -6,7 +6,7 @@
 
         <v-toolbar-title>GamingWorld</v-toolbar-title>
         <v-spacer></v-spacer>
-        <template class="d-flex justify-center red" width="auto">
+        <template class="d-flex justify-center red">
           <v-text-field class="d-flex mt-auto" style="max-width: 250px" label="Search ..." append-icon="mdi-magnify"  solo flat  background-color="primary" dark></v-text-field>
         </template>
         <v-spacer></v-spacer>
@@ -71,14 +71,14 @@
               </v-container>
             </v-col>
             <v-col cols="12" sm="2">
-              <v-card>
-                Twitch Themes
+              <v-card min-width="220">
+                <v-card-title >Twitch Categories</v-card-title>
               </v-card>
 
               <!--  Premium Ad Preview -->
-              <v-card class="mt-lg-5" >
-                <v-card-title>
-                  Support GamingWorld
+              <v-card class="mt-lg-5" min-width="220">
+                <v-card-title class="justify-start " >
+                  Support <br> GamingWorld
                 </v-card-title>
                 <v-card-text>
                   Become a premium member and get access to exclusive tools to find
@@ -91,7 +91,7 @@
                   <div class="text-center pa-3">
                     <v-dialog v-model="dialog" width="700">
                         <template v-slot:activator="{ on, attrs }">
-                          <v-btn color="primary" width="auto" dark v-bind="attrs" v-on="on">
+                          <v-btn color="primary" dark v-bind="attrs" v-on="on">
                             More Information
                           </v-btn>
                         </template>
