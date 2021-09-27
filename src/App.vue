@@ -2,16 +2,16 @@
   <v-app>
     <!--  Barra de navegacion  -->
     <v-container>
-      <v-app-bar app color="primary" flat dark>
+      <v-app-bar app color="primary" flat dark class=" red">
 
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
         <v-toolbar-title>GamingWorld</v-toolbar-title>
-
-        <v-text-field class="d-flex mt-auto " style="max-width: 250px" label="Search ..." append-icon="mdi-magnify"  solo  background-color="primary" dark></v-text-field>
-
+        <v-spacer></v-spacer>
+        <template class="d-flex justify-center red" width="auto">
+          <v-text-field class="d-flex mt-auto" style="max-width: 250px" label="Search ..." append-icon="mdi-magnify"  solo flat  background-color="primary" dark></v-text-field>
+        </template>
         <v-spacer></v-spacer>
         <v-btn icon>
-          <v-icon>mdi-heart</v-icon>
+          <v-icon>mdi-account-multiple</v-icon>
         </v-btn>
         <v-menu left bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -20,7 +20,7 @@
                 v-bind="attrs"
                 v-on="on"
             >
-              <v-icon>mdi-dots-vertical</v-icon>
+              <v-icon>mdi-account-circle</v-icon>
             </v-btn>
           </template>
 
@@ -34,49 +34,48 @@
             </v-list-item>
           </v-list>
         </v-menu>
-
-
-
-
       </v-app-bar>
     </v-container>
 
 
-    <v-main>
-      <div>
-        <v-row no-gutters>
-          <v-col cols="12" sm="2">
-            <v-card>
-              <v-list>
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-btn @click="searchArticles('videogames')">VideoGames</v-btn>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-btn @click="searchArticles('steam')">Steam</v-btn>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-btn @click="searchArticles('twitch')">Twitch</v-btn>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="8">
-            <v-container fluid>
-              <main-content :articles="articles"></main-content>
-            </v-container>
-          </v-col>
-          <v-col cols="12" sm="2">
-            <v-card>
-              Twitch Themes
-            </v-card>
 
-            <!--  Premium Ad Preview -->
+      <v-main class="background">
+        <v-container >
+        <div>
+          <v-row no-gutters>
+            <v-col cols="12" sm="2">
+              <v-card>
+                <v-list>
+                  <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
+                  <v-list-item >
+                    <v-list-item-content >
+                      <v-btn class="d-flex justify-start" text @click="searchArticles('videogames')">VideoGames</v-btn>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-btn class="d-flex justify-start" text @click="searchArticles('steam')">Steam</v-btn>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-btn class="d-flex justify-start" text @click="searchArticles('twitch')">Twitch</v-btn>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-card>
+            </v-col>
+            <v-col cols="12" sm="8">
+              <v-container class="mt-n3">
+                <main-content :articles="articles"></main-content>
+              </v-container>
+            </v-col>
+            <v-col cols="12" sm="2">
+              <v-card>
+                Twitch Themes
+              </v-card>
+
+              <!--  Premium Ad Preview -->
               <v-card class="mt-lg-5" >
                 <v-card-title>
                   Support GamingWorld
@@ -91,11 +90,11 @@
                 <template>
                   <div class="text-center pa-3">
                     <v-dialog v-model="dialog" width="700">
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn block color="primary" dark v-bind="attrs" v-on="on">
-                          More Information
-                        </v-btn>
-                      </template>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn color="primary" width="auto" dark v-bind="attrs" v-on="on">
+                            More Information
+                          </v-btn>
+                        </template>
                       <v-card>
                         <v-card-title class="font-weight-black pb-10">
                           Subscribe to GamingWorld
@@ -118,8 +117,9 @@
                           Match with other videogame content creators and expand your
                           community by sharing common events!
                         </v-card-text>
+
                         <div class="d-flex justify-center">
-                          <v-card color="primary"  width="auto" class="align-center" dark>
+                          <v-card color="background2"  width="auto" class="align-center" dark>
                             <v-card-title class="justify-center">Premium Plan <br> $5.00/Monthly</v-card-title>
                           </v-card>
                         </div>
@@ -127,12 +127,12 @@
 
 
                         <v-card-actions>
-                            <v-btn color="red" @click="dialog = false" dark>
-                              Close
-                            </v-btn>
-                            <v-btn color="primary" @click="dialog = false" dark>
-                              Purchase
-                            </v-btn>
+                          <v-btn color="warning" @click="dialog = false" dark>
+                            Close
+                          </v-btn>
+                          <v-btn color="primary" @click="dialog = false" dark>
+                            Purchase
+                          </v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-dialog>
@@ -140,26 +140,29 @@
                 </template>
               </v-card>
 
-          </v-col>
-        </v-row>
-      </div>
+            </v-col>
+          </v-row>
+        </div>
 
 
 
-      <v-footer class="secondary" app>
-        <v-layout row wrap align-center>
-          <v-flex xs12>
-            <div class="white--text ml-3"></div>
-            Made whit
-            <v-icon>
+        <v-footer class="secondary" app>
+          <v-layout row wrap align-center>
+            <v-flex xs12>
+              <div class="white--text ml-3"></div>
+              Made whit
+              <v-icon>
 
-            </v-icon>
+              </v-icon>
 
-          </v-flex>
-        </v-layout>
+            </v-flex>
+          </v-layout>
 
-      </v-footer>
-    </v-main>
+        </v-footer>
+        </v-container>
+      </v-main>
+
+
   </v-app>
 </template>
 
@@ -190,6 +193,9 @@ export default {
     axios.get(`https://newsapi.org/v2/everything?q=Gamer&language=es&apiKey=${this.apiKey}`)
         .then(response => {
           this.articles = response.data.articles;
+          let new_articles = response.data.articles
+              .filter(({urlToImage, description}) => (urlToImage && description));
+          this.articles = new_articles;
           console.log('data: ');
           console.log(response.data.articles)
         })
@@ -200,6 +206,9 @@ export default {
       axios.get(`https://newsapi.org/v2/everything?q=${theme}&apiKey=${this.apiKey}`)
           .then(response => {
             this.articles = response.data.articles;
+            let new_articles = response.data.articles
+                .filter(({urlToImage, description}) => (urlToImage && description));
+            this.articles = new_articles;
             console.log('data: ');
             console.log(response.data.articles);
           })
