@@ -36,11 +36,11 @@
 <script>
 
 export default {
-  name: "main-content",
+  name: 'news-content',
   props: {
     articles: Array
   },
-}
+};
 </script>
 
 <style scoped>
