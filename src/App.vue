@@ -1,6 +1,9 @@
 <template>
   <v-app>
-    <nav-bar></nav-bar>
+
+
+      <nav-bar></nav-bar>
+
       <v-main class="background">
 
         <!--  ScrollToTop Button  -->

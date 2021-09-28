@@ -1,7 +1,7 @@
 <template>
   <!--  Navigation Bar  -->
   <v-container>
-    <v-app-bar app color="primary" flat dark class=" red">
+    <v-app-bar app color="primary" flat dark>
       <v-toolbar-title>GamingWorld</v-toolbar-title>
       <v-spacer></v-spacer>
       <template class="d-flex justify-center red">

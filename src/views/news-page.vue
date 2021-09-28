@@ -1,8 +1,8 @@
 <template>
-  <v-container>
-    <div>
+
+    <v-container>
       <v-row no-gutters>
-        <v-col cols="12" sm="2">
+        <v-col cols="2" >
           <v-card>
             <v-list>
               <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
@@ -24,14 +24,27 @@
             </v-list>
           </v-card>
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="8" >
           <v-container class="mt-n3">
             <news-content :articles="articles"></news-content>
           </v-container>
         </v-col>
-        <v-col cols="12" sm="2">
+        <v-col cols="2">
           <v-card >
-            <v-card-title >Twitch Categories</v-card-title>
+            <v-card-title class=" text-justify">Popular Twitch<br> Themes</v-card-title>
+
+            <template v-for="(article) in topGames">
+
+                <v-list :cols="index === 0 ? 12 : 6" :key="article.name">
+                  <v-list-item class="d-flex text-justify">
+                    <v-img class="rounded-circle" v-bind:src="article.box_art_url.slice(0,-20) + '32x32.jpg'" width="32px" height="32px" max-width="32px" max-height="32px"></v-img>
+                    <v-spacer></v-spacer>
+                    <h5>{{article.name}}</h5>
+                  </v-list-item>
+                </v-list>
+
+            </template>
+
           </v-card>
 
           <!--  Premium Ad Preview -->
@@ -97,8 +110,8 @@
           </v-card>
         </v-col>
       </v-row>
-    </div>
-  </v-container>
+    </v-container>
+
 </template>
 
 <script>
@@ -118,18 +131,26 @@ export default {
     drawer: false,
     apiKey: '30a01aa6438d4782906f35bb2f136a91',
     articles:[],
+    topGames:[],
     errors:[],
+    tempArticles:[],
     dialog: false,
     fab:false,
 
   }),
   created() {
+    axios.get('https://aos-twitch-api.herokuapp.com/twitch/top-games')
+        .then( topGames => {
+          this.topGames = topGames.data.data;
+          console.log(this.topGames);
+        })
     axios.get(`https://newsapi.org/v2/everything?q=Gamer&language=es&apiKey=${this.apiKey}`)
         .then(response => {
           this.articles = response.data.articles;
-          let new_articles = response.data.articles
+          this.tempArticles = response.data.articles
               .filter(({urlToImage, description}) => (urlToImage && description));
-          this.articles = new_articles;
+          this.articles = this.tempArticles;
+          this.tempArticles = [];
           console.log('data: ');
           console.log(response.data.articles)
         })
@@ -140,9 +161,10 @@ export default {
       axios.get(`https://newsapi.org/v2/everything?q=${theme}&apiKey=${this.apiKey}`)
           .then(response => {
             this.articles = response.data.articles;
-            let new_articles = response.data.articles
+            this.tempArticles = response.data.articles
                 .filter(({urlToImage, description}) => (urlToImage && description));
-            this.articles = new_articles;
+            this.articles = this.tempArticles;
+            this.tempArticles = [];
             console.log('data: ');
             console.log(response.data.articles);
           })
@@ -150,6 +172,10 @@ export default {
             this.errors.push(e);
           })
     },
+
+
+
+
   }
 };
 </script>
