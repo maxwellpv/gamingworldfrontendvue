@@ -1,6 +1,6 @@
 <template>
-
     <v-container>
+      <header-bar></header-bar>
       <v-row no-gutters>
         <v-col cols="2" >
           <v-card>
@@ -119,12 +119,15 @@
 
 import axios from "axios";
 import NewsContent from "../components/news-content";
+import HeaderBar from "../components/nav-bar";
+
 
 export default {
   name: 'news-page',
 
   components: {
-    NewsContent
+    HeaderBar,
+    NewsContent,
   },
 
   data: () => ({

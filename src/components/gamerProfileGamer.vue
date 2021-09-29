@@ -1,5 +1,15 @@
 <template>
   <v-main>
+    <v-container>
+      <v-app-bar
+          app color="indigo darken-1 " dark >
+        <v-app-bar-title class="white--text " >User Type</v-app-bar-title>
+        <v-spacer></v-spacer>
+        <v-btn class="indigo darken-1" icon @click="showNewsPage" >
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+      </v-app-bar>
+    </v-container>
     <v-container class="spacing-playground pa-6">
       <v-row justify="center" align="center">
         <v-col sm="10" md="6">
@@ -200,6 +210,9 @@ export default {
         label: "Nombre de torneo",
         value: "",
       })
+    },
+    showNewsPage() {
+      this.$router.push('News')
     },
 
     // Elimina algún campo de resultado de torneo según el index indicado
