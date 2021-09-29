@@ -1,28 +1,63 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+
+
+      <nav-bar></nav-bar>
+
+      <v-main class="background">
+
+        <!--  ScrollToTop Button  -->
+        <v-container>
+          <v-btn class="mb-5"
+              v-scroll="onScroll"
+              v-show="fab"
+              fab
+              dark
+              fixed
+              bottom
+              right
+              color="primary"
+              @click="toTop"
+          >
+            <v-icon>mdi-chevron-up</v-icon>
+          </v-btn>
+        </v-container>
+        <news-page></news-page>
+      </v-main>
+    <footer-content></footer-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+
+import NavBar from "./components/nav-bar";
+import FooterContent from "./components/footer-content";
+import NewsPage from "./views/news-page";
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    NavBar,
+    FooterContent,
+    NewsPage
+  },
+
+  data: () => ({
+    fab:false,
+  }),
+
+  methods:{
+
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
+    }
+  }
+};
+</script>
