@@ -38,7 +38,7 @@
                           v-model="selectedStreamingCategories[i]"
                           :items="streamingCategories"
                           :rules="[v => !!v || 'Item is required']"
-                          label="Seleccione posición"
+                          label="Seleccione categoría"
                           required
                       ></v-select>
                       <v-btn v-if="i > 2" @click="removeStreamingCategory(i)" class="error">X</v-btn>

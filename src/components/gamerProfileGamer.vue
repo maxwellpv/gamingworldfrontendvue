@@ -103,7 +103,7 @@
                           v-model="gamesExperienceTimes[i]"
                           :items="possibleTimes"
                           :rules="[v => !!v || 'Item is required']"
-                          label="Seleccione posición"
+                          label="Seleccione tiempo"
                           required
                       ></v-select>
                     </v-col>
@@ -129,7 +129,7 @@
                 >
                   <v-col align="center" >
                     <v-img src="game.imageURL"></v-img>
-                    <v-checkbox color="blue" id="game.id" :label="game.name" v-model="selectedPopularGames"></v-checkbox>
+                    <v-checkbox color="blue" id="game.id" :label="game.name" v-model="selectedPopularGames[i]"></v-checkbox>
                   </v-col>
                 </div>
               </v-row>

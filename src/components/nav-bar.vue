@@ -28,7 +28,7 @@
             <v-list-item-title>Gamer Profile - Streamer</v-list-item-title>
           </v-list-item>
           <v-list-item @click="showGamerProfile">
-            <v-list-item-title>Gamer Profile - Gaymer</v-list-item-title>
+            <v-list-item-title>Gamer Profile - Gamer</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
