@@ -2,7 +2,7 @@
   <!--  Navigation Bar  -->
   <v-container>
     <v-app-bar app color="primary" flat dark>
-      <v-toolbar-title>GamingWorld</v-toolbar-title>
+      <v-app-bar-title class="white--text " >GamingWorld</v-app-bar-title>
       <v-spacer></v-spacer>
       <template class="d-flex justify-center red">
         <v-text-field class="d-flex mt-auto" style="max-width: 250px"
@@ -24,12 +24,11 @@
         </template>
 
         <v-list>
-          <v-list-item
-              v-for="n in 5"
-              :key="n"
-              @click="() => {}"
-          >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
+          <v-list-item @click="() => {}">
+            <v-list-item-title>Gamer Profile - Streamer</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="() => {}">
+            <v-list-item-title>Gamer Profile - Gaymer</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
