@@ -2,7 +2,7 @@
   <!--  Navigation Bar  -->
   <v-container>
     <v-app-bar app color="primary" flat dark>
-      <v-app-bar-title class="white--text " >GamingWorld</v-app-bar-title>
+      <v-app-bar-title @click="showGamerProfile" class="white--text">GamingWorld</v-app-bar-title>
       <v-spacer></v-spacer>
       <template class="d-flex justify-center red">
         <v-text-field class="d-flex mt-auto" style="max-width: 250px"
@@ -24,10 +24,10 @@
         </template>
 
         <v-list>
-          <v-list-item @click="() => {}">
+          <v-list-item @click="showStreamerProfile">
             <v-list-item-title>Gamer Profile - Streamer</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="() => {}">
+          <v-list-item @click="showGamerProfile">
             <v-list-item-title>Gamer Profile - Gaymer</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -38,7 +38,18 @@
 
 <script>
 export default {
-  name: "nav-bar"
+  name: "nav-bar",
+  methods: {
+    showNewsPage() {
+      this.$router.push('News')
+    },
+    showStreamerProfile() {
+      this.$router.push('Streamer')
+    },
+    showGamerProfile() {
+      this.$router.push('Gamer')
+    },
+  }
 }
 </script>
 
