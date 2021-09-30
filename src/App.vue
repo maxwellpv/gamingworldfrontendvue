@@ -28,7 +28,7 @@
 
 <script>
 
-import FooterContent from "./components/footer-content";
+import FooterContent from "./components/Footer";
 
 export default {
   name: 'App',

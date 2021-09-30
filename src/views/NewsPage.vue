@@ -118,8 +118,8 @@
 
 
 import axios from "axios";
-import NewsContent from "../components/news-content";
-import HeaderBar from "../components/nav-bar";
+import NewsContent from "../components/NewsContent";
+import HeaderBar from "../components/NavBar";
 
 
 export default {
