@@ -3,7 +3,7 @@
     <v-flex>
         <v-row >
           <template v-for="(article, index) in articles">
-            <v-col :cols="index === 0 ? 12 : 6" :key="article.title">
+            <v-col :sm="12" :lg="index === 0 ? 12 : 6" :key="article.title">
               <v-card >
                 <v-img height="350px" v-bind:src="article.urlToImage"></v-img>
                 <v-container fluid>

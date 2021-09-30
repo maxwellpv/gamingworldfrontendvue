@@ -2,7 +2,7 @@
     <v-container>
       <header-bar></header-bar>
       <v-row no-gutters>
-        <v-col cols="2" >
+        <v-col xs="12" sm="3">
           <v-card>
             <v-list>
               <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
@@ -24,12 +24,12 @@
             </v-list>
           </v-card>
         </v-col>
-        <v-col cols="8" >
+        <v-col xs="12" sm="6">
           <v-container class="mt-n3">
             <news-content :articles="articles"></news-content>
           </v-container>
         </v-col>
-        <v-col cols="2">
+        <v-col xs="12" sm="3">
           <v-card >
             <v-card-title class=" text-justify">Popular Twitch<br> Themes</v-card-title>
 
@@ -48,7 +48,7 @@
           </v-card>
 
           <!--  Premium Ad Preview -->
-          <v-card class="mt-lg-5" >
+          <v-card class="mt-lg-5 my-3" >
             <v-card-title class="justify-start " >
               Support <br> GamingWorld
             </v-card-title>

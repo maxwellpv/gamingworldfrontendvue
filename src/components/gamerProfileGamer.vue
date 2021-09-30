@@ -12,7 +12,7 @@
     </v-container>
     <v-container class="spacing-playground pa-6">
       <v-row justify="center" align="center">
-        <v-col sm="10" md="6">
+        <v-col cols="12" sm="10" md="8" lg="7" xl="6">
           <v-card>
             <v-card-title class="justify-center pa-8">
               <h2>GAMER AMATEUR</h2>
@@ -23,7 +23,7 @@
                 action=""
                 lazy-validation
             >
-            <v-container class="ma-5" fluid>
+            <v-container class="my-5" fluid>
               <h4>Nivel de juego general</h4>
               <v-row justify="center" class="ma-5">
                 <v-col align="center" sm="4">
@@ -43,25 +43,25 @@
                 </v-col>
               </v-row>
             </v-container>
-            <v-container class="ma-5" fluid>
+            <v-container class="my-5" fluid>
               <h4>Logros</h4>
-              <v-row justify="center" class="ma-5">
+              <v-row justify="center" class="my-5">
                 <div
                     v-for="(tournamentResultName, i) in tournamentsResultsNames"
                     :key="i"
                     class="text-fields-row"
                 >
-                  <v-row justify="center">
+                  <v-row>
                     <v-col sm="6">
                       <v-text-field
-                          class="ma-2"
+                          class="my-2"
                           :label="tournamentResultName.label"
                           v-model="tournamentResultName.value"
                       ></v-text-field>
                     </v-col>
                     <v-col sm="4">
                       <v-select
-                          class="ma-2"
+                          class="my-2"
                           v-model="tournamentsResultsPositions[i]"
                           :items="possibleResults"
                           :rules="[v => !!v || 'Item is required']"
@@ -69,7 +69,7 @@
                           required
                       ></v-select>
                     </v-col>
-                    <v-col sm="1">
+                    <v-col sm="2">
                       <v-btn @click="removeTournament(i)" class="error">Quitar</v-btn>
                     </v-col>
 
@@ -77,13 +77,13 @@
                 </div>
               </v-row>
               <v-row justify="center">
-                <v-btn @click="addTournament" class="ma-3 primary">+ Agregar logro</v-btn>
+                <v-btn @click="addTournament" class="ma-3 primary">+ Agregar</v-btn>
               </v-row>
 
             </v-container>
-            <v-container class="ma-5" fluid>
+            <v-container class="my-5" fluid>
               <h4>Experiencia en videojuegos</h4>
-              <v-row justify="center" class="ma-5">
+              <v-row justify="center" class="my-5">
                 <div
                     v-for="(gamesExperienceName, i) in gamesExperienceNames"
                     :key="i"
@@ -92,14 +92,14 @@
                   <v-row justify="center">
                     <v-col sm="6">
                       <v-text-field
-                          class="ma-2"
+                          class="my-2"
                           :label="gamesExperienceName.label"
                           v-model="gamesExperienceName.value"
                       ></v-text-field>
                     </v-col>
                     <v-col sm="4">
                       <v-select
-                          class="ma-2"
+                          class="my-2"
                           v-model="gamesExperienceTimes[i]"
                           :items="possibleTimes"
                           :rules="[v => !!v || 'Item is required']"
@@ -107,7 +107,7 @@
                           required
                       ></v-select>
                     </v-col>
-                    <v-col sm="1">
+                    <v-col sm="2">
                       <v-btn @click="removeGame(i)" class="error">Quitar</v-btn>
                     </v-col>
 
@@ -115,13 +115,13 @@
                 </div>
               </v-row>
               <v-row justify="center">
-                <v-btn @click="addGame" class="ma-3 primary">+ Agregar juego</v-btn>
+                <v-btn @click="addGame" class="ma-3 primary">+ Agregar</v-btn>
               </v-row>
 
             </v-container>
-            <v-container class="ma-5" fluid>
+            <v-container class="my-5" fluid>
               <h4>Videojuegos favoritos</h4>
-              <v-row justify="space-around" width class="ma-5" fluid>
+              <v-row justify="space-around" width class="my-5" fluid>
                 <div
                     v-for="(game, i) in popularGames"
                     :key="i"
@@ -251,4 +251,28 @@ export default {
 {
   flex-direction: column;
 }
+
+.v-application--is-ltr .v-input--selection-controls__input {
+  margin-right: 0px;
+}
+.v-text-field
+{
+  padding-top: 0px;
+}
+
+.v-select
+{
+  padding: 0px !important;
+  width: 100% !important;
+}
+
+.text-fields-row
+{
+  width: 85% !important;
+}
+
+.v-app-bar-title__content {
+  min-width: 120px;
+}
+
 </style>

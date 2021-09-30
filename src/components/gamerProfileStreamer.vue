@@ -2,8 +2,8 @@
   <v-main>
     <v-container>
       <v-app-bar
-          app color="indigo darken-1 " dark >
-        <v-app-bar-title class="white--text " >User Type</v-app-bar-title>
+          app color="indigo darken-1" dark>
+        <v-app-bar-title class="white--text">User Type</v-app-bar-title>
         <v-spacer></v-spacer>
         <v-btn class="indigo darken-1" icon @click="showNewsPage" >
           <v-icon>mdi-chevron-right</v-icon>
@@ -12,7 +12,7 @@
     </v-container>
     <v-container class="spacing-playground pa-6">
       <v-row justify="center" align="center">
-        <v-col sm="10" md="6">
+        <v-col cols="12"  sm="10" md="8" lg="7" xl="6">
           <v-card class="pa-10">
             <v-card-title class="justify-center">
               <h2>STREAMER</h2>
@@ -24,10 +24,11 @@
                 lazy-validation
             >
             <v-container fluid>
-              <h4 class="ma-2">Añadir categorías de streaming</h4>
+              <h4>Añadir categorías de streaming</h4>
               <v-row justify="space-around" class="ma-5">
                 <v-col
-                    sm="6"
+                    cols="12"
+                    md="6"
                     v-for="(selectedCategory, i) in selectedStreamingCategories"
                     :key="i"
                     class="text-fields-row"
@@ -44,17 +45,18 @@
                   </v-row>
                 </v-col>
                 <v-col
-                  sm="6"
+                    cols="12" md="6"
                   align="center">
-                  <v-btn @click="addStreamingCategory" class="ma-3 primary">+ Agregar Categoría</v-btn>
+                  <v-btn @click="addStreamingCategory" class="primary">+ Agregar</v-btn>
                 </v-col>
               </v-row>
             </v-container>
             <v-container fluid>
-              <h4 class="ma-2">Registrar Patrocinador</h4>
+              <h4>Registrar Patrocinador</h4>
               <v-row justify="space-around" class="ma-5">
                 <v-col
-                    sm="6"
+                    cols="12"
+                    md="6"
                     v-for="(partner, i) in registeredPartners"
                     :key="i"
                     >
@@ -68,13 +70,13 @@
                     </v-row>
                 </v-col>
                 <v-col
-                    sm="6"
+                    cols="12" md="6"
                     align="center">
-                  <v-btn @click="addPartner" class="ma-3 primary">+ Agregar Patrocinador</v-btn>
+                  <v-btn @click="addPartner" class="primary">+ Agregar</v-btn>
                 </v-col>
               </v-row>
             </v-container>
-            <v-container class="ma-5" fluid>
+            <v-container class="my-5" fluid>
               <h4>Videojuegos favoritos para stremear</h4>
               <v-row justify="space-around" width class="ma-5" fluid>
                 <div
@@ -82,7 +84,7 @@
                     :key="i"
                     class=""
                 >
-                  <v-col align="center" >
+                  <v-col align="center">
                     <v-img src="game.imageURL"></v-img>
                     <v-checkbox color="blue" id="game.id" :label="game.name" v-model="selectedPopularGames[i]"></v-checkbox>
                   </v-col>
@@ -188,5 +190,9 @@ export default {
   flex-grow: 1;
   padding: 0 20px 0 10px;
   width: 80% !important;
+}
+
+.v-app-bar-title__content {
+  min-width: 120px;
 }
 </style>
