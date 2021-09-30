@@ -15,7 +15,7 @@
         <v-col cols="12"  sm="10" md="8" lg="7" xl="6">
           <v-card class="pa-10">
             <v-card-title class="justify-center">
-              <h2>STREAMER</h2>
+              <h2>AMATEUR STREAMER</h2>
             </v-card-title>
             <v-form
                 id="gamerProfile"
@@ -24,7 +24,7 @@
                 lazy-validation
             >
             <v-container fluid>
-              <h4>Añadir categorías de streaming</h4>
+              <h4>Add streaming categories </h4>
               <v-row justify="space-around" class="ma-5">
                 <v-col
                     cols="12"
@@ -38,7 +38,7 @@
                           v-model="selectedStreamingCategories[i]"
                           :items="streamingCategories"
                           :rules="[v => !!v || 'Item is required']"
-                          label="Seleccione categoría"
+                          label="Select Category"
                           required
                       ></v-select>
                       <v-btn v-if="i > 2" @click="removeStreamingCategory(i)" class="error">X</v-btn>
@@ -47,12 +47,12 @@
                 <v-col
                     cols="12" md="6"
                   align="center">
-                  <v-btn @click="addStreamingCategory" class="primary">+ Agregar</v-btn>
+                  <v-btn @click="addStreamingCategory" class="primary">+ Add</v-btn>
                 </v-col>
               </v-row>
             </v-container>
             <v-container fluid>
-              <h4>Registrar Patrocinador</h4>
+              <h4>Register Sponsor</h4>
               <v-row justify="space-around" class="ma-5">
                 <v-col
                     cols="12"
@@ -62,7 +62,7 @@
                     >
                     <v-row class="ma-1">
                       <v-text-field
-                          label="Marca"
+                          label="Brand"
                           v-model="registeredPartners[i]"
                           required
                       ></v-text-field>
@@ -72,12 +72,12 @@
                 <v-col
                     cols="12" md="6"
                     align="center">
-                  <v-btn @click="addPartner" class="primary">+ Agregar</v-btn>
+                  <v-btn @click="addPartner" class="primary">+ Add</v-btn>
                 </v-col>
               </v-row>
             </v-container>
             <v-container class="my-5" fluid>
-              <h4>Videojuegos favoritos para stremear</h4>
+              <h4>Favorite video games to stream </h4>
               <v-row justify="space-around" width class="ma-5" fluid>
                 <div
                     v-for="(game, i) in popularGames"
@@ -108,8 +108,8 @@ export default {
       selectedStreamingCategories: [0, 0, 0],
       streamingCategories: [
           "PC",
-          "Movil",
-          "Consola",
+          "Mobile",
+          "Console",
           "Battle Royale",
           "Multiplayer",
           "Campaign"

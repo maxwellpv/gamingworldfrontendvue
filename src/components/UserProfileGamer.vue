@@ -15,7 +15,7 @@
         <v-col cols="12" sm="10" md="8" lg="7" xl="6">
           <v-card>
             <v-card-title class="justify-center pa-8">
-              <h2>GAMER AMATEUR</h2>
+              <h2>AMATEUR GAMER</h2>
             </v-card-title>
             <v-form
                 id="streamerProfile"
@@ -24,27 +24,27 @@
                 lazy-validation
             >
             <v-container class="my-5" fluid>
-              <h4>Nivel de juego general</h4>
+              <h4>Gamer Level</h4>
               <v-row justify="center" class="ma-5">
                 <v-col align="center" sm="4">
                   <v-img src="@/assets/svg/medalla-de-bronce.svg" class="icon"></v-img>
                   <v-radio class="justify-center ma-2" color="blue" id="gamer-level-newbie" name="gamer-level" value="newbie" v-model="gamerLevel"></v-radio>
-                  <label for="gamer-level-newbie">Novato</label>
+                  <label for="gamer-level-newbie">Noob</label>
                 </v-col>
                 <v-col align="center" sm="4">
                   <v-img src="@/assets/svg/medalla-de-plata.svg" class="icon"></v-img>
                   <v-radio class="justify-center ma-2" color="blue" id="gamer-level-average" name="gamer-level" value="average" v-model="gamerLevel"></v-radio>
-                  <label for="gamer-level-average">Medio</label>
+                  <label for="gamer-level-average">Medium</label>
                 </v-col>
                 <v-col align="center" sm="4">
                   <v-img src="@/assets/svg/medalla-de-oro.svg" class="icon"></v-img>
                   <v-radio class="justify-center ma-2" color="blue" id="gamer-level-veteran" name="gamer-level" value="veteran" v-model="gamerLevel"></v-radio>
-                  <label for="gamer-level-veteran">Semi Pro</label>
+                  <label for="gamer-level-veteran">Advanced</label>
                 </v-col>
               </v-row>
             </v-container>
             <v-container class="my-5" fluid>
-              <h4>Logros</h4>
+              <h4>Achievements</h4>
               <v-row justify="center" class="my-5">
                 <div
                     v-for="(tournamentResultName, i) in tournamentsResultsNames"
@@ -65,24 +65,24 @@
                           v-model="tournamentsResultsPositions[i]"
                           :items="possibleResults"
                           :rules="[v => !!v || 'Item is required']"
-                          label="Seleccione posición"
+                          label="Select Position"
                           required
                       ></v-select>
                     </v-col>
                     <v-col sm="2">
-                      <v-btn @click="removeTournament(i)" class="error">Quitar</v-btn>
+                      <v-btn @click="removeTournament(i)" class="error">Remove</v-btn>
                     </v-col>
 
                   </v-row>
                 </div>
               </v-row>
               <v-row justify="center">
-                <v-btn @click="addTournament" class="ma-3 primary">+ Agregar</v-btn>
+                <v-btn @click="addTournament" class="ma-3 primary">+ Add</v-btn>
               </v-row>
 
             </v-container>
             <v-container class="my-5" fluid>
-              <h4>Experiencia en videojuegos</h4>
+              <h4>Videogames Experience</h4>
               <v-row justify="center" class="my-5">
                 <div
                     v-for="(gamesExperienceName, i) in gamesExperienceNames"
@@ -103,24 +103,24 @@
                           v-model="gamesExperienceTimes[i]"
                           :items="possibleTimes"
                           :rules="[v => !!v || 'Item is required']"
-                          label="Seleccione tiempo"
+                          label="Select Time"
                           required
                       ></v-select>
                     </v-col>
                     <v-col sm="2">
-                      <v-btn @click="removeGame(i)" class="error">Quitar</v-btn>
+                      <v-btn @click="removeGame(i)" class="error">Remove</v-btn>
                     </v-col>
 
                   </v-row>
                 </div>
               </v-row>
               <v-row justify="center">
-                <v-btn @click="addGame" class="ma-3 primary">+ Agregar</v-btn>
+                <v-btn @click="addGame" class="ma-3 primary">+ Add</v-btn>
               </v-row>
 
             </v-container>
             <v-container class="my-5" fluid>
-              <h4>Videojuegos favoritos</h4>
+              <h4>Favorites Videogames</h4>
               <v-row justify="space-around" width class="my-5" fluid>
                 <div
                     v-for="(game, i) in popularGames"
@@ -155,10 +155,10 @@ export default {
       tournamentsResultsPositions: [],
       // Son los posibles resultados que el usuario podrá escoger por torneo
       possibleResults: [
-        'Top 10',
-        'Tercer puesto',
-        'Segundo puesto',
-        'Primer puesto'
+        'Top 10 ',
+        'Third place',
+        'Second place',
+        'First place'
       ],
       // v-text-fields con los nombres de los juegos en los que el usuario tiene experiencia
       gamesExperienceNames: [],
@@ -166,10 +166,10 @@ export default {
       gamesExperienceTimes: [],
       // Posibles tiempos a registrar por experiencia de juego
       possibleTimes: [
-        'Días',
-        'Semanas',
-        'Meses',
-        'Años'
+        'Days',
+        'Weeks',
+        'Months',
+        'Years'
       ],
       selectedPopularGames: [],
       // Lista de juegos populares a mostrar, array de objetos
@@ -207,7 +207,7 @@ export default {
     addTournament () {
       this.tournamentsResultsPositions.push(this.possibleResults[0]);
       this.tournamentsResultsNames.push({
-        label: "Nombre de torneo",
+        label: "Tournament Name",
         value: "",
       })
     },
@@ -226,7 +226,7 @@ export default {
     addGame () {
       this.gamesExperienceTimes.push(this.possibleTimes[0]);
       this.gamesExperienceNames.push({
-        label: "Nombre de juego",
+        label: "Videogame Name",
         value: "",
       })
     },
