@@ -5,7 +5,7 @@
           app color="indigo darken-1" dark>
         <v-app-bar-title class="white--text">User Type</v-app-bar-title>
         <v-spacer></v-spacer>
-        <v-btn class="indigo darken-1" icon @click="showNewsPage" >
+        <v-btn class="indigo darken-1" icon @click="registerStreamerProfile" >
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </v-app-bar>
@@ -57,22 +57,22 @@
                 <v-col
                     cols="12"
                     md="6"
-                    v-for="(partner, i) in registeredPartners"
+                    v-for="(sponsor, i) in registeredSponsors"
                     :key="i"
                     >
                     <v-row class="ma-1">
                       <v-text-field
                           label="Brand"
-                          v-model="registeredPartners[i]"
+                          v-model="registeredSponsors[i]"
                           required
                       ></v-text-field>
-                      <v-btn @click="removePartner(i)" class="error">X</v-btn>
+                      <v-btn @click="removeSponsor(i)" class="error">X</v-btn>
                     </v-row>
                 </v-col>
                 <v-col
                     cols="12" md="6"
                     align="center">
-                  <v-btn @click="addPartner" class="primary">+ Add</v-btn>
+                  <v-btn @click="addSponsor" class="primary">+ Add</v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -100,11 +100,12 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "gamerProfileStreamer",
   data: () => {
     return {
-      igdbApiKey: "",
       selectedStreamingCategories: [0, 0, 0],
       streamingCategories: [
           "PC",
@@ -114,7 +115,7 @@ export default {
           "Multiplayer",
           "Campaign"
       ],
-      registeredPartners: [""],
+      registeredSponsors: [""],
       selectedPopularGames: Array(0),
       popularGames: [
         {
@@ -146,13 +147,13 @@ export default {
     }
   },
   methods: {
-    addPartner()
+    addSponsor()
     {
-      this.registeredPartners.push("");
+      this.registeredSponsors.push("");
     },
-    removePartner(index)
+    removeSponsor(index)
     {
-      this.registeredPartners.splice(index, 1);
+      this.registeredSponsors.splice(index, 1);
     },
     addStreamingCategory()
     {
@@ -164,7 +165,28 @@ export default {
         return;
       this.selectedStreamingCategories.splice(index, 1);
     },
-    showNewsPage() {
+    registerStreamerProfile() {
+      for (let i = 0; i < this.selectedStreamingCategories.length; ++i) {
+        axios.post("http://localhost:3000/streamerSelectedCategories", {
+          userId: 1,
+          name: this.selectedStreamingCategories[i],
+        });
+      }
+      for (let i = 0; i < this.registeredSponsors.length; ++i) {
+        axios.post("http://localhost:3000/streamerSponsors", {
+          userId: 1,
+          name: this.registeredSponsors[i],
+        });
+      }
+      for (let i = 0; i < this.selectedPopularGames.length; ++i) {
+        if (this.selectedPopularGames[i])
+        {
+          axios.post("http://localhost:3000/favoriteGames", {
+            userId: 1,
+            gameName: this.popularGames[i].name
+          });
+        }
+      }
       this.$router.push('News')
     },
   }

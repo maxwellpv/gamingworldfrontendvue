@@ -1,0 +1,131 @@
+{
+  "gameExperiences": [
+    {
+      "id": 1,
+      "userId": 1,
+      "duration": "Días",
+      "gameName": "Nothing"
+    }
+  ],
+  "favoriteGames": [
+    {
+      "id": 1,
+      "userId": 1,
+      "gameName": "Nothing"
+    },
+    {
+      "userId": 1,
+      "gameName": "LoL",
+      "id": 2
+    },
+    {
+      "userId": 1,
+      "gameName": "Fortnite",
+      "id": 3
+    },
+    {
+      "userId": 1,
+      "gameName": "CoD: Warzone",
+      "id": 4
+    }
+  ],
+  "streamerSelectedCategories": [
+    {
+      "id": 1,
+      "userId": 1,
+      "streamingCategoryId": 1
+    },
+    {
+      "userId": 1,
+      "name": "Mobile",
+      "id": 2
+    },
+    {
+      "userId": 1,
+      "name": "Battle Royale",
+      "id": 3
+    },
+    {
+      "userId": 1,
+      "name": "Multiplayer",
+      "id": 4
+    },
+    {
+      "userId": 1,
+      "name": "Console",
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "name": "Battle Royale",
+      "id": 6
+    },
+    {
+      "userId": 1,
+      "name": "Multiplayer",
+      "id": 7
+    }
+  ],
+  "streamingCategories": [
+    {
+      "id": 1,
+      "name": "PC"
+    },
+    {
+      "id": 2,
+      "name": "Móvil"
+    },
+    {
+      "id": 3,
+      "name": "Consola"
+    },
+    {
+      "id": 4,
+      "name": "Battle Royale"
+    },
+    {
+      "id": 5,
+      "name": "Multiplayer"
+    },
+    {
+      "id": 6,
+      "name": "Campaign Story"
+    }
+  ],
+  "streamerSponsors": [
+    {
+      "id": 1,
+      "userId": 1,
+      "sponsorName": "Coca Cola"
+    },
+    {
+      "userId": 1,
+      "name": "Papitas Lays",
+      "id": 2
+    }
+  ],
+  "tournaments": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Clash",
+      "date": "03-09-2021",
+      "result": "Tercero"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "Fireinfern",
+      "email": "sebastian@gmail.com"
+    }
+  ],
+  "userProfiles": [
+    {
+      "id": 1,
+      "type": 0,
+      "userId": 1,
+      "gamingGeneralLevel": "Medium"
+    }
+  ]
+}

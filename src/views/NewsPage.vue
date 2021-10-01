@@ -131,8 +131,7 @@ export default {
   },
 
   data: () => ({
-    drawer: false,
-    apiKey: '30a01aa6438d4782906f35bb2f136a91',
+    //apiKey: '30a01aa6438d4782906f35bb2f136a91',
     articles:[],
     topGames:[],
     errors:[],
@@ -147,7 +146,7 @@ export default {
           this.topGames = topGames.data.data;
           console.log(this.topGames);
         })
-    axios.get(`https://newsapi.org/v2/everything?q=Gamer&language=es&apiKey=${this.apiKey}`)
+    axios.get(`https://xempre.com/request.php?theme=Gamer`)
         .then(response => {
           this.articles = response.data.articles;
           this.tempArticles = response.data.articles
@@ -160,8 +159,7 @@ export default {
   },
   methods:{
     searchArticles(theme){
-      this.drawer = !this.drawer;
-      axios.get(`https://newsapi.org/v2/everything?q=${theme}&apiKey=${this.apiKey}`)
+      axios.get(`https://xempre.com/request.php?theme=${theme}`)
           .then(response => {
             this.articles = response.data.articles;
             this.tempArticles = response.data.articles
