@@ -2,9 +2,30 @@
   <v-container>
     <nav-bar></nav-bar>
     <v-row no-gutters>
-      <v-col xs="12" sm="3"></v-col>
+      <v-col xs="12" sm="3">
+        <v-card>
+          <v-list>
+            <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
+            <v-list-item >
+              <v-list-item-content >
+                <v-btn class="d-flex justify-start" text @click="searchArticles('videogames')">General</v-btn>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn class="d-flex justify-start" text @click="searchArticles('steam')">Tip/Task</v-btn>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn class="d-flex justify-start" text @click="searchArticles('twitch')">Tournament</v-btn>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-col>
       <v-col xs="12" sm="6">
-          <v-card>
+          <v-card class="mx-3">
             <v-card-text>
               <v-dialog
                   v-model="dialogP"
