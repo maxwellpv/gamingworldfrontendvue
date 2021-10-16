@@ -253,8 +253,89 @@
                                 label="Prize Pool"
                             ></v-text-field>
                           </v-col>
-                        </v-row>
 
+                          <v-col
+                              cols="12"
+                              sm="6"
+                              md="4"
+                          >
+                            <v-menu
+                                ref="dateD"
+                                v-model="dialogD"
+                                :close-on-content-click="false"
+                                :return-value.sync="date"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="date"
+                                    label="Date"
+                                    prepend-icon="mdi-calendar"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                ></v-text-field>
+                              </template>
+                              <v-date-picker
+                                  v-model="date"
+                                  no-title
+                                  scrollable
+                              >
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="dialogD = false"
+                                >
+                                  Cancel
+                                </v-btn>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="$refs.dateD.save(date)"
+                                >
+                                  OK
+                                </v-btn>
+                              </v-date-picker>
+                            </v-menu>
+                          </v-col>
+                          <v-spacer></v-spacer>
+                          <v-col
+                              cols="11"
+                              sm="5"
+                          >
+                            <v-menu
+                                ref="timeD"
+                                v-model="dialogH"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                :return-value.sync="time"
+                                transition="scale-transition"
+                                offset-y
+                                max-width="290px"
+                                min-width="290px"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="time"
+                                    label="Hour"
+                                    prepend-icon="mdi-clock-time-four-outline"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                ></v-text-field>
+                              </template>
+                              <v-time-picker
+                                  v-if="dialogH"
+                                  v-model="time"
+                                  full-width
+                                  @click:minute="$refs.timeD.save(time)"
+                              ></v-time-picker>
+                            </v-menu>
+                          </v-col>
+                        </v-row>
                       </v-container>
                       <small>*indicates required field</small>
                     </v-card-text>
@@ -286,13 +367,6 @@
         <premium-dialog></premium-dialog>
       </v-col>
     </v-row>
-
-
-
-
-
-
-
   </v-container>
 </template>
 
@@ -311,6 +385,11 @@ export default {
     dialogTr: false,
     imgtest: "",
     selectedPopularGames: Array(0),
+    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    dialogD: false,
+    time: null,
+    dialogH: false,
+    modal2: false,
     popularGames: [
       {
         id: 0,
