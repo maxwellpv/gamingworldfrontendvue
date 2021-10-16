@@ -4,6 +4,7 @@ import News from '../views/NewsPage.vue'
 import ProfileSelection from '../components/UserTypeSelection'
 import GamerProfile from '../components/UserProfileGamer'
 import StreamerProfile from '../components/UserProfileStreamer'
+import GPCorrect from "../components/GamerProfileCorrect";
 
 
 Vue.use(VueRouter)
@@ -28,6 +29,11 @@ const routes = [
     path: '/news',
     name: 'News',
     component: News
+  },
+  {
+    path: '/correct',
+    name: 'Correct',
+    component: GPCorrect
   },
 
 ]
