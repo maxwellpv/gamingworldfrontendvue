@@ -1,33 +1,37 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import News from '../views/NewsPage.vue'
-import ProfileSelection from '../components/UserTypeSelection'
 import GamerProfile from '../components/UserProfileGamer'
 import StreamerProfile from '../components/UserProfileStreamer'
+import Publications from "@/views/PublicationsPage";
 
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/news',
+    name: 'news',
+    component: News
+  },
+  {
     path: '/',
-    name: 'Home',
-    component: ProfileSelection
+    redirect: "/news"
   },
   {
     path: '/gamer',
-    name: 'Gamer',
+    name: 'gamer',
     component: GamerProfile
   },
   {
     path: '/streamer',
-    name: 'Streamer',
+    name: 'streamer',
     component: StreamerProfile
   },
   {
-    path: '/news',
-    name: 'News',
-    component: News
+    path: '/publications',
+    name: 'publications',
+    component: Publications
   },
 
 ]
