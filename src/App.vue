@@ -1,7 +1,5 @@
 <template>
   <v-app>
-    <app-bar>
-    </app-bar>
     <v-main class="background">
       <router-view></router-view>
     </v-main>

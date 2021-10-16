@@ -25,7 +25,6 @@
                 </v-card-actions>
               </v-card>
             </v-col>
-
           </template>
 
         </v-row>

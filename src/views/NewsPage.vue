@@ -34,7 +34,6 @@
             <v-card-title class=" text-justify">Popular Twitch<br> Themes</v-card-title>
 
             <template v-for="(article) in topGames">
-
                 <v-list :cols="index === 0 ? 12 : 6" :key="article.name">
                   <v-list-item class="d-flex text-justify">
                     <v-img class="rounded-circle" v-bind:src="article.box_art_url.slice(0,-20) + '32x32.jpg'" width="32px" height="32px" max-width="32px" max-height="32px"></v-img>
@@ -42,9 +41,7 @@
                     <h5>{{article.name}}</h5>
                   </v-list-item>
                 </v-list>
-
             </template>
-
           </v-card>
 
           <!--  Premium Ad Preview -->
