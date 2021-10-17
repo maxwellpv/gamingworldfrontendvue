@@ -1,26 +1,7 @@
 <template>
   <v-app>
-
-
     <v-main class="background">
       <router-view></router-view>
-
-      <!--  ScrollToTop Button  -->
-      <v-container>
-        <v-btn class="mb-5"
-               v-scroll="onScroll"
-               v-show="fab"
-               fab
-               dark
-               fixed
-               bottom
-               right
-               color="primary"
-               @click="toTop"
-        >
-          <v-icon>mdi-chevron-up</v-icon>
-        </v-btn>
-      </v-container>
     </v-main>
     <footer-content></footer-content>
   </v-app>
