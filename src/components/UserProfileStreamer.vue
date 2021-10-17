@@ -187,7 +187,7 @@ export default {
           });
         }
       }
-      this.$router.push('News')
+      this.$router.push('Correct')
     },
   }
 }

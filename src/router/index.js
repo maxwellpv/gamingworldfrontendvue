@@ -4,7 +4,7 @@ import News from '../views/NewsPage.vue'
 import GamerProfile from '../components/UserProfileGamer'
 import StreamerProfile from '../components/UserProfileStreamer'
 import Publications from "@/views/PublicationsPage";
-
+import GPCorrect from "../components/GamerProfileCorrect";
 
 Vue.use(VueRouter)
 
@@ -32,6 +32,11 @@ const routes = [
     path: '/publications',
     name: 'publications',
     component: Publications
+  },
+  {
+    path: '/correct',
+    name: 'Correct',
+    component: GPCorrect
   },
 
 ]

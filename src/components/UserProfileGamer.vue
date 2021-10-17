@@ -244,7 +244,7 @@ export default {
           });
         }
       }
-      this.$router.push('News')
+      this.$router.push('Correct')
     },
 
     // Elimina algún campo de resultado de torneo según el index indicado
