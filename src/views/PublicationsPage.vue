@@ -362,6 +362,8 @@
             </v-card-text>
 
           </v-card>
+        <publications-content></publications-content>
+
       </v-col>
       <v-col xs="12" sm="3">
         <premium-dialog></premium-dialog>
@@ -373,11 +375,13 @@
 <script>
 import NavBar from "../components/NavBar";
 import PremiumDialog from "../components/PremiumDialog";
+import PublicationsContent from "../components/PublicationsContent";
 export default {
   name: "publications-page",
   components: {
     NavBar,
-    PremiumDialog
+    PremiumDialog,
+    PublicationsContent
   },
   data: () => ({
     dialogP: false,

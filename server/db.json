@@ -29,6 +29,22 @@
       "id": 4
     }
   ],
+  "games": [
+    {
+      "id": 1,
+      "name": "League of Legends"
+    },
+    {
+      "id": 2,
+      "name": "Hello Kitty Racing"
+    },{
+      "id": 3,
+      "name": "Call of Duty: Vanguard"
+    },{
+      "id": 4,
+      "name": "New World"
+    }
+  ],
   "streamerSelectedCategories": [
     {
       "id": 1,
@@ -126,6 +142,34 @@
       "type": 0,
       "userId": 1,
       "gamingGeneralLevel": "Medium"
+    }
+  ],
+  "publications": [
+    {
+      "publicationType": 1,
+      "id": 1,
+      "userId": 1,
+      "title": "200 years of collective design Riot",
+      "content": "What the hell is riot doing with the last champion releases. This is not balanced",
+      "urlToImage": "https://i.ytimg.com/vi/TZf_w2wAPnE/maxresdefault.jpg",
+      "gameId": null,
+      "participantLimit": null,
+      "prizePool": null,
+      "tDate": null,
+      "tHour": null
+    },
+    {
+      "publicationType": 3,
+      "id": 2,
+      "userId": 1,
+      "title": "Custom LoL Clash",
+      "content": "Participate in an all new tournament in Summoners Rift agains Challenger players",
+      "urlToImage": "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/clash-2018/es_AR/a46e742ae82f9d4f9db8e34ba57873e513e727b7/assets/static/img/meta/fb-share.jpg",
+      "gameId": 2,
+      "participantLimit": 30,
+      "prizePool": 0.0,
+      "tDate": "2021-10-20",
+      "tHour": "01:14"
     }
   ]
 }
