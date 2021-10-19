@@ -75,8 +75,8 @@
           <v-row justify="space-around" width class="my-5" fluid>
             <div v-for="(game, i) in popularGames" :key="i" class="">
               <v-col align="center" >
-                <v-img src="game.imageURL"></v-img>
-                <v-checkbox color="blue" id="game.id" :label="game.name" v-model="selectedPopularGames[i]"></v-checkbox>
+                  <v-img :src="game.imageURL"></v-img>
+                <v-checkbox color="blue" :id="game.id" :label="game.name" v-model="selectedPopularGames[i]"></v-checkbox>
               </v-col>
             </div>
           </v-row>
@@ -149,27 +149,27 @@ export default {
         {
           id: 0,
           name: "CS: GO",
-          imageURL: ""
+          imageURL: "@/assets/logos/CSGO_Logo.png"
         },
         {
           id: 1,
           name: "LoL",
-          imageURL: ""
+          imageURL: "@/assets/logos/LOL_Logo.png"
         },
         {
           id: 2,
           name: "Fortnite",
-          imageURL: ""
+          imageURL: "@/assets/logos/FORTNITE_Logo.png"
         },
         {
           id: 3,
           name: "Dota 2",
-          imageURL: ""
+          imageURL: "@/assets/logos/DOTA2_Logo.png"
         },
         {
           id: 4,
           name: "Valorant",
-          imageURL: ""
+          imageURL: "@/assets/logos/VALORANT_Logo.png"
         }
       ]
     }
