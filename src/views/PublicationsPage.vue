@@ -25,6 +25,7 @@
         </v-card>
       </v-col>
       <v-col xs="12" sm="6">
+        <v-form v-model="isValidated">
           <v-card class="mx-3">
             <v-card-text>
               <v-dialog
@@ -45,6 +46,7 @@
                     <span class="text-h5">New Publication</span>
                   </v-card-title>
                   <v-card-text>
+                    <small>*indicates required field</small>
                     <v-container>
                       <v-row>
                         <v-col
@@ -53,15 +55,17 @@
                           <v-text-field
                               label="Title*"
                               v-model="newpublication.title"
-                              required
+                              :rules="validationRulesP"
+
                           ></v-text-field>
                         </v-col>
 
                         <v-col cols="12">
                           <v-textarea
                               solo
-                              label="Content"
+                              label="Content*"
                               v-model="newpublication.content"
+                              :rules="validationRules1"
                           ></v-textarea>
                         </v-col>
                         <v-col cols="12">
@@ -77,20 +81,19 @@
                         ></v-file-input>
                       </v-row>
                     </v-container>
-                    <small>*indicates required field</small>
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
                         color="warning"
                         dark
-                        @click="dialogP = false"
+                        @click="dialogP = false; onClear()"
                     >
                       Close
                     </v-btn>
                     <v-btn
                         color="primary"
-                        dark
+                        :disabled="!isValidated"
                         @click="save(1)"
                     >
                       Save
@@ -119,6 +122,7 @@
                       <span class="text-h5">New Tip / Task</span>
                     </v-card-title>
                     <v-card-text>
+                      <small>*indicates required field</small>
                       <v-container>
                         <v-row>
                           <v-col
@@ -127,7 +131,7 @@
                             <v-text-field
                                 label="Title*"
                                 v-model="newpublication.title"
-                                required
+                                :rules="validationRulesP"
                             ></v-text-field>
                           </v-col>
 
@@ -147,8 +151,9 @@
                           <v-col cols="12">
                             <v-textarea
                                 solo
-                                label="Content"
+                                label="Content*"
                                 v-model="newpublication.content"
+                                :rules="validationRules1"
                             ></v-textarea>
                           </v-col>
                           <v-col cols="12">
@@ -164,20 +169,19 @@
                           ></v-file-input>
                         </v-row>
                       </v-container>
-                      <small>*indicates required field</small>
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn
                           color="warning"
                           dark
-                          @click="dialogT = false"
+                          @click="dialogT = false; onClear()"
                       >
                         Close
                       </v-btn>
                       <v-btn
                           color="primary"
-                          dark
+                          :disabled="!isValidated"
                           @click="save(2)"
                       >
                         Save
@@ -204,7 +208,9 @@
                     <v-card-title>
                       <span class="text-h5">New Tournament</span>
                     </v-card-title>
+
                     <v-card-text>
+                      <small>*indicates required field</small>
                       <v-container>
                         <v-row>
                           <v-col
@@ -213,7 +219,7 @@
                             <v-text-field
                                 label="Name*"
                                 v-model="newpublication.title"
-                                required
+                                :rules="validationRulesTr"
                             ></v-text-field>
                           </v-col>
 
@@ -236,7 +242,6 @@
                             <div
                                 v-for="(game, i) in popularGames"
                                 :key="i"
-                                class=""
                             >
                               <v-col align="center">
                                 <v-img src="game.imageURL"></v-img>
@@ -248,21 +253,26 @@
                           <v-col cols="12">
                             <v-textarea
                                 solo
-                                label="Tournament description"
+                                label="Tournament description*"
                                 v-model="newpublication.content"
+                                :rules="validationRules1"
                             ></v-textarea>
                           </v-col>
 
                           <v-col cols="12">
                             <v-text-field
-                                label="Participant Limit"
+                                label="Participant Limit*"
                                 v-model="newpublication.participantLimit"
+                                type="number"
+                                :rules="[v => !!v || 'Number of participants is required']"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
                                 label="Prize Pool"
+                                type="number"
                                 v-model="newpublication.prizePool"
+
                             ></v-text-field>
                           </v-col>
 
@@ -283,9 +293,13 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="date"
-                                    label="Date"
+                                    label="Date*"
+                                    :rules="[v => !!v || 'Date of the tournament is required']"
+
                                     prepend-icon="mdi-calendar"
                                     readonly
+                                    clearable
+
                                     v-bind="attrs"
                                     v-on="on"
                                 ></v-text-field>
@@ -294,6 +308,8 @@
                                   v-model="date"
                                   no-title
                                   scrollable
+
+
                               >
                                 <v-spacer></v-spacer>
                                 <v-btn
@@ -332,7 +348,8 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="time"
-                                    label="Hour"
+                                    label="Hour*"
+                                    :rules="[v => !!v || 'Hour of the tournament is required']"
                                     prepend-icon="mdi-clock-time-four-outline"
                                     readonly
                                     v-bind="attrs"
@@ -349,20 +366,20 @@
                           </v-col>
                         </v-row>
                       </v-container>
-                      <small>*indicates required field</small>
+
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn
                           color="warning"
                           dark
-                          @click="dialogTr = false"
+                          @click="dialogTr = false; onClear()"
                       >
                         Close
                       </v-btn>
                       <v-btn
+                          :disabled="!isValidated"
                           color="primary"
-                          dark
                           @click="save(3)"
                       >
                         Save
@@ -375,7 +392,7 @@
 
           </v-card>
         <publications-content :publications="publications" :games="games" :users="users"></publications-content>
-
+        </v-form>
       </v-col>
       <v-col xs="12" sm="3">
         <premium-dialog></premium-dialog>
@@ -417,6 +434,19 @@ export default {
     users: [],
     games: [],
     newpublication: {},
+    isValidated: true,
+    validationRules1: [
+      v => !!v || 'Content is required',
+      v => (v && v.length >= 40) ||'Content must be at least 40 characters',
+    ],
+    validationRulesTr: [
+      v => !!v || 'Name is required',
+      v => (v && v.length >= 15) ||'Name must be at least 15 characters',
+    ],
+    validationRulesP: [
+      v => !!v || 'Title is required',
+      v => (v && v.length >= 15) ||'Title must be at least 15 characters',
+    ],
 
     popularGames: [
       {
@@ -467,10 +497,16 @@ export default {
       this.dialogP = false
       this.dialogT = false
       this.publications.push(dto)
-
-
+      this.onClear()
 
     },
+
+    onClear() {
+      this.newpublication={}
+      this.date=""
+      this.time=null
+    },
+
     getDisplayPublication(publication) {
       return {
         publicationType: publication.publicationType,
@@ -485,6 +521,7 @@ export default {
         tDate: publication.tDate,
         tHour: publication.tHour,
         publicatedAt: publication.publicatedAt,
+
       }
     },
 

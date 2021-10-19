@@ -218,6 +218,18 @@
       "tHour": "17:19",
       "publicatedAt": "2021-10-19T04:35:27.374Z",
       "id": 7
+    },
+    {
+      "publicationType": 3,
+      "title": "New World Contest",
+      "content": "Engage in thrilling combat against other faction in this contest to conquer the inner castle of Aeternum",
+      "urlToImage": "https://www.pcgamesn.com/wp-content/uploads/2020/06/new_world_screen.jpg",
+      "participantLimit": "150",
+      "prizePool": "50",
+      "tDate": "2021-10-20",
+      "tHour": "13:25",
+      "publicatedAt": "2021-10-19T05:02:51.193Z",
+      "id": 8
     }
   ]
 }
