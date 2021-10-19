@@ -25,7 +25,7 @@
         </v-card>
       </v-col>
       <v-col xs="12" sm="6">
-        <v-form v-model="isValidated">
+        <v-form :key="testForm" v-model="isValidated">
           <v-card class="mx-3">
             <v-card-text>
               <v-dialog
@@ -264,7 +264,7 @@
                                 label="Participant Limit*"
                                 v-model="newpublication.participantLimit"
                                 type="number"
-                                :rules="[v => !!v || 'Number of participants is required']"
+                                :rules="[v => !!v || 'Number of participants is required', v => /^([0-9])+$/.test(v) || 'Number of participants must be integer']"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12">
@@ -435,6 +435,7 @@ export default {
     games: [],
     newpublication: {},
     isValidated: true,
+    testForm: 1,
     validationRules1: [
       v => !!v || 'Content is required',
       v => (v && v.length >= 40) ||'Content must be at least 40 characters',
@@ -505,6 +506,8 @@ export default {
       this.newpublication={}
       this.date=""
       this.time=null
+      this.isValidated=true
+      this.testForm=this.testForm*-1
     },
 
     getDisplayPublication(publication) {
