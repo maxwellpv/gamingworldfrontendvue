@@ -9,6 +9,7 @@
                       label="Search ..." append-icon="mdi-magnify"  solo flat  background-color="primary" dark></v-text-field>
       </template>
       <v-spacer></v-spacer>
+
       <v-btn @click="showNewsPage" icon>
         <v-icon>mdi-home</v-icon>
       </v-btn>
@@ -28,6 +29,9 @@
         </template>
 
         <v-list>
+          <v-list-item @click="showMyProfile">
+            <v-list-item-title>My Profile</v-list-item-title>
+          </v-list-item>
           <v-list-item @click="showStreamerProfile">
             <v-list-item-title>Gamer Profile - Streamer</v-list-item-title>
           </v-list-item>
@@ -55,6 +59,9 @@ export default {
     },
     showPublicationsPage() {
       this.$router.push('publications')
+    },
+    showMyProfile() {
+      this.$router.push('myprofile')
     },
   }
 }
