@@ -8,7 +8,7 @@
             <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
             <v-list-item >
               <v-list-item-content >
-                <v-btn class="d-flex justify-start" text @click="searchArticles('videogames')">General</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications('videogames')">General</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>

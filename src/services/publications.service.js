@@ -11,6 +11,10 @@ class PublicationsService{
         return http.get(`${this.endPoint}/${id}`);
     }
 
+    getByType(type){
+        return http.get(`${this.endPoint}?publicationType=${type}`);
+    }
+
     create(createPublicationDto){
         return http.post(this.endPoint, createPublicationDto)
     }

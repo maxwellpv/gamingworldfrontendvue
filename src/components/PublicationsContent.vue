@@ -14,9 +14,33 @@
                     </v-flex>
                   </v-layout>
                 </v-container>
+                <v-spacer></v-spacer>
+
                 <v-card-text>
                   {{publication.content}}
+                  <div v-if="publication.publicationType==3">
+                    <v-divider class="my-2"></v-divider>
+                    <h4 >Participant Limit: {{publication.participantLimit}}</h4>
+                    <h4 >Date: {{publication.tDate}} - Hour: {{publication.tHour}}</h4>
+                    <h4 >Prize Pool: {{publication.prizePool}} $</h4>
+                  </div>
                 </v-card-text>
+
+                <v-card-actions>
+                  <template v-for="game in games">
+                    <v-chip :key="game.id" v-if="publication.gameId!=null && game.id == publication.gameId" small
+                            color="secondary" class="white--text">
+                      {{ game.name }}
+                    </v-chip>
+                  </template>
+                  <v-spacer></v-spacer>
+                  <template v-for="user in users">
+                    <v-chip :key="user.id" v-if="publication.userId!=null && user.id == publication.userId" small
+                            color="secondary" class="white--text">
+                      {{ user.username }}
+                    </v-chip>
+                  </template>
+                </v-card-actions>
               </v-card>
             </v-col>
           </template>
@@ -59,7 +83,6 @@ export default {
         prizePool: publication.prizePool,
         tDate: publication.tDate,
         tHour: publication.tHour
-
       }
     },
 
@@ -75,6 +98,16 @@ export default {
         id: user.id,
         username: user.username,
       }
+    },
+
+    getGeneralPublications(){
+      PublicationsService.getByType(1)
+          .then((response)=>{
+            this.publications = response.data.map(this.getDisplayPublication);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
     },
 
     retrieveData(){
@@ -99,7 +132,6 @@ export default {
           .catch(e=>{
             console.log(e);
           })
-
     },
 
 
