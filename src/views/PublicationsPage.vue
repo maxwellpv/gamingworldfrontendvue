@@ -52,6 +52,7 @@
                         >
                           <v-text-field
                               label="Title*"
+                              v-model="newpublication.title"
                               required
                           ></v-text-field>
                         </v-col>
@@ -60,13 +61,15 @@
                           <v-textarea
                               solo
                               label="Content"
+                              v-model="newpublication.content"
                           ></v-textarea>
                         </v-col>
                         <v-col cols="12">
-                          <v-text-field v-model="imgtest"
+                          <v-text-field
                               label="Image URL"
+                              v-model="newpublication.urlToImage"
                           ></v-text-field>
-                          <v-img v-if="imgtest!=''" :src="this.imgtest"></v-img>
+                          <v-img v-if="newpublication.urlToImage!=''" :src="this.newpublication.urlToImage"></v-img>
                         </v-col>
                         <v-file-input
                             accept="image/*"
@@ -88,7 +91,7 @@
                     <v-btn
                         color="primary"
                         dark
-                        @click="dialogP = false"
+                        @click="save(1)"
                     >
                       Save
                     </v-btn>
@@ -123,6 +126,7 @@
                           >
                             <v-text-field
                                 label="Title*"
+                                v-model="newpublication.title"
                                 required
                             ></v-text-field>
                           </v-col>
@@ -144,12 +148,15 @@
                             <v-textarea
                                 solo
                                 label="Content"
+                                v-model="newpublication.content"
                             ></v-textarea>
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
                                 label="Image URL"
+                                v-model="newpublication.urlToImage"
                             ></v-text-field>
+                            <v-img v-if="newpublication.urlToImage!=''" :src="this.newpublication.urlToImage"></v-img>
                           </v-col>
                           <v-file-input
                               accept="image/*"
@@ -171,7 +178,7 @@
                       <v-btn
                           color="primary"
                           dark
-                          @click="dialogT = false"
+                          @click="save(2)"
                       >
                         Save
                       </v-btn>
@@ -205,15 +212,17 @@
                           >
                             <v-text-field
                                 label="Name*"
+                                v-model="newpublication.title"
                                 required
                             ></v-text-field>
                           </v-col>
 
                           <v-col cols="12">
-                            <v-text-field v-model="imgtest"
+                            <v-text-field
                                 label="Banner URL"
+                                v-model="newpublication.urlToImage"
                             ></v-text-field>
-                            <v-img :src="this.imgtest"></v-img>
+                            <v-img :src="this.newpublication.urlToImage"></v-img>
                           </v-col>
                           <v-col cols="12">
                             <v-file-input
@@ -240,17 +249,20 @@
                             <v-textarea
                                 solo
                                 label="Tournament description"
+                                v-model="newpublication.content"
                             ></v-textarea>
                           </v-col>
 
                           <v-col cols="12">
                             <v-text-field
                                 label="Participant Limit"
+                                v-model="newpublication.participantLimit"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
                                 label="Prize Pool"
+                                v-model="newpublication.prizePool"
                             ></v-text-field>
                           </v-col>
 
@@ -351,7 +363,7 @@
                       <v-btn
                           color="primary"
                           dark
-                          @click="dialogTr = false"
+                          @click="save(3)"
                       >
                         Save
                       </v-btn>
@@ -373,9 +385,16 @@
 </template>
 
 <script>
+
+
+
 import NavBar from "../components/NavBar";
 import PremiumDialog from "../components/PremiumDialog";
 import PublicationsContent from "../components/PublicationsContent";
+import PublicationsService from '../services/publications.service'
+import GamesService from '../services/games.service'
+import UsersService from '../services/users.service'
+
 export default {
   name: "publications-page",
   components: {
@@ -394,6 +413,11 @@ export default {
     time: null,
     dialogH: false,
     modal2: false,
+    publications: [],
+    users: [],
+    games: [],
+    newpublication: {},
+
     popularGames: [
       {
         id: 0,
@@ -422,7 +446,96 @@ export default {
       }
     ]
   }),
-}
+
+  created(){
+    this.retrieveData()
+  },
+
+  methods: {
+
+    save (pType) {
+      this.newpublication.publicationType=pType;
+      this.newpublication.tDate=this.date;
+      this.newpublication.tHour=this.time;
+      let item = this.newpublication;
+      let dto = this.getDisplayPublication(item);
+      this.hasSaved = true
+      PublicationsService.create(dto).catch(e => console.log(e));
+      this.dialogTr = false
+      this.dialogP = false
+      this.dialogT = false
+      this.publications.push(dto)
+
+
+    },
+    getDisplayPublication(publication) {
+      return {
+        publicationType: publication.publicationType,
+        id: publication.id,
+        userId: publication.userId,
+        title: publication.title,
+        content: publication.content,
+        urlToImage: publication.urlToImage,
+        gameId: publication.gameId,
+        participantLimit: publication.participantLimit,
+        prizePool: publication.prizePool,
+        tDate: publication.tDate,
+        tHour: publication.tHour
+      }
+    },
+
+    getDisplayGame(game) {
+      return {
+        id: game.id,
+        name: game.name,
+      }
+    },
+
+    getDisplayUser(user) {
+      return {
+        id: user.id,
+        username: user.username,
+      }
+    },
+
+    getGeneralPublications(){
+      PublicationsService.getByType(1)
+          .then((response)=>{
+            this.publications = response.data.map(this.getDisplayPublication);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+    },
+
+    retrieveData(){
+      PublicationsService.getAll()
+          .then((response)=>{
+            this.publications = response.data.map(this.getDisplayPublication);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+      GamesService.getAll()
+          .then((response)=>{
+            this.games = response.data.map(this.getDisplayGame);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+      UsersService.getAll()
+          .then((response)=>{
+            this.users = response.data.map(this.getDisplayUser);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+    },
+
+
+
+  }
+};
 </script>
 
 <style scoped>

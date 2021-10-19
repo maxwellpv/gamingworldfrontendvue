@@ -53,91 +53,16 @@
 
 <script>
 
-import PublicationsService from '../services/publications.service'
-import GamesService from '../services/games.servive'
-import UsersService from '../services/users.service'
-
 export default {
-  name: "publications",
-  data: ()=>({
-    publications: [],
-    games: [],
-    users: []
-  }),
+  name: 'publications-content',
+  props: {
+    publications: Array,
+    users: Array,
+    games: Array
 
-  created(){
-    this.retrieveData()
   },
+};
 
-  methods: {
-    getDisplayPublication(publication) {
-      return {
-        publicationType: publication.publicationType,
-        id: publication.id,
-        userId: publication.userId,
-        title: publication.title,
-        content: publication.content,
-        urlToImage: publication.urlToImage,
-        gameId: publication.gameId,
-        participantLimit: publication.participantLimit,
-        prizePool: publication.prizePool,
-        tDate: publication.tDate,
-        tHour: publication.tHour
-      }
-    },
-
-    getDisplayGame(game) {
-      return {
-        id: game.id,
-        name: game.name,
-      }
-    },
-
-    getDisplayUser(user) {
-      return {
-        id: user.id,
-        username: user.username,
-      }
-    },
-
-    getGeneralPublications(){
-      PublicationsService.getByType(1)
-          .then((response)=>{
-            this.publications = response.data.map(this.getDisplayPublication);
-          })
-          .catch(e=>{
-            console.log(e);
-          })
-    },
-
-    retrieveData(){
-      PublicationsService.getAll()
-          .then((response)=>{
-            this.publications = response.data.map(this.getDisplayPublication);
-          })
-          .catch(e=>{
-            console.log(e);
-          })
-      GamesService.getAll()
-          .then((response)=>{
-            this.games = response.data.map(this.getDisplayGame);
-          })
-          .catch(e=>{
-            console.log(e);
-          })
-      UsersService.getAll()
-          .then((response)=>{
-            this.users = response.data.map(this.getDisplayUser);
-          })
-          .catch(e=>{
-            console.log(e);
-          })
-    },
-
-
-
-  }
-}
 </script>
 
 <style scoped>
