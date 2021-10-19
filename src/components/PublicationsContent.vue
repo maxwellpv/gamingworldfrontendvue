@@ -3,7 +3,7 @@
     <v-layout>
       <v-flex>
         <v-row >
-          <template v-for="(publication) in publications">
+          <template v-for="(publication) in sortedArray">
             <v-col :sm="12" :key="publication.title">
               <v-card >
                 <v-img height="350px" v-bind:src="publication.urlToImage"></v-img>
@@ -18,7 +18,7 @@
 
                 <v-card-text>
                   {{publication.content}}
-                  <div v-if="publication.publicationType==3">
+                  <div v-if="publication.publicationType===3">
                     <v-divider class="my-2"></v-divider>
                     <h4 >Participant Limit: {{publication.participantLimit}}</h4>
                     <h4 >Date: {{publication.tDate}} - Hour: {{publication.tHour}}</h4>
@@ -28,14 +28,14 @@
 
                 <v-card-actions>
                   <template v-for="game in games">
-                    <v-chip :key="game.id" v-if="publication.gameId!=null && game.id == publication.gameId" small
+                    <v-chip :key="game.title" v-if="publication.gameId!=null && game.id === publication.gameId" small
                             color="secondary" class="white--text">
                       {{ game.name }}
                     </v-chip>
                   </template>
                   <v-spacer></v-spacer>
                   <template v-for="user in users">
-                    <v-chip :key="user.id" v-if="publication.userId!=null && user.id == publication.userId" small
+                    <v-chip :key="user.id" v-if="publication.userId!=null && user.id === publication.userId" small
                             color="secondary" class="white--text">
                       {{ user.username }}
                     </v-chip>
@@ -61,6 +61,20 @@ export default {
     games: Array
 
   },
+  computed: {
+    sortedArray: function() {
+      function compare(a, b) {
+        if (new Date(a.publicatedAt) > new Date(b.publicatedAt))
+          return -1;
+        if (new Date(a.publicatedAt) < new Date(b.publicatedAt))
+          return 1;
+        return 0;
+      }
+
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      return this.publications.sort(compare);
+    }
+  }
 };
 
 </script>

@@ -8,17 +8,17 @@
             <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
             <v-list-item >
               <v-list-item-content >
-                <v-btn class="d-flex justify-start" text @click="getGeneralPublications('videogames')">General</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(1)">General</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-content>
-                <v-btn class="d-flex justify-start" text @click="searchArticles('steam')">Tip/Task</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(2)">Tip/Task</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-content>
-                <v-btn class="d-flex justify-start" text @click="searchArticles('twitch')">Tournament</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(3)">Tournament</v-btn>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -69,7 +69,7 @@
                               label="Image URL"
                               v-model="newpublication.urlToImage"
                           ></v-text-field>
-                          <v-img v-if="newpublication.urlToImage!=''" :src="this.newpublication.urlToImage"></v-img>
+                          <v-img v-if="newpublication.urlToImage!==''" :src="this.newpublication.urlToImage"></v-img>
                         </v-col>
                         <v-file-input
                             accept="image/*"
@@ -156,7 +156,7 @@
                                 label="Image URL"
                                 v-model="newpublication.urlToImage"
                             ></v-text-field>
-                            <v-img v-if="newpublication.urlToImage!=''" :src="this.newpublication.urlToImage"></v-img>
+                            <v-img v-if="newpublication.urlToImage!==''" :src="this.newpublication.urlToImage"></v-img>
                           </v-col>
                           <v-file-input
                               accept="image/*"
@@ -374,7 +374,7 @@
             </v-card-text>
 
           </v-card>
-        <publications-content></publications-content>
+        <publications-content :publications="publications" :games="games" :users="users"></publications-content>
 
       </v-col>
       <v-col xs="12" sm="3">
@@ -448,12 +448,14 @@ export default {
   }),
 
   created(){
-    this.retrieveData()
+    this.retrieveData();
   },
+
 
   methods: {
 
     save (pType) {
+      this.newpublication.publicatedAt= (new Date(Date.now()).toISOString());
       this.newpublication.publicationType=pType;
       this.newpublication.tDate=this.date;
       this.newpublication.tHour=this.time;
@@ -465,6 +467,7 @@ export default {
       this.dialogP = false
       this.dialogT = false
       this.publications.push(dto)
+
 
 
     },
@@ -480,7 +483,8 @@ export default {
         participantLimit: publication.participantLimit,
         prizePool: publication.prizePool,
         tDate: publication.tDate,
-        tHour: publication.tHour
+        tHour: publication.tHour,
+        publicatedAt: publication.publicatedAt,
       }
     },
 
@@ -498,14 +502,15 @@ export default {
       }
     },
 
-    getGeneralPublications(){
-      PublicationsService.getByType(1)
+    getGeneralPublications(pType){
+      PublicationsService.getByType(pType)
           .then((response)=>{
             this.publications = response.data.map(this.getDisplayPublication);
           })
           .catch(e=>{
             console.log(e);
           })
+
     },
 
     retrieveData(){
@@ -530,11 +535,13 @@ export default {
           .catch(e=>{
             console.log(e);
           })
+
     },
 
+  },
 
 
-  }
+
 };
 </script>
 
