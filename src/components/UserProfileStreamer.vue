@@ -101,6 +101,7 @@
 
 <script>
 import axios from "axios";
+import GamesService from "@/services/games.service";
 
 export default {
   name: "gamerProfileStreamer",
@@ -117,33 +118,7 @@ export default {
       ],
       registeredSponsors: [""],
       selectedPopularGames: Array(0),
-      popularGames: [
-        {
-          id: 0,
-          name: "CS: GO",
-          imageURL: ""
-        },
-        {
-          id: 1,
-          name: "LoL",
-          imageURL: ""
-        },
-        {
-          id: 2,
-          name: "Fortnite",
-          imageURL: ""
-        },
-        {
-          id: 3,
-          name: "CoD: Warzone",
-          imageURL: ""
-        },
-        {
-          id: 4,
-          name: "Valorant",
-          imageURL: ""
-        }
-      ]
+      gameList: null
     }
   },
   methods: {
@@ -189,6 +164,11 @@ export default {
       }
       this.$router.push('Correct')
     },
+  },
+  created() {
+    GamesService.getList().then((response) => {
+      this.gameList = response.data;
+    });
   }
 }
 </script>

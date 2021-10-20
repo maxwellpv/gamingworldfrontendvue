@@ -1,10 +1,15 @@
-import http from '../core/http-common'
+import http, {xempreAPI} from '../core/http-common'
 
 class GamesService{
     endPoint = '/games';
 
     getAll(){
         return http.get(this.endPoint);
+    }
+
+    getList()
+    {
+        return xempreAPI().get("", {params: { limit: 10, where: "rating>95", orderby: "rating" }});
     }
 
     getById(id){

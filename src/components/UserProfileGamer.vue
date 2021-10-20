@@ -144,6 +144,7 @@
 
 <script>
 import axios from "axios";
+import GamesService from '../services/games.service'
 
 export default {
   name: "gamerProfileGamer",
@@ -174,34 +175,8 @@ export default {
         'Years'
       ],
       selectedPopularGames: [],
-      // Lista de juegos populares a mostrar, array de objetos
-      popularGames: [
-        {
-          id: 0,
-          name: "CS: GO",
-          imageURL: ""
-        },
-        {
-          id: 1,
-          name: "LoL",
-          imageURL: ""
-        },
-        {
-          id: 2,
-          name: "Fortnite",
-          imageURL: ""
-        },
-        {
-          id: 3,
-          name: "CoD: Warzone",
-          imageURL: ""
-        },
-        {
-          id: 4,
-          name: "Valorant",
-          imageURL: ""
-        }
-      ]
+      // Lista de juegos populares a mostrar
+      popularGames: null
     }
   },
   methods: {
@@ -269,6 +244,11 @@ export default {
       this.gamesExperienceTimes.splice(index, 1);
       this.gamesExperienceNames.splice(index, 1)
     }
+  },
+  created() {
+    GamesService.getList().then((response) => {
+      this.gameList = response.data;
+    });
   }
 }
 </script>
