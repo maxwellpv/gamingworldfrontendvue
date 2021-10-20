@@ -1,0 +1,235 @@
+{
+  "gameExperiences": [
+    {
+      "id": 1,
+      "userId": 1,
+      "duration": "Días",
+      "gameName": "Nothing"
+    }
+  ],
+  "favoriteGames": [
+    {
+      "id": 1,
+      "userId": 1,
+      "gameName": "Nothing"
+    },
+    {
+      "userId": 1,
+      "gameName": "LoL",
+      "id": 2
+    },
+    {
+      "userId": 1,
+      "gameName": "Fortnite",
+      "id": 3
+    },
+    {
+      "userId": 1,
+      "gameName": "CoD: Warzone",
+      "id": 4
+    }
+  ],
+  "games": [
+    {
+      "id": 1,
+      "name": "League of Legends"
+    },
+    {
+      "id": 2,
+      "name": "Hello Kitty Racing"
+    },
+    {
+      "id": 3,
+      "name": "Call of Duty: Vanguard"
+    },
+    {
+      "id": 4,
+      "name": "New World"
+    }
+  ],
+  "streamerSelectedCategories": [
+    {
+      "id": 1,
+      "userId": 1,
+      "streamingCategoryId": 1
+    },
+    {
+      "userId": 1,
+      "name": "Mobile",
+      "id": 2
+    },
+    {
+      "userId": 1,
+      "name": "Battle Royale",
+      "id": 3
+    },
+    {
+      "userId": 1,
+      "name": "Multiplayer",
+      "id": 4
+    },
+    {
+      "userId": 1,
+      "name": "Console",
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "name": "Battle Royale",
+      "id": 6
+    },
+    {
+      "userId": 1,
+      "name": "Multiplayer",
+      "id": 7
+    }
+  ],
+  "streamingCategories": [
+    {
+      "id": 1,
+      "name": "PC"
+    },
+    {
+      "id": 2,
+      "name": "Móvil"
+    },
+    {
+      "id": 3,
+      "name": "Consola"
+    },
+    {
+      "id": 4,
+      "name": "Battle Royale"
+    },
+    {
+      "id": 5,
+      "name": "Multiplayer"
+    },
+    {
+      "id": 6,
+      "name": "Campaign Story"
+    }
+  ],
+  "streamerSponsors": [
+    {
+      "id": 1,
+      "userId": 1,
+      "sponsorName": "Coca Cola"
+    },
+    {
+      "userId": 1,
+      "name": "Papitas Lays",
+      "id": 2
+    }
+  ],
+  "tournaments": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Clash",
+      "date": "03-09-2021",
+      "result": "Tercero"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "Fireinfern",
+      "email": "sebastian@gmail.com"
+    }
+  ],
+  "userProfiles": [
+    {
+      "id": 1,
+      "type": 0,
+      "userId": 1,
+      "gamingGeneralLevel": "Medium"
+    }
+  ],
+  "publications": [
+    {
+      "publicationType": 1,
+      "id": 1,
+      "userId": 1,
+      "title": "200 years of collective design Riot",
+      "content": "What the hell is riot doing with the last champion releases. This is not balanced",
+      "urlToImage": "https://i.ytimg.com/vi/TZf_w2wAPnE/maxresdefault.jpg",
+      "gameId": null,
+      "participantLimit": null,
+      "prizePool": null,
+      "tDate": null,
+      "tHour": null,
+      "publicatedAt": "2021-10-19T04:35:27.374Z"
+    },
+    {
+      "publicationType": 3,
+      "id": 2,
+      "userId": 1,
+      "title": "Custom LoL Clash",
+      "content": "Participate in an all new tournament in Summoners Rift agains Challenger players",
+      "urlToImage": "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/clash-2018/es_AR/a46e742ae82f9d4f9db8e34ba57873e513e727b7/assets/static/img/meta/fb-share.jpg",
+      "gameId": 1,
+      "participantLimit": 30,
+      "prizePool": 0,
+      "tDate": "2021-10-20",
+      "publicatedAt": "2021-10-19T04:35:27.374Z",
+      "tHour": "01:14"
+    },
+    {
+      "publicationType": 1,
+      "title": "I hate League of Legends so much!",
+      "content": "The game is so unbalanced after 200 years of collective experience",
+      "urlToImage": "https://i.ytimg.com/vi/7cFso3bYoxc/maxresdefault.jpg",
+      "publicatedAt": "2021-10-19T04:35:27.374Z",
+      "id": 3
+    },
+    {
+      "publicationType": 1,
+      "title": "What do you think about Mobalytics?",
+      "content": "Do you think this tool might help me improve my performance in games?",
+      "urlToImage": "https://cdnportal.mobalytics.gg/production/2021/08/55159adb-all_twitter2.jpg",
+      "publicatedAt": "2021-10-19T04:35:27.374Z",
+      "id": 4
+    },
+    {
+      "publicationType": 1,
+      "title": "I love Animal Crossing but...",
+      "content": "The last patch notes made the game so buggy it's umplayable :(",
+      "urlToImage": "https://cdn02.nintendo-europe.com/media/images/10_share_images/portals_3/H2x1_AnimalCrossing_Hub_v03_image1600w.jpg",
+      "publicatedAt": "2021-10-19T04:35:27.374Z",
+      "id": 5
+    },
+    {
+      "publicationType": 2,
+      "title": "You can push a minion with flash E while being Sion",
+      "content": "This trick is useful because you can chain it with Zilean bomb!",
+      "urlToImage": "https://gameriv.com/wp-content/uploads/2021/03/Blackfrost-skin-696x392.jpg",
+      "publicatedAt": "2021-10-19T04:35:27.374Z",
+      "id": 6
+    },
+    {
+      "publicationType": 3,
+      "title": "Amateur LoL Championship",
+      "content": "Participate in the first monetized event for league of legends amateur players!",
+      "urlToImage": "https://depor.com/resizer/CypkmPaYVyo0LluufzE_VugJjlA=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/VQ3ODNKXA5GMNNTHUMNPSRJGLU.jpg",
+      "participantLimit": "35",
+      "prizePool": "100",
+      "tDate": "2021-10-19",
+      "tHour": "17:19",
+      "publicatedAt": "2021-10-19T04:35:27.374Z",
+      "id": 7
+    },
+    {
+      "publicationType": 3,
+      "title": "New World Contest",
+      "content": "Engage in thrilling combat against other faction in this contest to conquer the inner castle of Aeternum",
+      "urlToImage": "https://www.pcgamesn.com/wp-content/uploads/2020/06/new_world_screen.jpg",
+      "participantLimit": "150",
+      "prizePool": "50",
+      "tDate": "2021-10-20",
+      "tHour": "13:25",
+      "publicatedAt": "2021-10-19T05:02:51.193Z",
+      "id": 8
+    }
+  ]
+}

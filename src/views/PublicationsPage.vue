@@ -8,23 +8,24 @@
             <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
             <v-list-item >
               <v-list-item-content >
-                <v-btn class="d-flex justify-start" text @click="searchArticles('videogames')">General</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(1)">General</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-content>
-                <v-btn class="d-flex justify-start" text @click="searchArticles('steam')">Tip/Task</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(2)">Tip/Task</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-content>
-                <v-btn class="d-flex justify-start" text @click="searchArticles('twitch')">Tournament</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(3)">Tournament</v-btn>
               </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-card>
       </v-col>
       <v-col xs="12" sm="6">
+        <v-form :key="testForm" v-model="isValidated">
           <v-card class="mx-3">
             <v-card-text>
               <v-dialog
@@ -45,6 +46,7 @@
                     <span class="text-h5">New Publication</span>
                   </v-card-title>
                   <v-card-text>
+                    <small>*indicates required field</small>
                     <v-container>
                       <v-row>
                         <v-col
@@ -52,21 +54,26 @@
                         >
                           <v-text-field
                               label="Title*"
-                              required
+                              v-model="newpublication.title"
+                              :rules="validationRulesP"
+
                           ></v-text-field>
                         </v-col>
 
                         <v-col cols="12">
                           <v-textarea
                               solo
-                              label="Content"
+                              label="Content*"
+                              v-model="newpublication.content"
+                              :rules="validationRules1"
                           ></v-textarea>
                         </v-col>
                         <v-col cols="12">
-                          <v-text-field v-model="imgtest"
+                          <v-text-field
                               label="Image URL"
+                              v-model="newpublication.urlToImage"
                           ></v-text-field>
-                          <v-img v-if="imgtest!=''" :src="this.imgtest"></v-img>
+                          <v-img v-if="newpublication.urlToImage!==''" :src="this.newpublication.urlToImage"></v-img>
                         </v-col>
                         <v-file-input
                             accept="image/*"
@@ -74,21 +81,20 @@
                         ></v-file-input>
                       </v-row>
                     </v-container>
-                    <small>*indicates required field</small>
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
                         color="warning"
                         dark
-                        @click="dialogP = false"
+                        @click="dialogP = false; onClear()"
                     >
                       Close
                     </v-btn>
                     <v-btn
                         color="primary"
-                        dark
-                        @click="dialogP = false"
+                        :disabled="!isValidated"
+                        @click="save(1)"
                     >
                       Save
                     </v-btn>
@@ -116,6 +122,7 @@
                       <span class="text-h5">New Tip / Task</span>
                     </v-card-title>
                     <v-card-text>
+                      <small>*indicates required field</small>
                       <v-container>
                         <v-row>
                           <v-col
@@ -123,7 +130,8 @@
                           >
                             <v-text-field
                                 label="Title*"
-                                required
+                                v-model="newpublication.title"
+                                :rules="validationRulesP"
                             ></v-text-field>
                           </v-col>
 
@@ -143,13 +151,17 @@
                           <v-col cols="12">
                             <v-textarea
                                 solo
-                                label="Content"
+                                label="Content*"
+                                v-model="newpublication.content"
+                                :rules="validationRules1"
                             ></v-textarea>
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
                                 label="Image URL"
+                                v-model="newpublication.urlToImage"
                             ></v-text-field>
+                            <v-img v-if="newpublication.urlToImage!==''" :src="this.newpublication.urlToImage"></v-img>
                           </v-col>
                           <v-file-input
                               accept="image/*"
@@ -157,21 +169,20 @@
                           ></v-file-input>
                         </v-row>
                       </v-container>
-                      <small>*indicates required field</small>
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn
                           color="warning"
                           dark
-                          @click="dialogT = false"
+                          @click="dialogT = false; onClear()"
                       >
                         Close
                       </v-btn>
                       <v-btn
                           color="primary"
-                          dark
-                          @click="dialogT = false"
+                          :disabled="!isValidated"
+                          @click="save(2)"
                       >
                         Save
                       </v-btn>
@@ -197,7 +208,9 @@
                     <v-card-title>
                       <span class="text-h5">New Tournament</span>
                     </v-card-title>
+
                     <v-card-text>
+                      <small>*indicates required field</small>
                       <v-container>
                         <v-row>
                           <v-col
@@ -205,15 +218,17 @@
                           >
                             <v-text-field
                                 label="Name*"
-                                required
+                                v-model="newpublication.title"
+                                :rules="validationRulesTr"
                             ></v-text-field>
                           </v-col>
 
                           <v-col cols="12">
-                            <v-text-field v-model="imgtest"
+                            <v-text-field
                                 label="Banner URL"
+                                v-model="newpublication.urlToImage"
                             ></v-text-field>
-                            <v-img :src="this.imgtest"></v-img>
+                            <v-img :src="this.newpublication.urlToImage"></v-img>
                           </v-col>
                           <v-col cols="12">
                             <v-file-input
@@ -227,7 +242,6 @@
                             <div
                                 v-for="(game, i) in popularGames"
                                 :key="i"
-                                class=""
                             >
                               <v-col align="center">
                                 <v-img src="game.imageURL"></v-img>
@@ -239,18 +253,26 @@
                           <v-col cols="12">
                             <v-textarea
                                 solo
-                                label="Tournament description"
+                                label="Tournament description*"
+                                v-model="newpublication.content"
+                                :rules="validationRules1"
                             ></v-textarea>
                           </v-col>
 
                           <v-col cols="12">
                             <v-text-field
-                                label="Participant Limit"
+                                label="Participant Limit*"
+                                v-model="newpublication.participantLimit"
+                                type="number"
+                                :rules="[v => !!v || 'Number of participants is required', v => /^([0-9])+$/.test(v) || 'Number of participants must be integer']"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
                                 label="Prize Pool"
+                                type="number"
+                                v-model="newpublication.prizePool"
+
                             ></v-text-field>
                           </v-col>
 
@@ -271,9 +293,13 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="date"
-                                    label="Date"
+                                    label="Date*"
+                                    :rules="[v => !!v || 'Date of the tournament is required']"
+
                                     prepend-icon="mdi-calendar"
                                     readonly
+                                    clearable
+
                                     v-bind="attrs"
                                     v-on="on"
                                 ></v-text-field>
@@ -282,6 +308,8 @@
                                   v-model="date"
                                   no-title
                                   scrollable
+
+
                               >
                                 <v-spacer></v-spacer>
                                 <v-btn
@@ -320,7 +348,8 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="time"
-                                    label="Hour"
+                                    label="Hour*"
+                                    :rules="[v => !!v || 'Hour of the tournament is required']"
                                     prepend-icon="mdi-clock-time-four-outline"
                                     readonly
                                     v-bind="attrs"
@@ -337,21 +366,21 @@
                           </v-col>
                         </v-row>
                       </v-container>
-                      <small>*indicates required field</small>
+
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn
                           color="warning"
                           dark
-                          @click="dialogTr = false"
+                          @click="dialogTr = false; onClear()"
                       >
                         Close
                       </v-btn>
                       <v-btn
+                          :disabled="!isValidated"
                           color="primary"
-                          dark
-                          @click="dialogTr = false"
+                          @click="save(3)"
                       >
                         Save
                       </v-btn>
@@ -362,6 +391,8 @@
             </v-card-text>
 
           </v-card>
+        <publications-content :publications="publications" :games="games" :users="users"></publications-content>
+        </v-form>
       </v-col>
       <v-col xs="12" sm="3">
         <premium-dialog></premium-dialog>
@@ -371,13 +402,22 @@
 </template>
 
 <script>
+
+
+
 import NavBar from "../components/NavBar";
 import PremiumDialog from "../components/PremiumDialog";
+import PublicationsContent from "../components/PublicationsContent";
+import PublicationsService from '../services/publications.service'
+import GamesService from '../services/games.service'
+import UsersService from '../services/users.service'
+
 export default {
   name: "publications-page",
   components: {
     NavBar,
-    PremiumDialog
+    PremiumDialog,
+    PublicationsContent
   },
   data: () => ({
     dialogP: false,
@@ -390,6 +430,25 @@ export default {
     time: null,
     dialogH: false,
     modal2: false,
+    publications: [],
+    users: [],
+    games: [],
+    newpublication: {},
+    isValidated: true,
+    testForm: 1,
+    validationRules1: [
+      v => !!v || 'Content is required',
+      v => (v && v.length >= 40) ||'Content must be at least 40 characters',
+    ],
+    validationRulesTr: [
+      v => !!v || 'Name is required',
+      v => (v && v.length >= 15) ||'Name must be at least 15 characters',
+    ],
+    validationRulesP: [
+      v => !!v || 'Title is required',
+      v => (v && v.length >= 15) ||'Title must be at least 15 characters',
+    ],
+
     popularGames: [
       {
         id: 0,
@@ -418,7 +477,112 @@ export default {
       }
     ]
   }),
-}
+
+  created(){
+    this.retrieveData();
+  },
+
+
+  methods: {
+
+    save (pType) {
+      this.newpublication.publicatedAt= (new Date(Date.now()).toISOString());
+      this.newpublication.publicationType=pType;
+      this.newpublication.tDate=this.date;
+      this.newpublication.tHour=this.time;
+      let item = this.newpublication;
+      let dto = this.getDisplayPublication(item);
+      this.hasSaved = true
+      PublicationsService.create(dto).catch(e => console.log(e));
+      this.dialogTr = false
+      this.dialogP = false
+      this.dialogT = false
+      this.publications.push(dto)
+      this.onClear()
+
+    },
+
+    onClear() {
+      this.newpublication={}
+      this.date=""
+      this.time=null
+      this.isValidated=true
+      this.testForm=this.testForm*-1
+    },
+
+    getDisplayPublication(publication) {
+      return {
+        publicationType: publication.publicationType,
+        id: publication.id,
+        userId: publication.userId,
+        title: publication.title,
+        content: publication.content,
+        urlToImage: publication.urlToImage,
+        gameId: publication.gameId,
+        participantLimit: publication.participantLimit,
+        prizePool: publication.prizePool,
+        tDate: publication.tDate,
+        tHour: publication.tHour,
+        publicatedAt: publication.publicatedAt,
+
+      }
+    },
+
+    getDisplayGame(game) {
+      return {
+        id: game.id,
+        name: game.name,
+      }
+    },
+
+    getDisplayUser(user) {
+      return {
+        id: user.id,
+        username: user.username,
+      }
+    },
+
+    getGeneralPublications(pType){
+      PublicationsService.getByType(pType)
+          .then((response)=>{
+            this.publications = response.data.map(this.getDisplayPublication);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+
+    },
+
+    retrieveData(){
+      PublicationsService.getAll()
+          .then((response)=>{
+            this.publications = response.data.map(this.getDisplayPublication);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+      GamesService.getAll()
+          .then((response)=>{
+            this.games = response.data.map(this.getDisplayGame);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+      UsersService.getAll()
+          .then((response)=>{
+            this.users = response.data.map(this.getDisplayUser);
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+
+    },
+
+  },
+
+
+
+};
 </script>
 
 <style scoped>
