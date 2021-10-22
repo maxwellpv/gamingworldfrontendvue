@@ -1,8 +1,8 @@
 <template>
   <div class="dropdown">
-    <input v-model.trim="searchQuery" @keyup.enter="getList" class="dropdown-input" type="text" placeholder="Find country" />
-    <div v-show="searchQuery && loaded" class="dropdown-list">
-      <div v-for="item in itemList" :key="item.name" class="dropdown-item">
+    <input v-model.trim="searchQuery" @keyup.enter="getList" class="dropdown-input" type="text" placeholder="Find game" />
+    <div v-show="searchQuery && loaded && !hide" class="dropdown-list">
+      <div v-for="item in itemList" :key="item.name" @click="emitValue(item.name)" class="dropdown-item">
         {{ item.name }}
       </div>
     </div>
@@ -18,15 +18,23 @@ export default {
     return {
       searchQuery: '',
       itemList: null,
-      loaded: false
+      loaded: false,
+      hide: false
     }
   },
   methods: {
     getList () {
       GamesService.getListByName(this.searchQuery).then( response => {
-        this.itemList = response.data
-        this.loaded = true
+        this.itemList = response.data;
+        this.loaded = true;
+        this.hide = false;
       });
+    },
+    emitValue(item)
+    {
+      this.$emit('gameSelected', item);
+      this.searchQuery = item;
+      this.hide = true;
     }
   }
 }
@@ -37,7 +45,7 @@ export default {
   position: relative;
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 15px;
 }
 .dropdown-input, .dropdown-selected{
   width: 100%;

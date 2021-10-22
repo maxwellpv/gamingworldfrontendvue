@@ -201,7 +201,7 @@
                       <v-row class="ma-1">
                         <v-text-field
                             label="Brand"
-                            v-model="registeredSponsors[i]"
+                            :v-model="sponsor"
                             :rules="[v => !!v || 'Item is required']"
                             required
                         ></v-text-field>
@@ -219,18 +219,25 @@
               <v-container class="my-5" fluid>
                 <h4 v-if="profileType === 0">Favorites Videogames</h4>
                 <h4 v-else-if="profileType === 1">Favorite video games to stream </h4>
-                <v-row justify="space-around" width class="ma-5" fluid>
-                  <div
-                      v-for="(game, i) in gameList"
+                  <v-row class="ma-5" fluid
+                         justify="center">
+                    <find-game @gameSelected="currentFavoriteGameSelected = $event"></find-game>
+                    <v-btn @click="addFavoriteGame()" class="primary">+ Add</v-btn>
+                  </v-row>
+                  <v-row
+                      class="ma-1"
+                      v-for="(game, i) in selectedFavoriteGames"
                       :key="i"
-                      class=""
+                      justify="space-around"
                   >
-                    <v-col align="center">
-                      <v-img src="game.imageURL"></v-img>
-                      <v-checkbox color="blue" id="game.id" :label="game.name" v-model="selectedPopularGames[i]"></v-checkbox>
-                    </v-col>
-                  </div>
-                </v-row>
+                      <v-text-field
+                          label="Game"
+                          :value="game"
+                          class="mx-3"
+                      ></v-text-field>
+                      <v-btn @click="removeGame(i)" class="error">X</v-btn>
+                  </v-row>
+
               </v-container>
             </v-form>
           </v-card>
@@ -252,9 +259,11 @@
 <script>
 import GamesService from "@/services/games.service";
 import ProfilesService from "@/services/profiles.service";
+import FindGame from "@/components/FindGame";
 
 export default {
   name: "ManageProfile",
+  components: {FindGame},
   data: () => {
     return {
       // Whether gamer (0) or streamer (1)
@@ -262,6 +271,7 @@ export default {
       searchQuery: "",
       validForm: true,
       editingProfileId: null,
+      currentFavoriteGameSelected: "",
       // --- FOR STREAMER PROFILES ---
       selectedStreamingCategories: [0, 0, 0],
       streamingCategories: [
@@ -276,7 +286,7 @@ export default {
       // --- END OF STREAMER
 
       // For both type of profiles
-      selectedPopularGames: Array(0),
+      selectedFavoriteGames: [],
       gameList: null,
 
       // --- FOR GAMER PROFILES ---
@@ -346,7 +356,13 @@ export default {
       this.gamesExperienceTimes.splice(index, 1);
       this.gamesExperienceNames.splice(index, 1)
     },
-
+    addFavoriteGame()
+    {
+      if (this.currentFavoriteGameSelected !== "" && !this.selectedFavoriteGames.includes(this.currentFavoriteGameSelected, 0))
+      {
+        this.selectedFavoriteGames.push(this.currentFavoriteGameSelected);
+      }
+    },
     addSponsor()
     {
       this.registeredSponsors.push("");
@@ -366,6 +382,7 @@ export default {
         return;
       this.selectedStreamingCategories.splice(index, 1);
     },
+
     saveProfile() {
       if (!this.validForm)
         return;
@@ -378,14 +395,11 @@ export default {
 
         let favoriteGamesData = [];
 
-        for (let i = 0; i < this.selectedPopularGames.length; ++i) {
-          if (this.selectedPopularGames[i] !== undefined)
-          {
+        for (let i = 0; i < this.selectedFavoriteGames.length; ++i) {
             favoriteGamesData.push({
-              id: this.$route.name === "edit" ? this.streamingCategoriesOriginalIds[i] : undefined,
+              id: this.$route.name === "edit" ? this.favoriteGamesOriginalIds[i] : undefined,
               userId: process.env.VUE_APP_CURRENT_USER_ID,
-              gameName: this.gameList[i].name});
-          }
+              gameName: this.selectedFavoriteGames[i]});
         }
 
         let experiencesData = [];
@@ -468,6 +482,11 @@ export default {
           this.editingProfileId = response[0].data[0].id;
           this.gamerLevel = response[0].data[0].gamingLevel;
           console.log(response);
+
+          for (let i = 0; i < response[1].data.length; ++i)
+          {
+            this.selectedFavoriteGames.push(this.response[1].data[i].gameName);
+          }
 
           for (let i = 0; i < response[2].data.length; ++i)
           {
