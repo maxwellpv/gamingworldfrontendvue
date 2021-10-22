@@ -21,7 +21,8 @@
                 @submit.prevent=""
             >
               <v-container fluid>
-                <h4>Add streaming categories </h4>
+                <h4 v-if="profileType === 0">Gaming Level</h4>
+                <h4 v-else-if="profileType === 1">Add streaming categories</h4>
                 <v-row justify="space-around" class="ma-5">
                   <template v-if="profileType === 0">
                     <v-radio-group
@@ -81,10 +82,9 @@
                   </template>
                 </v-row>
               </v-container>
-              <v-container class="my-5" fluid>
-                <h4 v-if="profileType === 0">Achievements</h4>
-                <h4 v-else-if="profileType === 1">Add streaming categories </h4>
-                  <template v-if="profileType === 0">
+              <v-container v-if="profileType === 0" class="my-5" fluid>
+                <h4>Achievements</h4>
+                  <template>
                     <v-row justify="center" class="my-5">
                   <div
                       v-for="(tournamentResultName, i) in tournamentsResultsNames"
@@ -121,33 +121,6 @@
                       <v-btn @click="addTournament" class="ma-3 primary">+ Add</v-btn>
                     </v-row>
                 </template>
-                  <template v-else-if="profileType === 1">
-                    <v-row justify="center" class="my-5">
-                    <v-col
-                        cols="12"
-                        md="6"
-                        v-for="(selectedCategory, i) in selectedStreamingCategories"
-                        :key="i"
-                        class="text-fields-row"
-                    >
-                      <v-row class="pa-2">
-                        <v-select
-                            v-model="selectedStreamingCategories[i]"
-                            :items="streamingCategories"
-                            :rules="[v => !!v || 'Item is required']"
-                            label="Select Category"
-                            required
-                        ></v-select>
-                        <v-btn v-if="i > 2" @click="removeStreamingCategory(i)" class="error">X</v-btn>
-                      </v-row>
-                    </v-col>
-                      <v-col
-                          cols="12" md="6"
-                          align="center">
-                        <v-btn @click="addStreamingCategory" class="primary">+ Add</v-btn>
-                      </v-col>
-                    </v-row>
-                  </template>
               </v-container>
               <v-container fluid>
                 <h4 v-if="profileType === 0">Videogames Experience</h4>
@@ -201,6 +174,7 @@
                       <v-row class="ma-1">
                         <v-text-field
                             label="Brand"
+                            :value="sponsor"
                             :v-model="sponsor"
                             :rules="[v => !!v || 'Item is required']"
                             required
@@ -230,11 +204,9 @@
                       :key="i"
                       justify="space-around"
                   >
-                      <v-text-field
-                          label="Game"
-                          :value="game"
+                      <span
                           class="mx-3"
-                      ></v-text-field>
+                      >{{ game }}</span>
                       <v-btn @click="removeGame(i)" class="error">X</v-btn>
                   </v-row>
 
@@ -282,7 +254,7 @@ export default {
         "Multiplayer",
         "Campaign"
       ],
-      registeredSponsors: [""],
+      registeredSponsors: [],
       // --- END OF STREAMER
 
       // For both type of profiles
@@ -476,16 +448,18 @@ export default {
         this.gameList = response.data;
       });
 
+      this.profileType = parseInt(this.$route.params.type);
+
       if (this.$route.name === "edit")
       {
-        ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
+          ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
           this.editingProfileId = response[0].data[0].id;
           this.gamerLevel = response[0].data[0].gamingLevel;
           console.log(response);
 
           for (let i = 0; i < response[1].data.length; ++i)
           {
-            this.selectedFavoriteGames.push(this.response[1].data[i].gameName);
+            this.selectedFavoriteGames.push(response[1].data[i].gameName);
           }
 
           for (let i = 0; i < response[2].data.length; ++i)
@@ -506,9 +480,11 @@ export default {
             }
             for (let i = 0; i < response[4].data.length; ++i)
             {
-              this.addSponsor();
+              if (i > 0)
+                this.addSponsor();
+
               this.sponsorsOriginalIds.push(response[4].data[i].id),
-              this.streamerSponsors[i] = response[4].data[i].sponsorName;
+              this.registeredSponsors[0] = response[4].data[i].name;
             }
           }
 

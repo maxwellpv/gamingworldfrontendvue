@@ -176,7 +176,8 @@ export default {
       ],
       selectedPopularGames: [],
       // Lista de juegos populares a mostrar
-      popularGames: null
+      popularGames: null,
+      profileType: 0
     }
   },
   methods: {

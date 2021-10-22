@@ -3,7 +3,7 @@
     <nav-bar></nav-bar>
     <v-card>
 
-      <v-container>
+      <v-container v-if="profileType === 0">
         <h4>General Level of Play </h4>
         <v-row justify="center" class="ma-5">
           <v-col align="center" sm="4">
@@ -13,7 +13,7 @@
         </v-row>
       </v-container>
 
-      <v-container>
+      <v-container v-if="profileType === 0">
         <h4>Achievements</h4>
         <v-list>
           <v-list-item v-for="achievement in tournaments" :key="achievement.id">
@@ -27,7 +27,18 @@
         </v-list>
       </v-container>
 
-      <v-container>
+      <v-container v-else-if="profileType === 1">
+        <h4>Streaming Categories</h4>
+        <v-list>
+          <v-list-item v-for="category in streamingCategories" :key="category.id">
+            <v-list-item-content>
+              <v-list-item-title v-text="category.gameName"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-container>
+
+      <v-container v-if="profileType === 0">
        <h4>Videogames Experience</h4>
         <v-list>
           <v-list-item v-for="experience in experiences" :key="experience.id">
@@ -36,6 +47,17 @@
             </v-list-item-content>
             <v-list-item-content>
               <v-list-item-title v-text="experience.time" align="end"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-container>
+
+      <v-container v-if="profileType === 1">
+        <h4>Sponsors</h4>
+        <v-list>
+          <v-list-item v-for="sponsor in streamerSponsors" :key="sponsor.id">
+            <v-list-item-content>
+              <v-list-item-title v-text="sponsor.name"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -57,7 +79,7 @@
         </v-list>
       </v-container>
 
-      <v-container>
+      <v-container v-if="profileType === 0">
        <h4>Task in progress</h4>
         <v-list>
           <v-list-item v-for="item in tasks" :key="item.title">
@@ -84,12 +106,13 @@ export default {
   components: {NavBar},
   data(){
     return {
-      profileData: null,
-      favoriteGames: null,
-      experiences: null,
-      streamingCategories: null,
-      streamerSponsors: null,
-      tournaments: null,
+      profileType: 0,
+      profileData: [],
+      favoriteGames: [],
+      experiences: [],
+      streamingCategories: [],
+      streamerSponsors: [],
+      tournaments: [],
       tasks:[
         { taskName: 'Aim Lab', timeToComplete: '30 minutes' },
         { taskName: 'Aim Lab', timeToComplete: '30 minutes' },
@@ -98,17 +121,43 @@ export default {
   },
   methods:{
     showEditProfile() {
-      this.$router.push({ path: `/profile/${this.$route.params.id}/edit/0` })
+      this.$router.push({ path: `/profile/${this.$route.params.id}/edit/${this.$route.params.type}` })
     },
     retrieveData() {
-      ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
-        this.profileData = response[0].data[0];
-        this.favoriteGames = response[1].data;
-        this.experiences = response[2].data;
-        this.streamingCategories = response[3].data;
-        this.streamerSponsors = response[4].data;
-        this.tournaments = response[5].data;
-      });
+      this.profileType = parseInt(this.$route.params.type);
+
+        ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
+          this.editingProfileId = response[0].data[0].id;
+          this.gamerLevel = response[0].data[0].gamingLevel;
+          console.log(response);
+
+          for (let i = 0; i < response[1].data.length; ++i)
+          {
+            this.favoriteGames.push(response[1].data[i]);
+          }
+
+          for (let i = 0; i < response[2].data.length; ++i)
+          {
+            this.experiences.push(response[2].data[i]);
+          }
+
+          if (this.$route.params.type === "1")
+          {
+            for (let i = 0; i < response[3].data.length; ++i)
+            {
+              this.streamingCategories.push(response[3].data[i]);
+            }
+            for (let i = 0; i < response[4].data.length; ++i)
+            {
+              this.streamerSponsors.push(response[4].data[i]);
+            }
+          }
+
+          for (let i = 0; i < response[5].data.length; ++i)
+          {
+            this.tournaments.push(response[5].data[i]);
+          }
+        });
     }
   },
   created() {

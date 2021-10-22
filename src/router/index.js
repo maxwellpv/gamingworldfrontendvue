@@ -45,7 +45,7 @@ const routes = [
   {
     path: '/profile/:id',
     children: [
-      { path: '', component: ManageProfile, name: 'view'},
+      { path: '/:type', component: ManageProfile, name: 'view'},
 
       { path: 'edit/:type', component: ManageProfile, name: 'edit'},
 
