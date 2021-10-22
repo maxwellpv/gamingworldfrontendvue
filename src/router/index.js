@@ -1,38 +1,63 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import News from '../views/NewsPage.vue'
-import ProfileSelection from '../components/UserTypeSelection'
 import GamerProfile from '../components/UserProfileGamer'
 import StreamerProfile from '../components/UserProfileStreamer'
+import Publications from "@/views/PublicationsPage";
+import MyProfile from "../views/MyProfile";
+import ManageProfile from "@/views/ManageProfile";
+import GamerProfileCorrect from "@/components/GamerProfileCorrect";
 
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/news',
+    name: 'news',
+    component: News
+  },
+  {
     path: '/',
-    name: 'Home',
-    component: ProfileSelection
+    redirect: "/news"
   },
   {
     path: '/gamer',
-    name: 'Gamer',
+    name: 'gamer',
     component: GamerProfile
   },
   {
     path: '/streamer',
-    name: 'Streamer',
+    name: 'streamer',
     component: StreamerProfile
   },
   {
-    path: '/news',
-    name: 'News',
-    component: News
+    path: '/publications',
+    name: 'publications',
+    component: Publications
   },
+  {
+    path: '/myprofile/:type/:id',
+    name: 'myprofile',
+    component: MyProfile
+  },
+  { path: '/success', component: GamerProfileCorrect, name: 'success'},
+  {
+    path: '/profile/:id',
+    children: [
+      { path: '/:type', component: ManageProfile, name: 'view'},
 
+      { path: 'edit/:type', component: ManageProfile, name: 'edit'},
+
+      { path: 'create/:type', component: ManageProfile, name: 'create'},
+    ],
+    component: ManageProfile
+  }
 ]
 
 const router = new VueRouter({
+
+  mode: 'history',
   routes
 })
 

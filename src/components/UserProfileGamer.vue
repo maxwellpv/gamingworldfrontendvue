@@ -5,7 +5,7 @@
           app color="indigo darken-1 " dark >
         <v-app-bar-title class="white--text " >User Type</v-app-bar-title>
         <v-spacer></v-spacer>
-        <v-btn class="indigo darken-1" icon @click="showNewsPage" >
+        <v-btn class="indigo darken-1" icon @click="registerUserProfile">
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </v-app-bar>
@@ -28,17 +28,17 @@
               <v-row justify="center" class="ma-5">
                 <v-col align="center" sm="4">
                   <v-img src="@/assets/svg/medalla-de-bronce.svg" class="icon"></v-img>
-                  <v-radio class="justify-center ma-2" color="blue" id="gamer-level-newbie" name="gamer-level" value="newbie" v-model="gamerLevel"></v-radio>
-                  <label for="gamer-level-newbie">Noob</label>
+                  <v-radio class="justify-center ma-2" color="blue" id="gamer-level-newbie" name="gamer-level" value="Newbie" v-model="gamerLevel"></v-radio>
+                  <label for="gamer-level-newbie">Newbie</label>
                 </v-col>
                 <v-col align="center" sm="4">
                   <v-img src="@/assets/svg/medalla-de-plata.svg" class="icon"></v-img>
-                  <v-radio class="justify-center ma-2" color="blue" id="gamer-level-average" name="gamer-level" value="average" v-model="gamerLevel"></v-radio>
+                  <v-radio class="justify-center ma-2" color="blue" id="gamer-level-average" name="gamer-level" value="Medium" v-model="gamerLevel"></v-radio>
                   <label for="gamer-level-average">Medium</label>
                 </v-col>
                 <v-col align="center" sm="4">
                   <v-img src="@/assets/svg/medalla-de-oro.svg" class="icon"></v-img>
-                  <v-radio class="justify-center ma-2" color="blue" id="gamer-level-veteran" name="gamer-level" value="veteran" v-model="gamerLevel"></v-radio>
+                  <v-radio class="justify-center ma-2" color="blue" id="gamer-level-veteran" name="gamer-level" value="Advanced" v-model="gamerLevel"></v-radio>
                   <label for="gamer-level-veteran">Advanced</label>
                 </v-col>
               </v-row>
@@ -143,6 +143,9 @@
 </template>
 
 <script>
+//import axios from "axios";
+import GamesService from '../services/games.service'
+
 export default {
   name: "gamerProfileGamer",
   data: () => {
@@ -172,34 +175,9 @@ export default {
         'Years'
       ],
       selectedPopularGames: [],
-      // Lista de juegos populares a mostrar, array de objetos
-      popularGames: [
-        {
-          id: 0,
-          name: "CS: GO",
-          imageURL: ""
-        },
-        {
-          id: 1,
-          name: "LoL",
-          imageURL: ""
-        },
-        {
-          id: 2,
-          name: "Fortnite",
-          imageURL: ""
-        },
-        {
-          id: 3,
-          name: "CoD: Warzone",
-          imageURL: ""
-        },
-        {
-          id: 4,
-          name: "Valorant",
-          imageURL: ""
-        }
-      ]
+      // Lista de juegos populares a mostrar
+      popularGames: null,
+      profileType: 0
     }
   },
   methods: {
@@ -211,8 +189,9 @@ export default {
         value: "",
       })
     },
-    showNewsPage() {
-      this.$router.push('News')
+    registerUserProfile()
+    {
+
     },
 
     // Elimina algún campo de resultado de torneo según el index indicado
@@ -237,6 +216,11 @@ export default {
       this.gamesExperienceTimes.splice(index, 1);
       this.gamesExperienceNames.splice(index, 1)
     }
+  },
+  created() {
+    GamesService.getList().then((response) => {
+      this.gameList = response.data;
+    });
   }
 }
 </script>

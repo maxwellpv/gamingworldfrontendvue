@@ -9,8 +9,12 @@
                       label="Search ..." append-icon="mdi-magnify"  solo flat  background-color="primary" dark></v-text-field>
       </template>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-account-multiple</v-icon>
+
+      <v-btn @click="showNewsPage" icon>
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+      <v-btn @click="showPublicationsPage" icon >
+        <v-icon>mdi-clipboard-multiple</v-icon>
       </v-btn>
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -21,9 +25,13 @@
           >
             <v-icon>mdi-account-circle</v-icon>
           </v-btn>
+
         </template>
 
         <v-list>
+          <v-list-item @click="showMyProfile">
+            <v-list-item-title>My Profile</v-list-item-title>
+          </v-list-item>
           <v-list-item @click="showStreamerProfile">
             <v-list-item-title>Gamer Profile - Streamer</v-list-item-title>
           </v-list-item>
@@ -41,13 +49,19 @@ export default {
   name: "nav-bar",
   methods: {
     showNewsPage() {
-      this.$router.push('News')
+      this.$router.push('news')
     },
     showStreamerProfile() {
-      this.$router.push('Streamer')
+      this.$router.push('streamer')
     },
     showGamerProfile() {
-      this.$router.push('Gamer')
+      this.$router.push('gamer')
+    },
+    showPublicationsPage() {
+      this.$router.push('publications')
+    },
+    showMyProfile() {
+      this.$router.push('myprofile')
     },
   }
 }
