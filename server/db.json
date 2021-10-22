@@ -1,120 +1,24 @@
 {
-  "gameExperiences": [
+  "experiences": [
     {
       "id": 1,
       "userId": 1,
-      "duration": "Días",
-      "gameName": "Nothing"
+      "gameName": "Valorant",
+      "time": 2
     }
   ],
-  "favoriteGames": [
+  "streamingcategories": [
     {
       "id": 1,
-      "userId": 1,
-      "gameName": "Nothing"
-    },
-    {
-      "userId": 1,
-      "gameName": "LoL",
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "gameName": "Fortnite",
-      "id": 3
-    },
-    {
-      "userId": 1,
-      "gameName": "CoD: Warzone",
-      "id": 4
+      "profileId": 1,
+      "gameName": "Battle Royale"
     }
   ],
-  "games": [
-    {
-      "id": 1,
-      "name": "League of Legends"
-    },
-    {
-      "id": 2,
-      "name": "Hello Kitty Racing"
-    },
-    {
-      "id": 3,
-      "name": "Call of Duty: Vanguard"
-    },
-    {
-      "id": 4,
-      "name": "New World"
-    }
-  ],
-  "streamerSelectedCategories": [
+  "streamersponsors": [
     {
       "id": 1,
       "userId": 1,
-      "streamingCategoryId": 1
-    },
-    {
-      "userId": 1,
-      "name": "Mobile",
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "name": "Battle Royale",
-      "id": 3
-    },
-    {
-      "userId": 1,
-      "name": "Multiplayer",
-      "id": 4
-    },
-    {
-      "userId": 1,
-      "name": "Console",
-      "id": 5
-    },
-    {
-      "userId": 1,
-      "name": "Battle Royale",
-      "id": 6
-    },
-    {
-      "userId": 1,
-      "name": "Multiplayer",
-      "id": 7
-    }
-  ],
-  "streamingCategories": [
-    {
-      "id": 1,
-      "name": "PC"
-    },
-    {
-      "id": 2,
-      "name": "Móvil"
-    },
-    {
-      "id": 3,
-      "name": "Consola"
-    },
-    {
-      "id": 4,
-      "name": "Battle Royale"
-    },
-    {
-      "id": 5,
-      "name": "Multiplayer"
-    },
-    {
-      "id": 6,
-      "name": "Campaign Story"
-    }
-  ],
-  "streamerSponsors": [
-    {
-      "id": 1,
-      "userId": 1,
-      "sponsorName": "Coca Cola"
+      "name": "Coca Cola"
     },
     {
       "userId": 1,
@@ -128,22 +32,31 @@
       "userId": 1,
       "name": "Clash",
       "date": "03-09-2021",
-      "result": "Tercero"
+      "result": "Third place"
     }
   ],
   "users": [
     {
       "id": 1,
       "username": "Fireinfern",
-      "email": "sebastian@gmail.com"
+      "email": "sebastian@gmail.com",
+      "passoword": "1234",
+      "premium": false
     }
   ],
-  "userProfiles": [
+  "profiles": [
     {
       "id": 1,
-      "type": 0,
       "userId": 1,
-      "gamingGeneralLevel": "Medium"
+      "gamingLevel": "Medium",
+      "isStreamer": false
+    }
+  ],
+  "favoritegames": [
+    {
+      "id": 1,
+      "userId": 1,
+      "gameName": "Free Fire"
     }
   ],
   "publications": [

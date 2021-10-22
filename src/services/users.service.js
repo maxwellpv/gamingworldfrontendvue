@@ -12,7 +12,7 @@ class UsersService{
     }
 
     create(createUsersDto){
-        return http.post(this.endPoint, createUsersDto)
+        return http.post(this.endPoint, createUsersDto);
     }
 
     update(id, updateUsersDto){

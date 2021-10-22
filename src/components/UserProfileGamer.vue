@@ -143,7 +143,8 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
+import GamesService from '../services/games.service'
 
 export default {
   name: "gamerProfileGamer",
@@ -174,34 +175,9 @@ export default {
         'Years'
       ],
       selectedPopularGames: [],
-      // Lista de juegos populares a mostrar, array de objetos
-      popularGames: [
-        {
-          id: 0,
-          name: "CS: GO",
-          imageURL: ""
-        },
-        {
-          id: 1,
-          name: "LoL",
-          imageURL: ""
-        },
-        {
-          id: 2,
-          name: "Fortnite",
-          imageURL: ""
-        },
-        {
-          id: 3,
-          name: "CoD: Warzone",
-          imageURL: ""
-        },
-        {
-          id: 4,
-          name: "Valorant",
-          imageURL: ""
-        }
-      ]
+      // Lista de juegos populares a mostrar
+      popularGames: null,
+      profileType: 0
     }
   },
   methods: {
@@ -215,36 +191,7 @@ export default {
     },
     registerUserProfile()
     {
-      axios.post("http://localhost:3000/userProfiles", {
-        userId: 1,
-        type: 0,
-        gamingGeneralLevel: this.gamerLevel
-      });
-      for (let i = 0; i < this.tournamentsResultsNames.length; ++i) {
-        axios.post("http://localhost:3000/tournaments", {
-          userId: 1,
-          name: this.tournamentsResultsNames[i].value,
-          date: "01-10-2021",
-          result: this.tournamentsResultsPositions[i]
-        });
-      }
-      for (let i = 0; i < this.gamesExperienceNames.length; ++i) {
-        axios.post("http://localhost:3000/gameExperiences", {
-          userId: 1,
-          gameName: this.gamesExperienceNames[i].value,
-          duration: this.gamesExperienceTimes[i]
-        });
-      }
-      for (let i = 0; i < this.selectedPopularGames.length; ++i) {
-        if (this.selectedPopularGames[i])
-        {
-          axios.post("http://localhost:3000/favoriteGames", {
-            userId: 1,
-            gameName: this.popularGames[i].name
-          });
-        }
-      }
-      this.$router.push('Correct')
+
     },
 
     // Elimina algún campo de resultado de torneo según el index indicado
@@ -269,6 +216,11 @@ export default {
       this.gamesExperienceTimes.splice(index, 1);
       this.gamesExperienceNames.splice(index, 1)
     }
+  },
+  created() {
+    GamesService.getList().then((response) => {
+      this.gameList = response.data;
+    });
   }
 }
 </script>
