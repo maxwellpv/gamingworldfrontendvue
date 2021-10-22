@@ -52,16 +52,16 @@ export default {
       this.$router.push('news')
     },
     showStreamerProfile() {
-      this.$router.push('streamer')
+      this.$router.push({ path: `/profile/${process.env.VUE_APP_CURRENT_USER_ID}/create/1` })
     },
     showGamerProfile() {
-      this.$router.push('gamer')
+      this.$router.push({ path: `/profile/${process.env.VUE_APP_CURRENT_USER_ID}/create/0` })
     },
     showPublicationsPage() {
       this.$router.push('publications')
     },
     showMyProfile() {
-      this.$router.push('myprofile')
+      this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/0` })
     },
   }
 }
