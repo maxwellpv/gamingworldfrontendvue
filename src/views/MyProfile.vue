@@ -8,7 +8,7 @@
         <v-row justify="center" class="ma-5">
           <v-col align="center" sm="4">
             <v-img src="@/assets/svg/medalla-de-bronce.svg" class="icon"></v-img>
-            <label>Noob</label>
+            <label>{{ profileData.gamingLevel }}</label>
           </v-col>
         </v-row>
       </v-container>
@@ -16,12 +16,12 @@
       <v-container>
         <h4>Achievements</h4>
         <v-list>
-          <v-list-item v-for="item in items" :key="item.title">
+          <v-list-item v-for="achievement in tournaments" :key="achievement.id">
             <v-list-item-content>
-              <v-list-item-title v-text="item.title"></v-list-item-title>
+              <v-list-item-title v-text="achievement.name"></v-list-item-title>
             </v-list-item-content>
             <v-list-item-content>
-              <v-list-item-title v-text="item.place" align="end"></v-list-item-title>
+              <v-list-item-title v-text="achievement.result" align="end"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -30,12 +30,12 @@
       <v-container>
        <h4>Videogames Experience</h4>
         <v-list>
-          <v-list-item v-for="item in games" :key="item.title">
+          <v-list-item v-for="experience in experiences" :key="experience.id">
             <v-list-item-content>
-              <v-list-item-title v-text="item.game"></v-list-item-title>
+              <v-list-item-title v-text="experience.gameName"></v-list-item-title>
             </v-list-item-content>
             <v-list-item-content>
-              <v-list-item-title v-text="item.time" align="end"></v-list-item-title>
+              <v-list-item-title v-text="experience.time" align="end"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -44,14 +44,14 @@
       <v-container>
         <h4>Favorites Videogames</h4>
         <v-list>
-          <v-list-item v-for="item in favouriteGames" :key="item.title">
+          <v-list-item v-for="favorite in favoriteGames" :key="favorite.id">
 
             <v-list-item-content>
-              <v-list-item-title v-text="item.popularGame"></v-list-item-title>
+              <v-list-item-title v-text="favorite.gameName"></v-list-item-title>
             </v-list-item-content>
 
             <v-list-item-avatar>
-              <v-img :src="item.logo"></v-img>
+              <v-img alt="Profile pic here"></v-img>
             </v-list-item-avatar>
           </v-list-item>
         </v-list>
@@ -77,24 +77,19 @@
 
 <script>
 import NavBar from "../components/NavBar";
+import ProfilesService from "@/services/profiles.service";
+
 export default {
   name: "MyProfile",
   components: {NavBar},
   data(){
     return {
-      items: [
-        { title: 'Peruvian League of CSGO 2020', place: '3° Place' },
-        { title: 'Peruvian League of CSGO 2019', place: '2° Place'  },
-        { title: 'LightSpeed Cup', place: '3° Place'  },
-      ],
-      games:[
-        { game: 'Counter Strike Global Offensive', time: '5 years' },
-      ],
-      favouriteGames: [
-        { popularGame: 'CS: GO', logo: '@/assets/logos/CSGO_Logo.png' },
-        { popularGame: 'Dota 2', logo: '@/assets/logos/DOTA2_Logo.png'  },
-        { popularGame: 'League Of Legends', logo: '@/assets/logos/LOL_Logo.png'  },
-      ],
+      profileData: null,
+      favoriteGames: null,
+      experiences: null,
+      streamingCategories: null,
+      streamerSponsors: null,
+      tournaments: null,
       tasks:[
         { taskName: 'Aim Lab', timeToComplete: '30 minutes' },
         { taskName: 'Aim Lab', timeToComplete: '30 minutes' },
@@ -103,8 +98,21 @@ export default {
   },
   methods:{
     showEditProfile() {
-      this.$router.push('edit')
+      this.$router.push({ path: `/profile/${this.$route.params.id}/edit/0` })
     },
+    retrieveData() {
+      ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
+        this.profileData = response[0].data[0];
+        this.favoriteGames = response[1].data;
+        this.experiences = response[2].data;
+        this.streamingCategories = response[3].data;
+        this.streamerSponsors = response[4].data;
+        this.tournaments = response[5].data;
+      });
+    }
+  },
+  created() {
+    this.retrieveData();
   }
 }
 </script>

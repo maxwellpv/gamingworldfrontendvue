@@ -3,6 +3,20 @@ import http from '../core/http-common'
 class ProfilesService{
     endPoint = '/profiles';
 
+    getProfileByUserId(userId)
+    {
+        let registrationPromises = [];
+
+        registrationPromises.push(http.get(this.endPoint, {q: userId }));
+        registrationPromises.push(http.get(`favoritegames`, {q: userId }));
+        registrationPromises.push(http.get(`experiences`, {q: userId }));
+        registrationPromises.push(http.get(`streamingcategories`, {q: userId }));
+        registrationPromises.push(http.get(`streamersponsors`, {q: userId }));
+        registrationPromises.push(http.get(`tournaments`, {q: userId }));
+
+        return Promise.all(registrationPromises);
+    }
+
     create(profileData, favoriteGamesData, experiencesData, streamingCategoriesData, streamerSponsorsData, tournamentsData){
         let registrationPromises = [];
 
@@ -45,11 +59,6 @@ class ProfilesService{
         }
 
         return Promise.all(registrationPromises);
-    }
-
-    createGamerProfile()
-    {
-
     }
 
     update(profileData, favoriteGamesData, experiencesData, streamingCategoriesData, streamerSponsorsData, tournamentsData){

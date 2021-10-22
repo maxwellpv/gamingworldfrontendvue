@@ -2,8 +2,8 @@
   "experiences": [
     {
       "id": 1,
-      "user_id": 1,
-      "game_id": 1,
+      "userId": 1,
+      "gameName": "Valorant",
       "time": 2
     }
   ],
@@ -29,18 +29,10 @@
   "tournaments": [
     {
       "id": 1,
-      "profileId": 1,
+      "userId": 1,
       "name": "Clash",
       "date": "03-09-2021",
       "result": "Tercero"
-    },
-    {
-      "userId": "1",
-      "name": "",
-      "date": "01-10-2021",
-      "result": "Top 10 ",
-      "apiId": "v1",
-      "id": 2
     }
   ],
   "users": [
