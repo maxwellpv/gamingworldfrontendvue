@@ -18,6 +18,7 @@
             <v-form
                 v-model="validForm"
                 ref="form"
+                @submit.prevent=""
             >
               <v-container fluid>
                 <h4>Add streaming categories </h4>
@@ -253,13 +254,14 @@ import GamesService from "@/services/games.service";
 import ProfilesService from "@/services/profiles.service";
 
 export default {
-  name: "gamerProfileStreamer",
+  name: "ManageProfile",
   data: () => {
     return {
       // Whether gamer (0) or streamer (1)
       profileType: 0,
       searchQuery: "",
       validForm: true,
+      editingProfileId: null,
       // --- FOR STREAMER PROFILES ---
       selectedStreamingCategories: [0, 0, 0],
       streamingCategories: [
@@ -301,8 +303,13 @@ export default {
         'Weeks',
         'Months',
         'Years'
-      ]
+      ],
      // --- END OF GAMER
+
+      // --- EDIT ORIGINAL IDS ---
+      sponsorsOriginalIds: [],
+      streamingCategoriesOriginalIds: [],
+      favoriteGamesOriginalIds: []
     }
   },
   methods: {
@@ -312,6 +319,7 @@ export default {
       this.tournamentsResultsNames.push({
         label: "Tournament Name",
         value: "",
+        originalId: null
       })
     },
 
@@ -328,6 +336,7 @@ export default {
       this.gamesExperienceNames.push({
         label: "Videogame Name",
         value: "",
+        originalId: null
       })
     },
 
@@ -361,6 +370,7 @@ export default {
       if (!this.validForm)
         return;
         const profileData = {
+          id: this.$route.name === "edit" ? this.editingProfileId : undefined,
           userId: process.env.VUE_APP_CURRENT_USER_ID,
           gamingLevel: this.gamerLevel,
           isStreamer: this.profileType === 1
@@ -371,14 +381,19 @@ export default {
         for (let i = 0; i < this.selectedPopularGames.length; ++i) {
           if (this.selectedPopularGames[i] !== undefined)
           {
-            favoriteGamesData.push({ userId: process.env.VUE_APP_CURRENT_USER_ID, gameName: this.gameList[i].name});
+            favoriteGamesData.push({
+              id: this.$route.name === "edit" ? this.streamingCategoriesOriginalIds[i] : undefined,
+              userId: process.env.VUE_APP_CURRENT_USER_ID,
+              gameName: this.gameList[i].name});
           }
         }
 
         let experiencesData = [];
 
         for (let i = 0; i < this.gamesExperienceNames.length; ++i) {
-            experiencesData.push({ userId: process.env.VUE_APP_CURRENT_USER_ID,
+            experiencesData.push({
+              id: this.$route.name === "edit" ? this.gamesExperienceNames[i].originalId : undefined,
+              userId: process.env.VUE_APP_CURRENT_USER_ID,
               gameName: this.gamesExperienceNames[i].value,
               duration: this.gamesExperienceTimes[i]
             });
@@ -386,7 +401,9 @@ export default {
 
         let tournamentsData = [];
         for (let i = 0; i < this.tournamentsResultsNames.length; ++i) {
-          tournamentsData.push({ userId: process.env.VUE_APP_CURRENT_USER_ID,
+          tournamentsData.push({
+            id: this.$route.name === "edit" ? this.tournamentsResultsNames[i].originalId : undefined,
+            userId: process.env.VUE_APP_CURRENT_USER_ID,
             name: this.tournamentsResultsNames[i].value,
             date: "01-10-2021",
             result: this.tournamentsResultsPositions[i]
@@ -398,13 +415,17 @@ export default {
         if (this.profileType === 1)
         {
           for (let i = 0; i < this.selectedStreamingCategories.length; ++i) {
-            streamingCategoriesData.push({ userId: process.env.VUE_APP_CURRENT_USER_ID,
+            streamingCategoriesData.push({
+              id: this.$route.name === "edit" ? this.streamingCategoriesOriginalIds[i] : undefined,
+              userId: process.env.VUE_APP_CURRENT_USER_ID,
               name: this.selectedStreamingCategories[i]
             });
           }
 
           for (let i = 0; i < this.registeredSponsors.length; ++i) {
-            streamerSponsorsData.push({ userId: process.env.VUE_APP_CURRENT_USER_ID,
+            streamerSponsorsData.push({
+              id: this.$route.name === "edit" ? this.sponsorsOriginalIds[i] : undefined,
+              userId: process.env.VUE_APP_CURRENT_USER_ID,
               name: this.registeredSponsors[i]
             });
           }
@@ -418,6 +439,13 @@ export default {
         }
         else if (this.$route.name === 'edit')
         {
+          console.log(profileData);
+          console.log(favoriteGamesData);
+          console.log(experiencesData);
+          console.log(streamingCategoriesData);
+          console.log(streamerSponsorsData);
+          console.log(tournamentsData);
+
           ProfilesService.update(profileData, favoriteGamesData, experiencesData, streamingCategoriesData, streamerSponsorsData, tournamentsData).then(() => {
             this.$router.push({name: 'success'});
           });
@@ -433,6 +461,47 @@ export default {
       GamesService.getList().then((response) => {
         this.gameList = response.data;
       });
+
+      if (this.$route.name === "edit")
+      {
+        ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
+          this.editingProfileId = response[0].data[0].id;
+          this.gamerLevel = response[0].data[0].gamingLevel;
+          console.log(response);
+
+          for (let i = 0; i < response[2].data.length; ++i)
+          {
+            this.addGame();
+            this.gamesExperienceNames[i].originalId = response[2].data[i].id;
+            this.gamesExperienceNames[i].value = response[2].data[i].gameName;
+            this.gamesExperienceTimes[i] = this.possibleTimes[response[2].data[i].time];
+          }
+
+          if (this.$route.params.type === "1")
+          {
+            for (let i = 0; i < response[3].data.length; ++i)
+            {
+              this.addStreamingCategory();
+              this.streamingCategoriesOriginalIds.push(response[3].data[i].id),
+              this.selectedStreamingCategories[i] = this.streamingCategories[this.streamingCategories.indexOf(response[3].data[i].gameName)];
+            }
+            for (let i = 0; i < response[4].data.length; ++i)
+            {
+              this.addSponsor();
+              this.sponsorsOriginalIds.push(response[4].data[i].id),
+              this.streamerSponsors[i] = response[4].data[i].sponsorName;
+            }
+          }
+
+          for (let i = 0; i < response[5].data.length; ++i)
+          {
+            this.addTournament();
+            this.tournamentsResultsNames[i].originalId = response[5].data[i].id;
+            this.tournamentsResultsNames[i].value = response[5].data[i].name;
+            this.tournamentsResultsPositions[i] = this.possibleResults[this.possibleResults.indexOf(response[5].data[i].result)];
+          }
+        });
+      }
     }
   },
   created() {
