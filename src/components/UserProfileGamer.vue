@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
 import GamesService from '../services/games.service'
 
 export default {
@@ -190,36 +190,7 @@ export default {
     },
     registerUserProfile()
     {
-      axios.post("http://localhost:3000/userProfiles", {
-        userId: 1,
-        type: 0,
-        gamingGeneralLevel: this.gamerLevel
-      });
-      for (let i = 0; i < this.tournamentsResultsNames.length; ++i) {
-        axios.post("http://localhost:3000/tournaments", {
-          userId: 1,
-          name: this.tournamentsResultsNames[i].value,
-          date: "01-10-2021",
-          result: this.tournamentsResultsPositions[i]
-        });
-      }
-      for (let i = 0; i < this.gamesExperienceNames.length; ++i) {
-        axios.post("http://localhost:3000/gameExperiences", {
-          userId: 1,
-          gameName: this.gamesExperienceNames[i].value,
-          duration: this.gamesExperienceTimes[i]
-        });
-      }
-      for (let i = 0; i < this.selectedPopularGames.length; ++i) {
-        if (this.selectedPopularGames[i])
-        {
-          axios.post("http://localhost:3000/favoriteGames", {
-            userId: 1,
-            gameName: this.popularGames[i].name
-          });
-        }
-      }
-      this.$router.push('Correct')
+
     },
 
     // Elimina algún campo de resultado de torneo según el index indicado

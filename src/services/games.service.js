@@ -12,6 +12,11 @@ class GamesService{
         return xempreAPI().get("", {params: { limit: 10, where: "rating>95", orderby: "rating" }});
     }
 
+    getListByName(query)
+    {
+        return xempreAPI().get("", {params: { limit: 10, searchby: query }});
+    }
+
     getById(id){
         return http.get(`${this.endPoint}/${id}`);
     }

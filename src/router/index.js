@@ -4,8 +4,9 @@ import News from '../views/NewsPage.vue'
 import GamerProfile from '../components/UserProfileGamer'
 import StreamerProfile from '../components/UserProfileStreamer'
 import Publications from "@/views/PublicationsPage";
-import EditProfile from "../views/EditProfileGamer";
 import MyProfile from "../views/MyProfile";
+import ManageProfile from "@/views/ManageProfile";
+import GamerProfileCorrect from "@/components/GamerProfileCorrect";
 
 
 Vue.use(VueRouter)
@@ -36,15 +37,22 @@ const routes = [
     component: Publications
   },
   {
-    path: '/edit',
-    name: 'edit',
-    component: EditProfile
-  },
-  {
     path: '/myprofile',
     name: 'myprofile',
     component: MyProfile
   },
+  { path: '/success', component: GamerProfileCorrect, name: 'success'},
+  {
+    path: '/profile/:id',
+    children: [
+      { path: '', component: ManageProfile, name: 'view'},
+
+      { path: 'edit/:type', component: ManageProfile, name: 'edit'},
+
+      { path: 'create/:type', component: ManageProfile, name: 'create'},
+    ],
+    component: ManageProfile
+  }
 ]
 
 const router = new VueRouter({

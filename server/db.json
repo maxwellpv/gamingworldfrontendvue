@@ -1,116 +1,20 @@
 {
-  "gameExperiences": [
+  "experiences": [
     {
       "id": 1,
-      "userId": 1,
-      "duration": "Días",
+      "user_id": 1,
+      "game_id": 1,
+      "time": 2
+    }
+  ],
+  "streamingcategories": [
+    {
+      "id": 1,
+      "profileId": 1,
       "gameName": "Nothing"
     }
   ],
-  "favoriteGames": [
-    {
-      "id": 1,
-      "userId": 1,
-      "gameName": "Nothing"
-    },
-    {
-      "userId": 1,
-      "gameName": "LoL",
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "gameName": "Fortnite",
-      "id": 3
-    },
-    {
-      "userId": 1,
-      "gameName": "CoD: Warzone",
-      "id": 4
-    }
-  ],
-  "games": [
-    {
-      "id": 1,
-      "name": "League of Legends"
-    },
-    {
-      "id": 2,
-      "name": "Hello Kitty Racing"
-    },
-    {
-      "id": 3,
-      "name": "Call of Duty: Vanguard"
-    },
-    {
-      "id": 4,
-      "name": "New World"
-    }
-  ],
-  "streamerSelectedCategories": [
-    {
-      "id": 1,
-      "userId": 1,
-      "streamingCategoryId": 1
-    },
-    {
-      "userId": 1,
-      "name": "Mobile",
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "name": "Battle Royale",
-      "id": 3
-    },
-    {
-      "userId": 1,
-      "name": "Multiplayer",
-      "id": 4
-    },
-    {
-      "userId": 1,
-      "name": "Console",
-      "id": 5
-    },
-    {
-      "userId": 1,
-      "name": "Battle Royale",
-      "id": 6
-    },
-    {
-      "userId": 1,
-      "name": "Multiplayer",
-      "id": 7
-    }
-  ],
-  "streamingCategories": [
-    {
-      "id": 1,
-      "name": "PC"
-    },
-    {
-      "id": 2,
-      "name": "Móvil"
-    },
-    {
-      "id": 3,
-      "name": "Consola"
-    },
-    {
-      "id": 4,
-      "name": "Battle Royale"
-    },
-    {
-      "id": 5,
-      "name": "Multiplayer"
-    },
-    {
-      "id": 6,
-      "name": "Campaign Story"
-    }
-  ],
-  "streamerSponsors": [
+  "streamersponsors": [
     {
       "id": 1,
       "userId": 1,
@@ -125,25 +29,42 @@
   "tournaments": [
     {
       "id": 1,
-      "userId": 1,
+      "profileId": 1,
       "name": "Clash",
       "date": "03-09-2021",
       "result": "Tercero"
+    },
+    {
+      "userId": "1",
+      "name": "",
+      "date": "01-10-2021",
+      "result": "Top 10 ",
+      "apiId": "v1",
+      "id": 2
     }
   ],
   "users": [
     {
       "id": 1,
       "username": "Fireinfern",
-      "email": "sebastian@gmail.com"
+      "email": "sebastian@gmail.com",
+      "passoword": "1234",
+      "premium": false
     }
   ],
-  "userProfiles": [
+  "profiles": [
     {
       "id": 1,
-      "type": 0,
       "userId": 1,
-      "gamingGeneralLevel": "Medium"
+      "gamingLevel": "Medium",
+      "isStreamer": false
+    }
+  ],
+  "favoritegames": [
+    {
+      "id": 1,
+      "userId": 1,
+      "gameName": "Free Fire"
     }
   ],
   "publications": [
