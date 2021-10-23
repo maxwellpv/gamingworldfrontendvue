@@ -8,7 +8,7 @@ export default axios.create({
 export function xempreAPI()
 {
     return axios.create({
-        baseURL:'http://xempre.com/api/v2/request.php',
+        baseURL:'https://xempre.com/api/v2/request.php',
         headers:{'Content-type': 'application/json'}
     });
 }

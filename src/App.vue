@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main class="background">
-      <router-view></router-view>
+      <router-view :key="$route.path" ></router-view>
     </v-main>
     <footer-content></footer-content>
   </v-app>
