@@ -37,7 +37,7 @@ const routes = [
     component: Publications
   },
   {
-    path: '/myprofile/:type/:id',
+    path: '/myprofile/:id/:type',
     name: 'myprofile',
     component: MyProfile
   },

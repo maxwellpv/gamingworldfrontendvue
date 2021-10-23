@@ -32,6 +32,9 @@
           <v-list-item @click="showMyProfile">
             <v-list-item-title>My Profile</v-list-item-title>
           </v-list-item>
+          <v-list-item @click="showMyStreamerProfile">
+            <v-list-item-title>My Streamer Profile</v-list-item-title>
+          </v-list-item>
           <v-list-item @click="showStreamerProfile">
             <v-list-item-title>Gamer Profile - Streamer</v-list-item-title>
           </v-list-item>
@@ -63,6 +66,11 @@ export default {
     showMyProfile() {
       this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/0` })
     },
+    showMyStreamerProfile() {
+      this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/1` })
+    },
+
+
   }
 }
 </script>

@@ -27,10 +27,10 @@
                 </v-card-text>
 
                 <v-card-actions>
-                  <template v-for="game in games">
-                    <v-chip :key="game.title" v-if="publication.gameId!=null && game.id === publication.gameId" small
+                  <template >
+                    <v-chip small v-if="publication.gameName!=null"
                             color="secondary" class="white--text">
-                      {{ game.name }}
+                      {{ publication.gameName }}
                     </v-chip>
                   </template>
                   <v-spacer></v-spacer>
