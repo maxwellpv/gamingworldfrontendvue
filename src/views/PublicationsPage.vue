@@ -54,7 +54,7 @@
                         >
                           <v-text-field
                               label="Title*"
-                              v-model="newpublication.title"
+                              v-model="newPublication.title"
                               :rules="validationRulesP"
 
                           ></v-text-field>
@@ -64,16 +64,16 @@
                           <v-textarea
                               solo
                               label="Content*"
-                              v-model="newpublication.content"
+                              v-model="newPublication.content"
                               :rules="validationRules1"
                           ></v-textarea>
                         </v-col>
                         <v-col cols="12">
                           <v-text-field
                               label="Image URL"
-                              v-model="newpublication.urlToImage"
+                              v-model="newPublication.urlToImage"
                           ></v-text-field>
-                          <v-img v-if="newpublication.urlToImage!==''" :src="this.newpublication.urlToImage"></v-img>
+                          <v-img v-if="newPublication.urlToImage!==''" :src="this.newPublication.urlToImage"></v-img>
                         </v-col>
                         <v-file-input
                             accept="image/*"
@@ -94,7 +94,7 @@
                     <v-btn
                         color="primary"
                         :disabled="!isValidated"
-                        @click="save(1)"
+                        @click="submitPublication(1)"
                     >
                       Save
                     </v-btn>
@@ -130,38 +130,27 @@
                           >
                             <v-text-field
                                 label="Title*"
-                                v-model="newpublication.title"
+                                v-model="newPublication.title"
                                 :rules="validationRulesP"
                             ></v-text-field>
                           </v-col>
 
-                          <v-row justify="space-around" width class="ma-5" fluid>
-                            <div
-                                v-for="(game, i) in popularGames"
-                                :key="i"
-                                class=""
-                            >
-                              <v-col align="center">
-                                <v-img src="game.imageURL"></v-img>
-                                <v-checkbox color="blue" id="game.id" :label="game.name" v-model="selectedPopularGames[i]"></v-checkbox>
-                              </v-col>
-                            </div>
-                          </v-row>
+                          <find-game rules="v => !!v || 'Title is required'" @gameSelected="currentFavoriteGameSelected = $event"></find-game>
 
                           <v-col cols="12">
                             <v-textarea
                                 solo
                                 label="Content*"
-                                v-model="newpublication.content"
+                                v-model="newPublication.content"
                                 :rules="validationRules1"
                             ></v-textarea>
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
                                 label="Image URL"
-                                v-model="newpublication.urlToImage"
+                                v-model="newPublication.urlToImage"
                             ></v-text-field>
-                            <v-img v-if="newpublication.urlToImage!==''" :src="this.newpublication.urlToImage"></v-img>
+                            <v-img v-if="newPublication.urlToImage!==''" :src="this.newPublication.urlToImage"></v-img>
                           </v-col>
                           <v-file-input
                               accept="image/*"
@@ -181,8 +170,8 @@
                       </v-btn>
                       <v-btn
                           color="primary"
-                          :disabled="!isValidated"
-                          @click="save(2)"
+                          :disabled="!isValidated || currentFavoriteGameSelected===null"
+                          @click="submitPublication(2)"
                       >
                         Save
                       </v-btn>
@@ -218,7 +207,7 @@
                           >
                             <v-text-field
                                 label="Name*"
-                                v-model="newpublication.title"
+                                v-model="newPublication.title"
                                 :rules="validationRulesTr"
                             ></v-text-field>
                           </v-col>
@@ -226,9 +215,9 @@
                           <v-col cols="12">
                             <v-text-field
                                 label="Banner URL"
-                                v-model="newpublication.urlToImage"
+                                v-model="newPublication.urlToImage"
                             ></v-text-field>
-                            <v-img :src="this.newpublication.urlToImage"></v-img>
+                            <v-img :src="this.newPublication.urlToImage"></v-img>
                           </v-col>
                           <v-col cols="12">
                             <v-file-input
@@ -237,24 +226,14 @@
                             ></v-file-input>
                           </v-col>
 
+                          <find-game @gameSelected="currentFavoriteGameSelected = $event"></find-game>
 
-                          <v-row justify="space-around" width class="ma-5" fluid>
-                            <div
-                                v-for="(game, i) in popularGames"
-                                :key="i"
-                            >
-                              <v-col align="center">
-                                <v-img src="game.imageURL"></v-img>
-                                <v-checkbox color="blue" id="game.id" :label="game.name" v-model="selectedPopularGames[i]"></v-checkbox>
-                              </v-col>
-                            </div>
-                          </v-row>
 
                           <v-col cols="12">
                             <v-textarea
                                 solo
                                 label="Tournament description*"
-                                v-model="newpublication.content"
+                                v-model="newPublication.content"
                                 :rules="validationRules1"
                             ></v-textarea>
                           </v-col>
@@ -262,7 +241,7 @@
                           <v-col cols="12">
                             <v-text-field
                                 label="Participant Limit*"
-                                v-model="newpublication.participantLimit"
+                                v-model="newPublication.participantLimit"
                                 type="number"
                                 :rules="[v => !!v || 'Number of participants is required', v => /^([0-9])+$/.test(v) || 'Number of participants must be integer']"
                             ></v-text-field>
@@ -271,7 +250,7 @@
                             <v-text-field
                                 label="Prize Pool"
                                 type="number"
-                                v-model="newpublication.prizePool"
+                                v-model="newPublication.prizePool"
 
                             ></v-text-field>
                           </v-col>
@@ -378,9 +357,9 @@
                         Close
                       </v-btn>
                       <v-btn
-                          :disabled="!isValidated"
+                          :disabled="!isValidated || currentFavoriteGameSelected===null"
                           color="primary"
-                          @click="save(3)"
+                          @click="submitPublication(3)"
                       >
                         Save
                       </v-btn>
@@ -411,19 +390,22 @@ import PublicationsContent from "../components/PublicationsContent";
 import PublicationsService from '../services/publications.service'
 import GamesService from '../services/games.service'
 import UsersService from '../services/users.service'
+import FindGame from "@/components/FindGame";
 
 export default {
   name: "publications-page",
   components: {
+    FindGame,
     NavBar,
     PremiumDialog,
     PublicationsContent
   },
   data: () => ({
+    currentFavoriteGameSelected: null,
     dialogP: false,
     dialogT: false,
     dialogTr: false,
-    imgtest: "",
+    imgTest: "",
     selectedPopularGames: Array(0),
     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     dialogD: false,
@@ -433,7 +415,7 @@ export default {
     publications: [],
     users: [],
     games: [],
-    newpublication: {},
+    newPublication: {},
     isValidated: true,
     testForm: 1,
     validationRules1: [
@@ -449,33 +431,6 @@ export default {
       v => (v && v.length >= 15) ||'Title must be at least 15 characters',
     ],
 
-    popularGames: [
-      {
-        id: 0,
-        name: "CS: GO",
-        imageURL: ""
-      },
-      {
-        id: 1,
-        name: "LoL",
-        imageURL: ""
-      },
-      {
-        id: 2,
-        name: "Fortnite",
-        imageURL: ""
-      },
-      {
-        id: 3,
-        name: "CoD: Warzone",
-        imageURL: ""
-      },
-      {
-        id: 4,
-        name: "Valorant",
-        imageURL: ""
-      }
-    ]
   }),
 
   created(){
@@ -485,12 +440,14 @@ export default {
 
   methods: {
 
-    save (pType) {
-      this.newpublication.publicatedAt= (new Date(Date.now()).toISOString());
-      this.newpublication.publicationType=pType;
-      this.newpublication.tDate=this.date;
-      this.newpublication.tHour=this.time;
-      let item = this.newpublication;
+    submitPublication (pType) {
+      this.newPublication.userId = 1;
+      this.newPublication.publicatedAt= (new Date(Date.now()).toISOString());
+      this.newPublication.publicationType=pType;
+      this.newPublication.gameName = this.currentFavoriteGameSelected;
+      this.newPublication.tDate=this.date;
+      this.newPublication.tHour=this.time;
+      let item = this.newPublication;
       let dto = this.getDisplayPublication(item);
       this.hasSaved = true
       PublicationsService.create(dto).catch(e => console.log(e));
@@ -503,7 +460,7 @@ export default {
     },
 
     onClear() {
-      this.newpublication={}
+      this.newPublication={}
       this.date=""
       this.time=null
       this.isValidated=true
@@ -518,7 +475,7 @@ export default {
         title: publication.title,
         content: publication.content,
         urlToImage: publication.urlToImage,
-        gameId: publication.gameId,
+        gameName: publication.gameName,
         participantLimit: publication.participantLimit,
         prizePool: publication.prizePool,
         tDate: publication.tDate,

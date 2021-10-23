@@ -207,7 +207,7 @@
                       <span
                           class="mx-3"
                       >{{ game }}</span>
-                      <v-btn @click="removeGame(i)" class="error">X</v-btn>
+                      <v-btn @click="removeFavoriteGame(i)" class="error">X</v-btn>
                   </v-row>
 
               </v-container>
@@ -440,6 +440,10 @@ export default {
     goToMain()
     {
       this.$router.push('/news');
+    },
+    removeFavoriteGame(index)
+    {
+      this.selectedFavoriteGames.splice(index, 1);
     },
 
     // Needed to instantiate the profile registration
