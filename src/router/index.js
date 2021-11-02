@@ -7,6 +7,7 @@ import Publications from "@/views/PublicationsPage";
 import MyProfile from "../views/MyProfile";
 import ManageProfile from "@/views/ManageProfile";
 import GamerProfileCorrect from "@/components/GamerProfileCorrect";
+import TournamentPage from "../views/TournamentPage";
 
 
 Vue.use(VueRouter)
@@ -35,6 +36,11 @@ const routes = [
     path: '/publications',
     name: 'publications',
     component: Publications
+  },
+  {
+    path: '/tournament/:id',
+    name: 'tournament',
+    component: TournamentPage
   },
   {
     path: '/myprofile/:id/:type',
