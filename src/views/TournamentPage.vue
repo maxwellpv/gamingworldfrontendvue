@@ -98,24 +98,34 @@
                   <v-container>
                     <v-row no-gutters>
                       <v-col xs="12" sm="8">
-                        <v-card color="white" class="mr-2" min-height="400">
-                            <v-list-item class="d-flex text-justify">
-                              <v-list-item-content>
-                                <v-list-item-title>Manuel Garcia <span class="float-right">40</span></v-list-item-title>
-                                <v-list-item-title>Javier Merino <span class="float-right">22</span></v-list-item-title>
-                                <v-list-item-title>Paolo Pinzas <span class="float-right">10</span></v-list-item-title>
-                              </v-list-item-content>
-                            </v-list-item>
+                        <v-card  color="white" class="mr-2" min-height="400">
+                          <v-list-item class="d-flex text-justify" v-for="participant in participantsMatchPoints" v-bind:key="participant.name">
+                            <v-list-item-content>
+                              <v-list-item-title>{{participant.name}}<span class="float-right">{{participant.points}}</span></v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
                         </v-card>
                       </v-col>
                       <v-col xs="12" sm="4">
-                        <v-text-field
-                            label="Search participant..." solo  background-color="white"></v-text-field>
+
+                        <v-autocomplete
+                            class=""
+                            v-model="searchParticipant"
+                            :items="participants"
+                            item-text="name"
+                            dense
+                            solo
+                            filled
+                            label="Filled"
+                            return-object
+                        ></v-autocomplete>
+
                         <v-btn
                             block
                             dark
                             color="primary"
                             class="mt-n5"
+                            @click="this.addParticipant"
                         >
                           <v-icon
                               dark
@@ -131,6 +141,8 @@
                         </div>
 
                         <v-text-field
+                            type="number"
+                            v-model="extraPoints"
                             label="Add extra points to the user..." solo  background-color="white"></v-text-field>
                       </v-col>
 
@@ -149,7 +161,7 @@
                     <v-btn
                         color="primary"
                         dark
-                        @click="dialog2 = false"
+                        @click="dialog2 = false; addParticipantPoints()"
                     >
                       Confirm
                     </v-btn>
@@ -166,11 +178,9 @@
             <v-card >
               <v-card-title class="text-justify; mb-n6" >Participants</v-card-title>
               <template>
-                  <v-list-item class="d-flex text-justify">
+                  <v-list-item class="d-flex text-justify" v-for="participant in sortedArray" v-bind:key="participant.id">
                     <v-list-item-content>
-                      <v-list-item-title>Manuel Garcia <span class="float-right">40</span></v-list-item-title>
-                      <v-list-item-title>Javier Merino <span class="float-right">22</span></v-list-item-title>
-                      <v-list-item-title>Paolo Pinzas <span class="float-right">10</span></v-list-item-title>
+                      <v-list-item-title>{{participant.name}}<span class="float-right">{{participant.points}}</span></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
               </template>
@@ -193,8 +203,20 @@ export default {
   },
 
   data: () => ({
+    dialogCard: true,
+    searchParticipant: null,
+    extraPoints: 0,
     publication: {},
     publicationId: {},
+
+    participants: [
+      {id: 1, name: "Manuel Garcia", points: 0},
+      {id: 2, name: "Javier Merino", points: 0},
+      {id: 3, name: "Paolo Pinzas", points: 10},
+    ],
+
+    participantsMatchPoints: [
+    ],
     dialog:false,
     dialog2:false
 
@@ -232,6 +254,50 @@ export default {
             console.log(e);
           })
     },
+    addParticipant(){
+
+      if(this.searchParticipant!= null){
+        let temp = {...this.searchParticipant}
+
+        temp.points = 0;
+
+        if( !this.participantsMatchPoints.some(e => e.id === temp.id) ){
+          temp.points = parseInt(temp.points) + parseInt(this.extraPoints);
+          this.participantsMatchPoints.push(temp);
+        }
+        this.extraPoints=0;
+        this.searchParticipant= null;
+      }
+    },
+
+    addParticipantPoints(){
+      this.participants.forEach( (value) => {
+        this.participantsMatchPoints.forEach( (value2) => {
+          if(value.id == value2.id){
+            value.points += value2.points;
+          }
+        } )
+      } )
+      this.searchParticipant= null;
+      this.extraPoints = 0,
+      this.participantsMatchPoints = [];
+    }
+
+  },
+
+  computed: {
+    sortedArray: function() {
+      function compare(a, b) {
+        if (new Date(a.points) > new Date(b.points))
+          return -1;
+        if (new Date(a.points) < new Date(b.points))
+          return 1;
+        return 0;
+      }
+
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      return this.participants.sort(compare);
+    }
   }
 
 
