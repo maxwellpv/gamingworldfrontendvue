@@ -22,7 +22,7 @@ class GamesService{
     }
 
     create(createGamesDto){
-        return http.post(this.endPoint, createGamesDto)
+        return http.post(this.endPoint, createGamesDto);
     }
 
     update(id, updateGamesDto){

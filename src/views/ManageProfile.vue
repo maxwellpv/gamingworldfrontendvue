@@ -12,8 +12,8 @@
         <v-col cols="12"  sm="10" md="8" lg="7" xl="6">
           <v-card class="pa-10">
             <v-card-title class="justify-center">
-              <h2 v-if="profileType === 0">AMATEUR GAMER</h2>
-              <h2 v-else-if="profileType === 1">AMATEUR STREAMER</h2>
+              <h2 v-if="profileType === 'gamer'">AMATEUR GAMER</h2>
+              <h2 v-else-if="profileType === 'streamer'">AMATEUR STREAMER</h2>
             </v-card-title>
             <v-form
                 v-model="validForm"
@@ -21,10 +21,10 @@
                 @submit.prevent=""
             >
               <v-container fluid>
-                <h4 v-if="profileType === 0">Gaming Level</h4>
-                <h4 v-else-if="profileType === 1">Add streaming categories</h4>
+                <h4 v-if="profileType === 'gamer'">Gaming Level</h4>
+                <h4 v-else-if="profileType === 'streamer'">Add streaming categories</h4>
                 <v-row justify="space-around" class="ma-5">
-                  <template v-if="profileType === 0">
+                  <template v-if="profileType === 'gamer'">
                     <v-radio-group
                         v-model="gamerLevel"
                         row
@@ -55,7 +55,7 @@
                       </v-col>
                     </v-radio-group>
                   </template>
-                  <template v-else-if="profileType === 1">
+                  <template v-else-if="profileType === 'streamer'">
                     <v-col
                         cols="12"
                         md="6"
@@ -64,25 +64,24 @@
                         class="text-fields-row"
                     >
                       <v-row class="pa-2">
-                        <v-select
+                        <v-text-field
                             v-model="selectedStreamingCategories[i]"
-                            :items="streamingCategories"
                             :rules="[v => !!v || 'Item is required']"
                             label="Select Category"
                             required
-                        ></v-select>
-                        <v-btn v-if="i > 2" @click="removeStreamingCategory(i)" class="error">X</v-btn>
+                        ></v-text-field>
+                        <v-btn v-if="i > 2" @click="removeStreamingCategory(i)" class="error" :disabled="this.$route.name === 'edit'">X</v-btn>
                       </v-row>
                     </v-col>
                     <v-col
                         cols="12" md="6"
                         align="center">
-                      <v-btn @click="addStreamingCategory" class="primary">+ Add</v-btn>
+                      <v-btn @click="addStreamingCategory" class="primary" :disabled="$route.name === 'edit'">+ Add</v-btn>
                     </v-col>
                   </template>
                 </v-row>
               </v-container>
-              <v-container v-if="profileType === 0" class="my-5" fluid>
+              <v-container v-if="profileType === 'gamer'" class="my-5" fluid>
                 <h4>Achievements</h4>
                   <template>
                     <v-row justify="center" class="my-5">
@@ -102,31 +101,31 @@
                         ></v-text-field>
                       </v-col>
                       <v-col sm="4">
-                        <v-select
+                        <v-text-field
                             class="my-2"
+                            type="number"
                             v-model="tournamentsResultsPositions[i]"
-                            :items="possibleResults"
                             :rules="[v => !!v || 'Item is required']"
                             label="Select Position"
                             required
-                        ></v-select>
+                        ></v-text-field>
                       </v-col>
                       <v-col sm="2">
-                        <v-btn @click="removeTournament(i)" class="error">Remove</v-btn>
+                        <v-btn @click="removeTournament(i)" class="error" :disabled="$route.name === 'edit'">Remove</v-btn>
                       </v-col>
                     </v-row>
                   </div>
                     </v-row>
                     <v-row justify="center">
-                      <v-btn @click="addTournament" class="ma-3 primary">+ Add</v-btn>
+                      <v-btn @click="addTournament" class="ma-3 primary" :disabled="$route.name === 'edit'">+ Add</v-btn>
                     </v-row>
                 </template>
               </v-container>
               <v-container fluid>
-                <h4 v-if="profileType === 0">Videogames Experience</h4>
-                <h4 v-else-if="profileType === 1">Register Sponsor</h4>
+                <h4 v-if="profileType === 'gamer'">Videogames Experience</h4>
+                <h4 v-else-if="profileType === 'streamer'">Register Sponsor</h4>
 
-                  <template v-if="profileType === 0">
+                  <template v-if="profileType === 'gamer'">
                     <v-row justify="space-around" class="ma-5">
                     <div
                         v-for="(gamesExperienceName, i) in gamesExperienceNames"
@@ -144,26 +143,26 @@
                           ></v-text-field>
                         </v-col>
                         <v-col sm="4">
-                          <v-select
+                          <v-text-field
+                              type="number"
                               class="my-2"
                               v-model="gamesExperienceTimes[i]"
-                              :items="possibleTimes"
                               :rules="[v => !!v || 'Item is required']"
                               label="Select Time"
                               required
-                          ></v-select>
+                          ></v-text-field>
                         </v-col>
                         <v-col sm="2">
-                          <v-btn @click="removeGame(i)" class="error">Remove</v-btn>
+                          <v-btn @click="removeGame(i)" class="error" :disabled="$route.name === 'edit'">Remove</v-btn>
                         </v-col>
                       </v-row>
                     </div>
                     </v-row>
                     <v-row justify="center">
-                      <v-btn @click="addGame" class="ma-3 primary">+ Add</v-btn>
+                      <v-btn @click="addGame" class="ma-3 primary" :disabled="$route.name === 'edit'">+ Add</v-btn>
                     </v-row>
                   </template>
-                  <template v-else-if="profileType === 1">
+                  <template v-else-if="profileType === 'streamer'">
                     <v-row justify="space-around" class="ma-5">
                     <v-col
                         cols="12"
@@ -179,24 +178,24 @@
                             :rules="[v => !!v || 'Item is required']"
                             required
                         ></v-text-field>
-                        <v-btn @click="removeSponsor(i)" class="error">X</v-btn>
+                        <v-btn @click="removeSponsor(i)" class="error" :disabled="$route.name === 'edit'">X</v-btn>
                       </v-row>
                     </v-col>
                     <v-col
                         cols="12" md="6"
                         align="center">
-                      <v-btn @click="addSponsor" class="primary">+ Add</v-btn>
+                      <v-btn @click="addSponsor" class="primary" :disabled="$route.name === 'edit'">+ Add</v-btn>
                     </v-col>
                     </v-row>
                   </template>
               </v-container>
               <v-container class="my-5" fluid>
-                <h4 v-if="profileType === 0">Favorites Videogames</h4>
-                <h4 v-else-if="profileType === 1">Favorite video games to stream </h4>
+                <h4 v-if="profileType === 'gamer'">Favorites Videogames</h4>
+                <h4 v-else-if="profileType === 'streamer'">Favorite video games to stream </h4>
                   <v-row class="ma-5" fluid
                          justify="center">
                     <find-game @gameSelected="currentFavoriteGameSelected = $event"></find-game>
-                    <v-btn @click="addFavoriteGame()" class="primary">+ Add</v-btn>
+                    <v-btn @click="addFavoriteGame()" class="primary" :disabled="$route.name === 'edit'">+ Add</v-btn>
                   </v-row>
                   <v-row
                       class="ma-1"
@@ -207,17 +206,17 @@
                       <span
                           class="mx-3"
                       >{{ game }}</span>
-                      <v-btn @click="removeFavoriteGame(i)" class="error">X</v-btn>
+                      <v-btn @click="removeFavoriteGame(i)" class="error" :disabled="$route.name === 'edit'">X</v-btn>
                   </v-row>
 
               </v-container>
             </v-form>
           </v-card>
           <v-container>
-            <template v-if="this.$route.name === 'create'">
+            <template v-if="$route.name === 'create'">
               <v-btn class="ma-3 primary" @click="saveProfile" :disabled="!validForm">Create</v-btn>
             </template>
-            <template v-else-if="this.$route.name === 'edit'">
+            <template v-else-if="$route.name === 'edit'">
               <v-btn class="ma-3 primary" @click="saveProfile" :disabled="!validForm">Save</v-btn>
             </template>
             <v-btn class="ma-3 primary" @click="goToMain">Cancel </v-btn>
@@ -243,9 +242,11 @@ export default {
       searchQuery: "",
       validForm: true,
       editingProfileId: null,
+      possibleGamingLevels:
+      ["Newbie", "Medium", "Advanced"],
       currentFavoriteGameSelected: "",
       // --- FOR STREAMER PROFILES ---
-      selectedStreamingCategories: [0, 0, 0],
+      selectedStreamingCategories: [],
       streamingCategories: [
         "PC",
         "Mobile",
@@ -358,12 +359,6 @@ export default {
     saveProfile() {
       if (!this.validForm)
         return;
-        const profileData = {
-          id: this.$route.name === "edit" ? this.editingProfileId : undefined,
-          userId: process.env.VUE_APP_CURRENT_USER_ID,
-          gamingLevel: this.gamerLevel,
-          isStreamer: this.profileType === 1
-        };
 
         let favoriteGamesData = [];
 
@@ -378,27 +373,27 @@ export default {
 
         for (let i = 0; i < this.gamesExperienceNames.length; ++i) {
             experiencesData.push({
-              id: this.$route.name === "edit" ? this.gamesExperienceNames[i].originalId : undefined,
+              id: this.$route.name === "edit" ? parseInt(this.gamesExperienceNames[i].originalId) : undefined,
               userId: process.env.VUE_APP_CURRENT_USER_ID,
               gameName: this.gamesExperienceNames[i].value,
-              duration: this.gamesExperienceTimes[i]
+              time: parseInt(this.gamesExperienceTimes[i])
             });
         }
 
         let tournamentsData = [];
         for (let i = 0; i < this.tournamentsResultsNames.length; ++i) {
           tournamentsData.push({
-            id: this.$route.name === "edit" ? this.tournamentsResultsNames[i].originalId : undefined,
+            id: this.$route.name === "edit" ? parseInt(this.tournamentsResultsNames[i].originalId) : undefined,
             userId: process.env.VUE_APP_CURRENT_USER_ID,
             name: this.tournamentsResultsNames[i].value,
             date: "01-10-2021",
-            result: this.tournamentsResultsPositions[i]
+            position: parseInt(this.tournamentsResultsPositions[i])
           });
         }
 
       let streamerSponsorsData = [];
       let streamingCategoriesData = [];
-        if (this.profileType === 1)
+        if (this.profileType === 'streamer')
         {
           for (let i = 0; i < this.selectedStreamingCategories.length; ++i) {
             streamingCategoriesData.push({
@@ -417,22 +412,28 @@ export default {
           }
         }
 
+        console.log(experiencesData);
+        console.log(tournamentsData);
+      const profileData = {
+        id: this.$route.name === "edit" ? this.editingProfileId : undefined,
+        userId: this.$route.params.id,
+        gamingLevel: this.possibleGamingLevels.indexOf(this.gamerLevel) + 1,
+        isStreamer: this.profileType === 'streamer',
+        favoriteGamesData,
+        experiencesData,
+        streamingCategoriesData,
+        streamerSponsorsData,
+        tournamentsData
+      };
         if (this.$route.name === 'create')
         {
-          ProfilesService.create(profileData, favoriteGamesData, experiencesData, streamingCategoriesData, streamerSponsorsData, tournamentsData).then(() => {
+          ProfilesService.create(profileData).then(() => {
             this.$router.push({name: 'success'});
           });
         }
         else if (this.$route.name === 'edit')
         {
-          console.log(profileData);
-          console.log(favoriteGamesData);
-          console.log(experiencesData);
-          console.log(streamingCategoriesData);
-          console.log(streamerSponsorsData);
-          console.log(tournamentsData);
-
-          ProfilesService.update(profileData, favoriteGamesData, experiencesData, streamingCategoriesData, streamerSponsorsData, tournamentsData).then(() => {
+          ProfilesService.update(this.editingProfileId, profileData).then(() => {
             this.$router.push({name: 'success'});
           });
         }
@@ -448,56 +449,54 @@ export default {
 
     // Needed to instantiate the profile registration
     retrieveData() {
+
       GamesService.getList().then((response) => {
         this.gameList = response.data;
       });
 
-      this.profileType = parseInt(this.$route.params.type);
+      this.profileType = this.$route.params.type;
 
       if (this.$route.name === "edit")
       {
-          ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
-          this.editingProfileId = response[0].data[0].id;
-          this.gamerLevel = response[0].data[0].gamingLevel;
-          console.log(response);
+        ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
+          console.log(response.data)
+          this.editingProfileId = response.data.id;
+          this.gamerLevel = response.data.gamingLevel;
 
-          for (let i = 0; i < response[1].data.length; ++i)
+          for (let i = 0; i < response.data.favoriteGames.length; ++i)
           {
-            this.selectedFavoriteGames.push(response[1].data[i].gameName);
+            this.selectedFavoriteGames.push(response.data.favoriteGames[i].gameName);
           }
 
-          for (let i = 0; i < response[2].data.length; ++i)
+          for (let i = 0; i < response.data.gameExperiences.length; ++i)
           {
             this.addGame();
-            this.gamesExperienceNames[i].originalId = response[2].data[i].id;
-            this.gamesExperienceNames[i].value = response[2].data[i].gameName;
-            this.gamesExperienceTimes[i] = this.possibleTimes[response[2].data[i].time];
+            this.gamesExperienceNames[i].originalId = response.data.gameExperiences[i].id;
+            this.gamesExperienceNames[i].value = response.data.gameExperiences[i].gameName;
+            this.gamesExperienceTimes[i] = response.data.gameExperiences[i].time;
           }
 
-          if (this.$route.params.type === "1")
+          if (this.$route.params.type === "streamer")
           {
-            for (let i = 0; i < response[3].data.length; ++i)
+            for (let i = 0; i < response.data.streamingCategories.length; ++i)
             {
               this.addStreamingCategory();
-              this.streamingCategoriesOriginalIds.push(response[3].data[i].id),
-              this.selectedStreamingCategories[i] = this.streamingCategories[this.streamingCategories.indexOf(response[3].data[i].gameName)];
+              this.selectedStreamingCategories[i] = response.data.streamingCategories[i].name;
             }
-            for (let i = 0; i < response[4].data.length; ++i)
+            for (let i = 0; i < response.data.streamerSponsors.length; ++i)
             {
-              if (i > 0)
-                this.addSponsor();
+              this.addSponsor();
 
-              this.sponsorsOriginalIds.push(response[4].data[i].id),
-              this.registeredSponsors[0] = response[4].data[i].name;
+              this.registeredSponsors[0] = response.data.streamerSponsors[i].name;
             }
           }
 
-          for (let i = 0; i < response[5].data.length; ++i)
+          for (let i = 0; i < response.data.tournamentExperiences.length; ++i)
           {
             this.addTournament();
-            this.tournamentsResultsNames[i].originalId = response[5].data[i].id;
-            this.tournamentsResultsNames[i].value = response[5].data[i].name;
-            this.tournamentsResultsPositions[i] = this.possibleResults[this.possibleResults.indexOf(response[5].data[i].result)];
+            this.tournamentsResultsNames[i].originalId = response.data.tournamentExperiences[i].id;
+            this.tournamentsResultsNames[i].value = response.data.tournamentExperiences[i].name;
+            this.tournamentsResultsPositions[i] = parseInt(response.data.tournamentExperiences[i].position);
           }
         });
       }
