@@ -27,19 +27,32 @@
                 </v-card-text>
 
                 <v-card-actions>
+
+
                   <template >
                     <v-chip small v-if="publication.gameName!=null"
                             color="secondary" class="white--text">
                       {{ publication.gameName }}
                     </v-chip>
                   </template>
-                  <v-spacer></v-spacer>
                   <template v-for="user in users">
                     <v-chip :key="user.id" v-if="publication.userId!=null && user.id === publication.userId" small
                             color="secondary" class="white--text">
                       {{ user.username }}
                     </v-chip>
                   </template>
+                  <v-spacer></v-spacer>
+                  <div v-if="publication.publicationType===3">
+
+                    <v-btn
+                        color="primary"
+                        dark
+                        @click="showTournament(publication.id)"
+                    >
+                      View Tournament
+                    </v-btn>
+                  </div>
+
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -55,6 +68,11 @@
 
 export default {
   name: 'publications-content',
+  methods: {
+    showTournament(id) {
+      this.$router.push(`/tournament/${id}`)
+    }
+  },
   props: {
     publications: Array,
     users: Array,

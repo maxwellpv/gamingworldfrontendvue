@@ -52,7 +52,7 @@ export default {
   name: "nav-bar",
   methods: {
     showNewsPage() {
-      this.$router.push('news')
+      this.$router.push({path: '/news'})
     },
     showStreamerProfile() {
       this.$router.push({ path: `/profile/${process.env.VUE_APP_CURRENT_USER_ID}/create/1` })
@@ -61,7 +61,7 @@ export default {
       this.$router.push({ path: `/profile/${process.env.VUE_APP_CURRENT_USER_ID}/create/0` })
     },
     showPublicationsPage() {
-      this.$router.push('publications')
+      this.$router.push({path: '/publications'})
     },
     showMyProfile() {
       this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/0` })
