@@ -4,11 +4,11 @@
     <v-card>
 
       <v-container v-if="profileType === 0">
-        <h4>General Level of Play </h4>
+        <h4>General Gaming Level </h4>
         <v-row justify="center" class="ma-5">
           <v-col align="center" sm="4">
             <v-img src="@/assets/svg/medalla-de-bronce.svg" class="icon"></v-img>
-            <label>{{ profileData.gamingLevel }}</label>
+            <label>{{ gamerLevel }}</label>
           </v-col>
         </v-row>
       </v-container>
@@ -113,6 +113,7 @@ export default {
       streamingCategories: [],
       streamerSponsors: [],
       tournaments: [],
+      gamerLevel: null,
       tasks:[
         { taskName: 'Aim Lab', timeToComplete: '30 minutes' },
         { taskName: 'Aim Lab', timeToComplete: '30 minutes' },
@@ -127,35 +128,35 @@ export default {
       this.profileType = parseInt(this.$route.params.type);
 
         ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
-          this.editingProfileId = response[0].data[0].id;
-          this.gamerLevel = response[0].data[0].gamingLevel;
-          console.log(response);
+          console.log(response.data);
+          this.editingProfileId = response.data.id;
+          this.gamerLevel = response.data.gamingLevel;
 
-          for (let i = 0; i < response[1].data.length; ++i)
+          for (let i = 0; i < response.data.favoriteGames.length; ++i)
           {
-            this.favoriteGames.push(response[1].data[i]);
+            this.favoriteGames.push(response.data.favoriteGames[i]);
           }
 
-          for (let i = 0; i < response[2].data.length; ++i)
+          for (let i = 0; i < response.data.gameExperiences.length; ++i)
           {
-            this.experiences.push(response[2].data[i]);
+            this.experiences.push(response.data.gameExperiences[i]);
           }
 
           if (this.$route.params.type === "1")
           {
-            for (let i = 0; i < response[3].data.length; ++i)
+            for (let i = 0; i < response.data.streamingCategories.length; ++i)
             {
-              this.streamingCategories.push(response[3].data[i]);
+              this.streamingCategories.push(response.data.streamingCategories[i]);
             }
-            for (let i = 0; i < response[4].data.length; ++i)
+            for (let i = 0; i < response.data.streamerSponsors.length; ++i)
             {
-              this.streamerSponsors.push(response[4].data[i]);
+              this.streamerSponsors.push(response.data.streamerSponsors[i]);
             }
           }
 
-          for (let i = 0; i < response[5].data.length; ++i)
+          for (let i = 0; i < response.data.tournamentExperiences.length; ++i)
           {
-            this.tournaments.push(response[5].data[i]);
+            this.tournaments.push(response.data.tournamentExperiences[i]);
           }
         });
     }
