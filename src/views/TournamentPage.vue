@@ -18,15 +18,13 @@
             {{this.publication.content}}
             <div v-if="this.publication.publicationType===3">
               <v-divider class="my-2"></v-divider>
-              <h4 >Participant Limit: {{this.publication.participantLimit}}</h4>
-              <h4 >Date: {{this.publication.tDate}} - Hour: {{this.publication.tHour}}</h4>
-              <h4 >Prize Pool: {{this.publication.prizePool}} $</h4>
+              <h4 >{{$t('Limit')}} {{this.publication.participantLimit}}</h4>
+              <h4 >{{$t('Date')}} {{this.publication.tDate}} - {{$t('Hour')}} {{this.publication.tHour}}</h4>
+              <h4 >{{$t('Prize-Pool')}} {{this.publication.prizePool}} $</h4>
             </div>
           </v-card-text>
 
           <v-card-actions>
-
-
             <template >
               <v-chip small v-if="this.publication.gameName!=null"
                       color="secondary" class="white--text">
@@ -48,14 +46,14 @@
                   v-bind="attrs"
                   v-on="on"
               >
-                End Tournament
+                {{$t('End-Tournament')}}
               </v-btn>
                 </template>
                 <v-card>
                   <v-card-title class="text-h5">
-                    End tournament?
+                    {{$t('End-Question')}}
                   </v-card-title>
-                  <v-card-text>This action cannot be undone. If you are sure press "Confirm". Otherwise press "Cancel" to exit</v-card-text>
+                  <v-card-text>{{$t('End-Text')}}</v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -63,14 +61,14 @@
                         dark
                         @click="dialog = false"
                     >
-                      Cancel
+                      {{$t('Cancel')}}
                     </v-btn>
                     <v-btn
                         color="primary"
                         dark
                         @click="dialog = false"
                     >
-                      Confirm
+                      {{$t('Confirm')}}
                     </v-btn>
                   </v-card-actions>
                 </v-card>
@@ -88,12 +86,12 @@
                       v-on="on"
                       class="ml-2"
                   >
-                    Set Scores
+                    {{$t('Set-Scores')}}
                   </v-btn>
                 </template>
                 <v-card color="secondary">
                   <v-card-title class="text-h5 white--text" >
-                    Register new match points
+                    {{$t('Register-Points')}}
                   </v-card-title>
                   <v-container>
                     <v-row no-gutters>
@@ -132,11 +130,11 @@
                               left
                           >
                             mdi-plus-circle
-                          </v-icon>Add participant
+                          </v-icon>{{$t('Add-Participant')}}
                         </v-btn>
                         <div  class="mt-6">
                             <h3 class="white--text">
-                              Extra Points
+                              {{$t('Extra-Points')}}
                             </h3>
                         </div>
 
@@ -156,14 +154,14 @@
                         dark
                         @click="dialog2 = false"
                     >
-                      Cancel
+                      {{$t('Cancel')}}
                     </v-btn>
                     <v-btn
                         color="primary"
                         dark
                         @click="dialog2 = false; addParticipantPoints()"
                     >
-                      Confirm
+                      {{$t('Confirm')}}
                     </v-btn>
                   </v-card-actions>
                 </v-card>
@@ -176,7 +174,7 @@
 
           <v-col xs="12" sm="3">
             <v-card >
-              <v-card-title class="text-justify; mb-n6" >Participants</v-card-title>
+              <v-card-title class="text-justify; mb-n6" >{{$t('Participants')}}</v-card-title>
               <template>
                   <v-list-item class="d-flex text-justify" v-for="participant in sortedArray" v-bind:key="participant.id">
                     <v-list-item-content>
@@ -309,3 +307,41 @@ export default {
 <style scoped>
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "Limit": "Participant Limit: ",
+    "Date": "Date: ",
+    "Hour": "Hour: ",
+    "Prize-Pool": "Prize Pool: ",
+    "End-Tournament": "End Tournament",
+    "End-Question": "End Tournament?",
+    "End-Text": "This action cannot be undone. If you are sure press 'Confirm'. Otherwise press 'Cancel' to exit.",
+    "Cancel": "Cancel",
+    "Confirm": "Confirm",
+    "Set-Scores": "Set Scores",
+    "Register-Points": "Register new match points",
+    "Add-Participant": "Add participant",
+    "Extra-Points": "Extra Points",
+    "Participants": "Participants"
+  },
+
+  "es": {
+    "Limit": "Límite de Participantes: ",
+    "Date": "Día: ",
+    "Hour": "Hora: ",
+    "Prize-Pool": "Botin a obtener: ",
+    "End-Tournament": "Finalizar Torneo",
+    "End-Question": "¿Finalizar Torneo?",
+    "End-Text": "Esta acción no se puede deshacer. Si está seguro, presione 'Confirmar'. De lo contrario, presione 'Cancelar' para salir.",
+    "Cancel": "Cancelar",
+    "Confirm": "Confirmar",
+    "Set-Scores": "Establecer Puntajes",
+    "Register-Points": "Registrar puntajes",
+    "Add-Participant": "Añadir participantes",
+    "Extra-Points": "Puntos Extra",
+    "Participants": "Participantes"
+  }
+}
+</i18n>

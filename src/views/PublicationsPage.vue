@@ -5,7 +5,7 @@
       <v-col xs="12" sm="3">
         <v-card>
           <v-list>
-            <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
+            <v-list-item-title class="pl-3"><h2>{{$t('Filter-By')}}</h2></v-list-item-title>
             <v-list-item >
               <v-list-item-content >
                 <v-btn class="d-flex justify-start" text @click="getGeneralPublications(1)">General</v-btn>
@@ -13,12 +13,12 @@
             </v-list-item>
             <v-list-item>
               <v-list-item-content>
-                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(2)">Tip/Task</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(2)">{{$t('Task')}}</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-content>
-                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(3)">Tournament</v-btn>
+                <v-btn class="d-flex justify-start" text @click="getGeneralPublications(3)">{{$t('Tournament')}}</v-btn>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -38,15 +38,15 @@
                       v-bind="attrs"
                       v-on="on"
                   >
-                  Publish something!
+                  {{$t('Publish')}}
                   </v-btn>
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="text-h5">New Publication</span>
+                    <span class="text-h5">{{$t('New-Publication')}}</span>
                   </v-card-title>
                   <v-card-text>
-                    <small>*indicates required field</small>
+                    <small>{{$t('Required')}}</small>
                     <v-container>
                       <v-row>
                         <v-col
@@ -89,14 +89,14 @@
                         dark
                         @click="dialogP = false; onClear()"
                     >
-                      Close
+                      {{$t('Close')}}
                     </v-btn>
                     <v-btn
                         color="primary"
                         :disabled="!isValidated"
                         @click="submitPublication(1)"
                     >
-                      Save
+                      {{$t('Save')}}
                     </v-btn>
                   </v-card-actions>
                 </v-card>
@@ -114,15 +114,15 @@
                            v-on="on"
                     >
                         <v-icon>mdi-gamepad</v-icon>
-                        Tip/Task
+                        {{$t('Tip/Task')}}
                     </v-btn>
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="text-h5">New Tip / Task</span>
+                      <span class="text-h5">{{$t('New-Tip/Task')}}</span>
                     </v-card-title>
                     <v-card-text>
-                      <small>*indicates required field</small>
+                      <small>{{$t('Required')}}</small>
                       <v-container>
                         <v-row>
                           <v-col
@@ -166,14 +166,14 @@
                           dark
                           @click="dialogT = false; onClear()"
                       >
-                        Close
+                        {{$t('Close')}}
                       </v-btn>
                       <v-btn
                           color="primary"
                           :disabled="!isValidated || currentFavoriteGameSelected===null"
                           @click="submitPublication(2)"
                       >
-                        Save
+                        {{$t('Save')}}
                       </v-btn>
                     </v-card-actions>
                   </v-card>
@@ -190,16 +190,16 @@
                            v-on="on"
                     >
                       <v-icon>mdi-medal</v-icon>
-                      Tournament
+                      {{$t('Tournament')}}
                     </v-btn>
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="text-h5">New Tournament</span>
+                      <span class="text-h5">{{$t('New-Tournament')}}</span>
                     </v-card-title>
 
                     <v-card-text>
-                      <small>*indicates required field</small>
+                      <small>{{$t('Required')}}</small>
                       <v-container>
                         <v-row>
                           <v-col
@@ -296,14 +296,14 @@
                                     color="primary"
                                     @click="dialogD = false"
                                 >
-                                  Cancel
+                                  {{$t('Cancel')}}
                                 </v-btn>
                                 <v-btn
                                     text
                                     color="primary"
                                     @click="$refs.dateD.save(date)"
                                 >
-                                  OK
+                                  {{$t('OK')}}
                                 </v-btn>
                               </v-date-picker>
                             </v-menu>
@@ -354,14 +354,14 @@
                           dark
                           @click="dialogTr = false; onClear()"
                       >
-                        Close
+                        {{$t('Close')}}
                       </v-btn>
                       <v-btn
                           :disabled="!isValidated || currentFavoriteGameSelected===null"
                           color="primary"
                           @click="submitPublication(3)"
                       >
-                        Save
+                        {{$t('Save')}}
                       </v-btn>
                     </v-card-actions>
                   </v-card>
@@ -545,3 +545,42 @@ export default {
 <style scoped>
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "Filter-By": "Filter By",
+    "Task": "Tips/Tasks",
+    "Tournament": "Tournaments",
+    "Publish": "Publish something!",
+    "New-Publication": "New Publication",
+    "Required": "*indicates required field",
+    "Tip/Task": "Tip/Task",
+    "Tournament": "Tournament",
+    "New-Tip/Task": "New Tip/Task",
+    "New-Tournament": "New Tournament",
+    "Cancel": "Cancel",
+    "OK": "OK",
+    "Close": "Close",
+    "Save": "Save"
+  },
+
+  "es": {
+    "Filter-By": "Filtrar Por",
+    "Task": "Tips/Tareas",
+    "Tournament": "Torneos",
+    "Publish": "¡Publica algo!",
+    "New-Publication": "Nueva Publicación",
+    "Required": "*indica los espacios requeridos",
+    "Tip/Task": "Tip/Tarea",
+    "Tournament": "Torneo",
+    "New-Tip/Task": "Nuevo Tip/Tarea",
+    "New-Tournament": "Nuevo Torneo",
+    "Cancel": "Cancelar",
+    "OK": "Aceptar",
+    "Close": "Cerrar",
+    "Save": "Guardar"
+  }
+}
+
+</i18n>

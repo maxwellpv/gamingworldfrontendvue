@@ -21,7 +21,7 @@
                     {{article.source.name}}
                   </v-chip>
                   <v-spacer></v-spacer>
-                  <v-btn small replace color="primary" v-bind:href="article.url" target="_blank">Read More</v-btn>
+                  <v-btn small replace color="primary" v-bind:href="article.url" target="_blank">{{$t('Read More')}}</v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -45,3 +45,16 @@ export default {
 <style scoped>
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "Read More": "Read More"
+  },
+
+  "es": {
+    "Read More": "Leer mas"
+  }
+}
+
+</i18n>

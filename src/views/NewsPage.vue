@@ -5,10 +5,10 @@
         <v-col xs="12" sm="3">
           <v-card>
             <v-list>
-              <v-list-item-title class="pl-3"><h2>Filter By</h2></v-list-item-title>
+              <v-list-item-title class="pl-3"><h2>{{$t('Filter')}}</h2></v-list-item-title>
               <v-list-item >
                 <v-list-item-content >
-                  <v-btn class="d-flex justify-start" text @click="searchArticles('videogames')">VideoGames</v-btn>
+                  <v-btn class="d-flex justify-start" text @click="searchArticles('videogames')">{{$t('Videogames')}}</v-btn>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item>
@@ -31,7 +31,7 @@
         </v-col>
         <v-col xs="12" sm="3">
           <v-card >
-            <v-card-title class=" text-justify">Popular Twitch<br> Themes</v-card-title>
+            <v-card-title class=" text-justify">{{$t('Twitch-1')}}<br> {{$t('Twitch-2')}}</v-card-title>
 
             <template v-for="(article, index) in topGames">
                 <v-list :cols="index === 0 ? 12 : 6" :key="article.name">
@@ -59,7 +59,6 @@ import axios from "axios";
 import NewsContent from "../components/NewsContent";
 import NavBar from "../components/NavBar";
 import PremiumDialog from "../components/PremiumDialog";
-
 
 export default {
   name: 'news-page',
@@ -124,3 +123,21 @@ export default {
 <style scoped>
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "Filter": "Filter By",
+    "Videogames": "Videogames",
+    "Twitch-1": "Popular Twitch",
+    "Twitch-2": "Categories"
+  },
+  "es": {
+    "Filter": "Filtrar Por",
+    "Videogames": "Videojuegos",
+    "Twitch-1": "Categorias populares",
+    "Twitch-2": "de Twitch"
+  }
+}
+
+</i18n>

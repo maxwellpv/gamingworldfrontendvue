@@ -20,9 +20,9 @@
                   {{publication.content}}
                   <div v-if="publication.publicationType===3">
                     <v-divider class="my-2"></v-divider>
-                    <h4 >Participant Limit: {{publication.participantLimit}}</h4>
-                    <h4 >Date: {{publication.tDate}} - Hour: {{publication.tHour}}</h4>
-                    <h4 >Prize Pool: {{publication.prizePool}} $</h4>
+                    <h4 > {{$t('Limit')}} {{publication.participantLimit}}</h4>
+                    <h4 > {{$t('Date')}} {{publication.tDate}} - {{$t('Hour')}} {{publication.tHour}}</h4>
+                    <h4 > {{$t('Prize-Pool')}}  {{publication.prizePool}} $</h4>
                   </div>
                 </v-card-text>
 
@@ -49,7 +49,7 @@
                         dark
                         @click="showTournament(publication.id)"
                     >
-                      View Tournament
+                      {{$t('View-Tournament')}}
                     </v-btn>
                   </div>
 
@@ -100,3 +100,24 @@ export default {
 <style scoped>
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "Limit": "Participant Limit: ",
+    "Date": "Date: ",
+    "Hour": "Hour: ",
+    "Prize-Pool": "Prize Pool: ",
+    "View-Tournament": "View Tournament"
+  },
+
+  "es": {
+    "Limit": "Límite de Participantes: ",
+    "Date": "Día: ",
+    "Hour": "Hora: ",
+    "Prize-Pool": "Botin a obtener: ",
+    "View-Tournament": "Ver Torneo"
+  }
+}
+
+</i18n>

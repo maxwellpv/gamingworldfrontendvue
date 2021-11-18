@@ -3,7 +3,7 @@
     <v-layout row wrap align-center>
       <v-flex xs12>
         <div class="white--text ml-1 pa-2">
-          Made by AW-Team
+          {{$t('Footer')}}
         </div>
       </v-flex>
     </v-layout>
@@ -19,3 +19,16 @@ export default {
 <style scoped>
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "Footer": "Made by AW-Team"
+  },
+
+  "es": {
+    "Footer": "Hecho por AW-Team"
+  }
+}
+
+</i18n>

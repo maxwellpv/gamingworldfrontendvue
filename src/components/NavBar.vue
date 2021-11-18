@@ -6,23 +6,39 @@
       <v-spacer></v-spacer>
       <template class="d-flex justify-center red">
         <v-text-field class="d-flex mt-auto" style="max-width: 250px"
-                      label="Search ..." append-icon="mdi-magnify"  solo flat  background-color="primary" dark></v-text-field>
+                      label="Search..." append-icon="mdi-magnify"  solo flat  background-color="primary" dark></v-text-field>
       </template>
       <v-spacer></v-spacer>
+
+      <!--Internacionalización-->
+      <v-menu left bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-translate</v-icon>
+          </v-btn>
+        </template>
+        <v-list >
+          <v-list-item @click="$root.$i18n.locale='en'">
+            <v-list-item-title>{{$t('Language-1')}}</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="$root.$i18n.locale='es'">
+            <v-list-item-title >{{$t('Language-2')}}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <!--Hasta aca-->
 
       <v-btn @click="showNewsPage" icon>
         <v-icon>mdi-home</v-icon>
       </v-btn>
+
       <v-btn @click="showPublicationsPage" icon >
         <v-icon>mdi-clipboard-multiple</v-icon>
       </v-btn>
+
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              icon
-              v-bind="attrs"
-              v-on="on"
-          >
+          <v-btn icon v-bind="attrs" v-on="on">
             <v-icon>mdi-account-circle</v-icon>
           </v-btn>
 
@@ -70,7 +86,6 @@ export default {
       this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/1` })
     },
 
-
   }
 }
 </script>
@@ -78,3 +93,16 @@ export default {
 <style scoped>
 
 </style>
+
+<i18n>
+{
+  "en": {
+    "Language-1": "English",
+    "Language-2": "Spanish"
+  },
+  "es": {
+    "Language-1": "Ingles",
+    "Language-2": "Español"
+  }
+}
+</i18n>
