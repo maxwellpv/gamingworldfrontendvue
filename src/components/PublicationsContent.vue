@@ -25,13 +25,11 @@
                     <h4 >Prize Pool: {{publication.prizePool}} $</h4>
                   </div>
                 </v-card-text>
-
                 <v-card-actions>
-
-
-                  <template >
+                  <template>
                     <v-chip small v-if="publication.gameName!=null"
-                            color="secondary" class="white--text">
+                            color="secondary" class="white--text"
+                            style="margin-right: 10px">
                       {{ publication.gameName }}
                     </v-chip>
                   </template>
@@ -42,18 +40,26 @@
                     </v-chip>
                   </template>
                   <v-spacer></v-spacer>
-                  <div v-if="publication.publicationType===3">
+                  <div v-if="publication.publicationType===3" >
+                    <v-layout>
+                      <confirm-tournament-dialog></confirm-tournament-dialog>
 
-                    <v-btn
-                        color="primary"
-                        dark
-                        @click="showTournament(publication.id)"
-                    >
-                      View Tournament
-                    </v-btn>
+                      <v-btn
+                          color="primary"
+                          dark
+                          @click="showTournament(publication.id)"
+                          style="margin-left: 10px"
+                      >
+                        View
+                      </v-btn>
+                    </v-layout>
+
+
                   </div>
 
                 </v-card-actions>
+
+
               </v-card>
             </v-col>
           </template>
@@ -61,13 +67,15 @@
       </v-flex>
     </v-layout>
   </v-container>
-
 </template>
 
 <script>
 
+import ConfirmTournamentDialog from "./ConfirmTournamentDialog";
 export default {
+
   name: 'publications-content',
+  components: {ConfirmTournamentDialog},
   methods: {
     showTournament(id) {
       this.$router.push(`/tournament/${id}`)
