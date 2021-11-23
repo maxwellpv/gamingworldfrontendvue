@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL:'http://gamingworldapi-aw-api.sa-east-1.elasticbeanstalk.com/api/v1/',
+    baseURL:'http://localhost:5000/api/v1',
     headers:{'Content-type': 'application/json'}
 });
 
