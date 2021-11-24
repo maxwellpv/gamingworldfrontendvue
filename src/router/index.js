@@ -8,11 +8,23 @@ import MyProfile from "../views/MyProfile";
 import ManageProfile from "@/views/ManageProfile";
 import GamerProfileCorrect from "@/components/GamerProfileCorrect";
 import TournamentPage from "../views/TournamentPage";
+import LoginPage from "../views/LoginPage";
+import RegisterPage from "../views/RegisterPage";
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginPage
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterPage
+  },
   {
     path: '/news',
     name: 'news',

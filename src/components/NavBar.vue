@@ -41,6 +41,9 @@
           <v-list-item @click="showGamerProfile">
             <v-list-item-title>Gamer Profile - Gamer</v-list-item-title>
           </v-list-item>
+          <v-list-item @click="showLogin">
+            <v-list-item-title>Log-In</v-list-item-title>
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -69,8 +72,9 @@ export default {
     showMyStreamerProfile() {
       this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/1` })
     },
-
-
+    showLogin() {
+      this.$router.push({path: '/login'})
+    },
   }
 }
 </script>
