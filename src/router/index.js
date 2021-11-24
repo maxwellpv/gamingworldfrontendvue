@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import News from '../views/NewsPage.vue'
-import GamerProfile from '../components/UserProfileGamer'
-import StreamerProfile from '../components/UserProfileStreamer'
 import Publications from "@/views/PublicationsPage";
 import MyProfile from "../views/MyProfile";
 import ManageProfile from "@/views/ManageProfile";
@@ -23,16 +21,6 @@ const routes = [
     redirect: "/news"
   },
   {
-    path: '/gamer',
-    name: 'gamer',
-    component: GamerProfile
-  },
-  {
-    path: '/streamer',
-    name: 'streamer',
-    component: StreamerProfile
-  },
-  {
     path: '/publications',
     name: 'publications',
     component: Publications
@@ -43,7 +31,7 @@ const routes = [
     component: TournamentPage
   },
   {
-    path: '/myprofile/:id/:type',
+    path: '/myprofile/:id',
     name: 'myprofile',
     component: MyProfile
   },
