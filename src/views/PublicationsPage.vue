@@ -491,21 +491,43 @@ export default {
     },
 
     getDisplayPublication(publication) {
-      return {
+      if(publication.publicationType === 3) {
+        return {
+          publicationType: publication.publicationType,
+          id: publication.id,
+          userId: publication.userId,
+          title: publication.title,
+          content: publication.content,
+          urlToImage: publication.urlToImage,
+          gameName: publication.gameName,
+          participantLimit: publication.participantLimit,
+          prizePool: publication.prizePool,
+          tournamentDate: publication.tournamentDate,
+          tournamentHour: publication.tournamentHour,
+          createdAt: publication.createdAt,
+          tournament: publication.tournament
+        }
+      }
+      else if(publication.publicationType === 2) {
+        return {
+          publicationType: publication.publicationType,
+          id: publication.id,
+          userId: publication.userId,
+          title: publication.title,
+          content: publication.content,
+          createdAt: publication.createdAt,
+          urlToImage: publication.urlToImage,
+          gameName: publication.gameName
+        }
+      }
+      else if(publication.publicationType === 1) return {
         publicationType: publication.publicationType,
         id: publication.id,
         userId: publication.userId,
         title: publication.title,
         content: publication.content,
-        urlToImage: publication.urlToImage,
-        gameName: publication.gameName,
-        participantLimit: publication.participantLimit,
-        prizePool: publication.prizePool,
-        tournamentDate: publication.tournamentDate,
-        tournamentHour: publication.tournamentHour,
         createdAt: publication.createdAt,
-        tournament: publication.tournament
-
+        urlToImage: publication.urlToImage,
       }
     },
 
