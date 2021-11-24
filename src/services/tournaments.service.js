@@ -35,6 +35,10 @@ class TournamentsService{
         return http.get(`${this.endPoint}?title=${title}`);
     }
 
+    endTournament(tournamentId){
+        return http.put(`${this.endPoint}/${tournamentId}?tournamentStatus=false`);
+    }
+
 
 }
 

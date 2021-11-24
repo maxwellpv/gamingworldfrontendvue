@@ -4,23 +4,24 @@
     <v-row no-gutters>
       <v-col xs="12" sm="9">
         <v-card  class="mr-2">
-          <v-img height="350px" v-bind:src="this.publication.urlToImage"></v-img>
-          <v-container fluid>
-            <v-layout>
-              <v-flex xs12 align-end d-flex>
+          <v-img v-if="this.publication.urlToImage" height="350px" v-bind:src="this.publication.urlToImage"></v-img>
+              <v-card-title>
                 <span class="headline">{{this.publication.title}}</span>
-              </v-flex>
-            </v-layout>
-          </v-container>
+              </v-card-title>
           <v-spacer></v-spacer>
-
           <v-card-text>
             {{this.publication.content}}
             <div v-if="this.publication.publicationType===3">
               <v-divider class="my-2"></v-divider>
               <h4 >Participant Limit: {{this.publication.tournament.participantLimit}}</h4>
               <h4 >Date: {{this.publication.tournament.tournamentDate}} - Hour: {{this.publication.tournament.tournamentHour}}</h4>
-              <h4 >Prize Pool: {{this.publication.prizePool}} $</h4>
+              <h4 >Prize Pool: {{this.publication.tournament.prizePool}}$</h4>
+              <v-chip-group>
+
+                <v-chip v-if="!compareDates() && this.publication.tournament.tournamentStatus" color="primary">Stand By</v-chip>
+                <v-chip v-if="this.publication.tournament.tournamentStatus && compareDates()" color="green" text-color="white">Active</v-chip>
+                <v-chip v-if="!this.publication.tournament.tournamentStatus" color="warning">Ended</v-chip>
+              </v-chip-group>
             </div>
           </v-card-text>
 
@@ -35,7 +36,7 @@
             </template>
 
             <v-spacer></v-spacer>
-            <div v-if="this.publication.publicationType===3">
+            <div v-if="publication.publicationType===3">
               <v-dialog
                   v-model="dialog"
                   persistent
@@ -44,6 +45,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-spacer></v-spacer>
               <v-btn
+                  v-if="publication.tournament.tournamentStatus"
                   color="warning"
                   dark
                   v-bind="attrs"
@@ -67,9 +69,10 @@
                       Cancel
                     </v-btn>
                     <v-btn
+
                         color="primary"
                         dark
-                        @click="dialog = false"
+                        @click="endTournament(publication.tournament.id)"
                     >
                       Confirm
                     </v-btn>
@@ -83,6 +86,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
+                      v-if="publication.tournament.tournamentStatus"
                       color="primary"
                       dark
                       v-bind="attrs"
@@ -294,18 +298,33 @@ export default {
     addParticipantPoints(){
       this.participants.forEach( (value) => {
         this.participantsMatchPoints.forEach( (value2) => {
-          if(value.id == value2.id){
+          if(value.id === value2.id){
             value.points += value2.points;
             this.updateTournamentParticipantPoints(value.id,value.points);
           }
         } )
       } )
       this.searchParticipant= null;
-      this.extraPoints = 0,
+      this.extraPoints = 0;
       this.participantsMatchPoints = [];
+    },
+
+    endTournament(tournamentId){
+      TournamentsService.endTournament(tournamentId).then(data => this.publication.tournament.tournamentStatus = data.tournamentStatus);
+      this.dialog = false;
+    },
+
+    compareDates(){
+      let date1 = new Date();
+      let tournamentDate = this.publication.tournament.tournamentDate+" "+this.publication.tournament.tournamentHour;
+      let tDate = new Date(tournamentDate);
+      return (date1 > tDate);
     }
 
   },
+
+
+
 
   computed: {
     sortedArray: function() {

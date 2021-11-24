@@ -4,18 +4,13 @@
       <v-flex>
         <v-row >
           <template v-for="(publication) in sortedArray">
-            <v-col :sm="12" :key="publication.title">
+            <v-col :sm="12" :key="publication.id">
               <v-card >
-                <v-img height="350px" v-bind:src="publication.urlToImage"></v-img>
-                <v-container fluid>
-                  <v-layout>
-                    <v-flex xs12 align-end d-flex>
+                <v-img v-if="publication.urlToImage" height="350px" v-bind:src="publication.urlToImage"></v-img>
+                    <v-card-title>
                       <span class="headline">{{publication.title}}</span>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
+                    </v-card-title>
                 <v-spacer></v-spacer>
-
                 <v-card-text>
                   {{publication.content}}
                   <div v-if="publication.publicationType===3">
@@ -90,9 +85,9 @@ export default {
   computed: {
     sortedArray: function() {
       function compare(a, b) {
-        if (new Date(a.publicatedAt) > new Date(b.publicatedAt))
+        if (new Date(a.createdAt) > new Date(b.createdAt))
           return -1;
-        if (new Date(a.publicatedAt) < new Date(b.publicatedAt))
+        if (new Date(a.createdAt) < new Date(b.createdAt))
           return 1;
         return 0;
       }

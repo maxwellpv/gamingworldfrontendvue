@@ -435,12 +435,15 @@ export default {
       this.newPublication.tournamentHour=this.time;
       let item = this.newPublication;
       let dto = this.getDisplayPublication(item);
-      PublicationsService.create(dto).catch(e => console.log(e));
+      console.log(dto);
+      console.log(item);
+      PublicationsService.create(dto).then(e => this.publications.push(e));
       this.dialogTr = false
       this.dialogP = false
       this.dialogT = false
-      this.publications.push(dto)
+
       this.onClear()
+
 
     },
 
@@ -495,6 +498,7 @@ export default {
           })
 
     },
+
 
     retrieveData(){
       PublicationsService.getAll()
