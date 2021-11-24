@@ -1,4 +1,5 @@
 import http from '../core/http-common'
+import SessionService from '../services/session.service'
 
 class TournamentsService{
     endPoint = '/tournaments';
@@ -17,7 +18,7 @@ class TournamentsService{
 
     addParticipantTournament(tournamentId){
         let participant = {
-            userId: 1
+            userId: SessionService.getSession().id
         }
         return http.post(`${this.endPoint}/${tournamentId}/participants`, participant);
     }

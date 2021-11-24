@@ -42,7 +42,7 @@
                   persistent
                   max-width="300"
               >
-                <template v-slot:activator="{ on, attrs }">
+                <template v-if="validButtons" v-slot:activator="{ on, attrs }">
                   <v-spacer></v-spacer>
               <v-btn
                   v-if="publication.tournament.tournamentStatus"
@@ -206,6 +206,7 @@
 import NavBar from "../components/NavBar";
 import PublicationsService from '../services/publications.service'
 import TournamentsService from '../services/tournaments.service'
+import SessionService from "../services/session.service";
 
 export default {
   name: "TournamentPage",
@@ -229,13 +230,17 @@ export default {
     participantsMatchPoints: [
     ],
     dialog:false,
-    dialog2:false
+    dialog2:false,
+    validButtons: false
 
   }),
 
   created(){
+
     this.publicationId = this.$route.params.id
     this.getPublicationById(this.publicationId)
+
+
   },
 
 
@@ -274,6 +279,8 @@ export default {
           .then((response) => {
             this.publication = response.data;
             this.getTournamentParticipants(this.publication.tournament.id)
+            if(SessionService.getSession().id != null && SessionService.getSession().id === this.publication.userId )
+              this.validButtons = true;
           })
           .catch(e => {
             console.log(e);

@@ -9,7 +9,7 @@ class GamesService{
 
     getListByName(query)
     {
-        return http.get(`${this.endPoint}/find?name=${query}`);
+        return http.get(`${this.endPoint}/find?name=${query}&limit=10`);
     }
 
     getById(id){
@@ -17,7 +17,7 @@ class GamesService{
     }
 
     getTopGames(){
-        return http.get(`${this.endPoint}/top`);
+        return http.get(`${this.endPoint}/top?limit=5`);
     }
 }
 

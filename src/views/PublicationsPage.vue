@@ -1,7 +1,38 @@
 <template>
-  <v-container>
+  <v-container >
     <nav-bar></nav-bar>
-    <v-row no-gutters>
+    <v-card v-if="!validSession">
+        <v-img
+            class="white--text align-end"
+            src="https://www.fifplay.com/img/public/big-gaming-competition.jpg"
+        >
+          <v-card-title>Join in the GamingWorld Community</v-card-title>
+        </v-img>
+
+        <v-card-text class="text--primary">
+          <div>Please Log-in or Sing-up in GamingWorld to access the tournaments.</div>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              color="primary"
+              text
+              @click="$router.push('/login')"
+          >
+            Log-in
+          </v-btn>
+
+          <v-btn
+              color="primary"
+              text
+              @click="$router.push('/register')"
+          >
+            Sign-up
+          </v-btn>
+        </v-card-actions>
+    </v-card>
+    <v-row v-if="validSession" no-gutters>
       <v-col xs="12" sm="3">
         <v-card>
           <v-list>
@@ -377,6 +408,7 @@ import PublicationsService from '../services/publications.service'
 import GamesService from '../services/games.service'
 import UsersService from '../services/users.service'
 import FindGame from "@/components/FindGame";
+import SessionService from '../services/session.service'
 
 export default {
   name: "publications-page",
@@ -403,6 +435,7 @@ export default {
     games: [],
     newPublication: {},
     isValidated: true,
+    validSession: false,
     testForm: 1,
     validationRules1: [
       v => !!v || 'Content is required',
@@ -420,6 +453,8 @@ export default {
   }),
 
   created(){
+    if(SessionService.getSession().id != null)
+      this.validSession = true;
     this.retrieveData();
   },
 
@@ -427,7 +462,7 @@ export default {
   methods: {
 
     submitPublication (pType) {
-      this.newPublication.userId = 1;
+      this.newPublication.userId = SessionService.getSession().id;
       this.newPublication.createdAt= (new Date(Date.now()).toISOString());
       this.newPublication.publicationType=pType;
       this.newPublication.gameName = this.currentFavoriteGameSelected;
