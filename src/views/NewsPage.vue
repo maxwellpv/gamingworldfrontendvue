@@ -84,7 +84,7 @@ export default {
     axios.get('https://aos-twitch-api.herokuapp.com/twitch/top-games')
         .then( topGames => {
           this.topGames = topGames.data.data;
-          console.log(this.topGames);
+
         })
     axios.get(`https://xempre.com/request.php?theme=Gamer`)
         .then(response => {
@@ -93,8 +93,7 @@ export default {
               .filter(({urlToImage, description}) => (urlToImage && description));
           this.articles = this.tempArticles;
           this.tempArticles = [];
-          console.log('data: ');
-          console.log(response.data.articles)
+
         })
   },
   methods:{
@@ -106,8 +105,7 @@ export default {
                 .filter(({urlToImage, description}) => (urlToImage && description));
             this.articles = this.tempArticles;
             this.tempArticles = [];
-            console.log('data: ');
-            console.log(response.data.articles);
+
           })
           .catch(e=>{
             this.errors.push(e);

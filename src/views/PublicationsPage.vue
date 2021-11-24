@@ -428,20 +428,22 @@ export default {
 
     submitPublication (pType) {
       this.newPublication.userId = 1;
-      this.newPublication.publicatedAt= (new Date(Date.now()).toISOString());
+      this.newPublication.createdAt= (new Date(Date.now()).toISOString());
       this.newPublication.publicationType=pType;
       this.newPublication.gameName = this.currentFavoriteGameSelected;
-      this.newPublication.tDate=this.date;
-      this.newPublication.tHour=this.time;
+      this.newPublication.tournamentDate=this.date;
+      this.newPublication.tournamentHour=this.time;
       let item = this.newPublication;
       let dto = this.getDisplayPublication(item);
-      this.hasSaved = true
-      PublicationsService.create(dto).catch(e => console.log(e));
+      console.log(dto);
+      console.log(item);
+      PublicationsService.create(dto).then(e => this.publications.push(e.data));
       this.dialogTr = false
       this.dialogP = false
       this.dialogT = false
-      this.publications.push(dto)
+
       this.onClear()
+
 
     },
 
@@ -464,9 +466,10 @@ export default {
         gameName: publication.gameName,
         participantLimit: publication.participantLimit,
         prizePool: publication.prizePool,
-        tDate: publication.tDate,
-        tHour: publication.tHour,
-        publicatedAt: publication.publicatedAt,
+        tournamentDate: publication.tournamentDate,
+        tournamentHour: publication.tournamentHour,
+        createdAt: publication.createdAt,
+        tournament: publication.tournament
 
       }
     },
@@ -495,6 +498,7 @@ export default {
           })
 
     },
+
 
     retrieveData(){
       PublicationsService.getAll()

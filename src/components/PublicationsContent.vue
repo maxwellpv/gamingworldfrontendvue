@@ -4,25 +4,20 @@
       <v-flex>
         <v-row >
           <template v-for="(publication) in sortedArray">
-            <v-col :sm="12" :key="publication.title">
+            <v-col :sm="12" :key="publication.id">
               <v-card >
-                <v-img height="350px" v-bind:src="publication.urlToImage"></v-img>
-                <v-container fluid>
-                  <v-layout>
-                    <v-flex xs12 align-end d-flex>
+                <v-img v-if="publication.urlToImage" height="350px" v-bind:src="publication.urlToImage"></v-img>
+                    <v-card-title>
                       <span class="headline">{{publication.title}}</span>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
+                    </v-card-title>
                 <v-spacer></v-spacer>
-
                 <v-card-text>
                   {{publication.content}}
                   <div v-if="publication.publicationType===3">
                     <v-divider class="my-2"></v-divider>
-                    <h4 >Participant Limit: {{publication.participantLimit}}</h4>
-                    <h4 >Date: {{publication.tDate}} - Hour: {{publication.tHour}}</h4>
-                    <h4 >Prize Pool: {{publication.prizePool}} $</h4>
+                    <h4 >Participant Limit: {{publication.tournament.participantLimit}}</h4>
+                    <h4 >Date: {{publication.tournament.tournamentDate}} - Hour: {{publication.tournament.tournamentHour}}</h4>
+                    <h4 >Prize Pool: {{publication.tournament.prizePool}} $</h4>
                   </div>
                 </v-card-text>
                 <v-card-actions>
@@ -42,7 +37,7 @@
                   <v-spacer></v-spacer>
                   <div v-if="publication.publicationType===3" >
                     <v-layout>
-                      <confirm-tournament-dialog></confirm-tournament-dialog>
+                      <confirm-tournament-dialog :tournament-id="publication.tournament.id"></confirm-tournament-dialog>
 
                       <v-btn
                           color="primary"
@@ -90,9 +85,9 @@ export default {
   computed: {
     sortedArray: function() {
       function compare(a, b) {
-        if (new Date(a.publicatedAt) > new Date(b.publicatedAt))
+        if (new Date(a.createdAt) > new Date(b.createdAt))
           return -1;
-        if (new Date(a.publicatedAt) < new Date(b.publicatedAt))
+        if (new Date(a.createdAt) < new Date(b.createdAt))
           return 1;
         return 0;
       }

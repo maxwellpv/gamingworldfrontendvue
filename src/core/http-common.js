@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL:'http://localhost:5000/api/v1',
-    headers:{'Content-type': 'application/json'}
+    baseURL:'https://localhost:5001/api/v1',
+    headers:{'Content-type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYmYiOjE2Mzc2OTE1NDQsImV4cCI6MTYzODI5NjM0NCwiaWF0IjoxNjM3NjkxNTQ0fQ.NDbrywBOBGORenUCCMTJBDOIQMBLl08QPyvtsHfsG94'}
 });
 
 export function xempreAPI()
