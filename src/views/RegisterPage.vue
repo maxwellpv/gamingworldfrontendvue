@@ -1,6 +1,6 @@
 <template>
-
-  <v-card color="primary" class="mx-auto mt-16" max-width="500" align="center">
+<v-container fluid>
+  <v-card color="primary" class="mx-auto mt-16" max-width="600" align="center">
     <v-card-title class="white--text">Sign Up</v-card-title>
     <div class="pa-7">
     <v-text-field color="white" label="Name"></v-text-field>
@@ -23,6 +23,7 @@
       </div>
     </v-row>
   </v-card>
+</v-container>
 </template>
 
 <script>
