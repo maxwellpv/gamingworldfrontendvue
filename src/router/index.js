@@ -31,7 +31,7 @@ const routes = [
     component: TournamentPage
   },
   {
-    path: '/myprofile/:id/:type',
+    path: '/myprofile/:id',
     name: 'myprofile',
     component: MyProfile
   },

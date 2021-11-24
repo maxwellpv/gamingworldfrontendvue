@@ -7,15 +7,20 @@
         <h4>General Gaming Level </h4>
         <v-row justify="center" class="ma-5">
           <v-col align="center" sm="4">
-            <v-img src="@/assets/gaming_levels/{{this.profileData.gamingLevel}}.svg" class="icon"></v-img>
-            <label>{{ this.profileData.gamingLevel }}</label>
+            <v-img v-if="profileData.gamingLevel === 'Newbie'" src="@/assets/gaming_levels/Newbie.svg" class="icon"></v-img>
+            <v-img v-if="profileData.gamingLevel === 'Medium'" src="@/assets/gaming_levels/Medium.svg" class="icon"></v-img>
+            <v-img v-if="profileData.gamingLevel === 'Advanced'" src="@/assets/gaming_levels/Advanced.svg" class="icon"></v-img>
+            <h2>{{ this.profileData.gamingLevel }}</h2>
           </v-col>
         </v-row>
       </v-container>
 
-      <v-container v-if="profileType === 1">
+      <v-container>
         <h4>Streaming Categories</h4>
         <v-list>
+          <h5 v-if="profileData.streamingCategories.length === 0">
+            Ninguna entrada.
+          </h5>
           <v-list-item v-for="(category, i) in profileData.streamingCategories" :key="i">
             <v-list-item-content>
               <v-list-item-title v-text="category.name"></v-list-item-title>
@@ -24,9 +29,12 @@
         </v-list>
       </v-container>
 
-      <v-container v-if="profileType === 1">
+      <v-container>
         <h4>Sponsors</h4>
         <v-list>
+          <h5 v-if="profileData.streamerSponsors.length === 0">
+            Ninguna entrada.
+          </h5>
           <v-list-item v-for="(sponsor, i) in profileData.streamerSponsors" :key="i">
             <v-list-item-content>
               <v-list-item-title v-text="sponsor.name"></v-list-item-title>
@@ -38,6 +46,9 @@
       <v-container>
         <h4>Achievements</h4>
         <v-list>
+          <h5 v-if="profileData.tournamentExperiences.length === 0">
+            Ninguna entrada.
+          </h5>
           <v-list-item v-for="(achievement, i) in profileData.tournamentExperiences" :key="i">
             <v-list-item-content>
               <v-list-item-title v-text="achievement.name"></v-list-item-title>
@@ -52,7 +63,10 @@
       <v-container>
        <h4>Videogames Experience</h4>
         <v-list>
-          <v-list-item v-for="(experience, i) in favoriteGames.gameExperiences" :key="i">
+          <h5 v-if="profileData.gameExperiences.length === 0">
+            Ninguna entrada.
+          </h5>
+          <v-list-item v-for="(experience, i) in profileData.gameExperiences" :key="i">
             <v-list-item-content>
               <v-list-item-title v-text="experience.gameName"></v-list-item-title>
             </v-list-item-content>
@@ -66,6 +80,9 @@
       <v-container>
         <h4>Favorites Videogames</h4>
         <v-list>
+          <h5 v-if="profileData.favoriteGames.length === 0">
+            Ninguna entrada.
+          </h5>
           <v-list-item v-for="(favorite, i) in profileData.favoriteGames" :key="i">
 
             <v-list-item-content>
@@ -94,6 +111,7 @@ export default {
     return {
       profileType: 0,
       profileData: null,
+      gamingLevelImg: "",
     }
   },
   methods:{
@@ -101,12 +119,9 @@ export default {
       this.$router.push({ path: `/profile/${this.$route.params.id}/edit/${this.$route.params.type}` })
     },
     retrieveData() {
-      this.profileType = parseInt(this.$route.params.type);
-
         ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
-          console.log(response.data);
           this.profileData = response.data;
-
+          console.log(this.gamingLevelImg)
           this.profileType = this.profileData.isStreamer;
         });
     }
