@@ -37,7 +37,7 @@
                   <v-spacer></v-spacer>
                   <div v-if="publication.publicationType===3" >
                     <v-layout>
-                      <confirm-tournament-dialog></confirm-tournament-dialog>
+                      <confirm-tournament-dialog :tournament-id="publication.tournament.id"></confirm-tournament-dialog>
 
                       <v-btn
                           color="primary"

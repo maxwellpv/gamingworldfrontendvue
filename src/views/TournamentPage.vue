@@ -218,7 +218,7 @@ export default {
     searchParticipant: null,
     extraPoints: 0,
     publication: {},
-    publicationId: {},
+    publicationId: 0,
 
     participants: [
       // {id: 1, name: "Manuel Garcia", points: 0},
@@ -234,9 +234,10 @@ export default {
   }),
 
   created(){
-    this.publicationId=this.$route.params.id
+    this.publicationId = this.$route.params.id
     this.getPublicationById(this.publicationId)
   },
+
 
   methods: {
     getDisplayPublication(publication) {
@@ -265,7 +266,7 @@ export default {
       })
     },
     async updateTournamentParticipantPoints(participantId, points){
-      await TournamentsService.updateTournamentParticipantPoints(this.publication.tournamentId,participantId, points ).then();
+      await TournamentsService.updateTournamentParticipantPoints(this.publication.tournament.id, participantId, points ).then;
     },
 
     getPublicationById(id) {
@@ -300,7 +301,7 @@ export default {
         this.participantsMatchPoints.forEach( (value2) => {
           if(value.id === value2.id){
             value.points += value2.points;
-            this.updateTournamentParticipantPoints(value.id,value.points);
+            this.updateTournamentParticipantPoints(value.id, value.points);
           }
         } )
       } )

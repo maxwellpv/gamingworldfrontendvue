@@ -437,7 +437,7 @@ export default {
       let dto = this.getDisplayPublication(item);
       console.log(dto);
       console.log(item);
-      PublicationsService.create(dto).then(e => this.publications.push(e));
+      PublicationsService.create(dto).then(e => this.publications.push(e.data));
       this.dialogTr = false
       this.dialogP = false
       this.dialogT = false

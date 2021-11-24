@@ -15,6 +15,13 @@ class TournamentsService{
         return http.get(`${this.endPoint}/${id}/participants`);
     }
 
+    addParticipantTournament(tournamentId){
+        let participant = {
+            userId: 1
+        }
+        return http.post(`${this.endPoint}/${tournamentId}/participants`, participant);
+    }
+
     updateTournamentParticipantPoints(tournamentId,participantId, points){
         return http.put(`${this.endPoint}/${tournamentId}/participants/${participantId}?points=${points}`);
     }
