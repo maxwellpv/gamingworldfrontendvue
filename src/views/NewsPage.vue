@@ -53,12 +53,11 @@
 </template>
 
 <script>
-
-
-import axios from "axios";
 import NewsContent from "../components/NewsContent";
 import NavBar from "../components/NavBar";
 import PremiumDialog from "../components/PremiumDialog";
+import NewsService from "../services/news.service";
+import GamesService from "../services/games.service";
 
 
 export default {
@@ -71,7 +70,6 @@ export default {
   },
 
   data: () => ({
-    //apiKey: '30a01aa6438d4782906f35bb2f136a91',
     articles:[],
     topGames:[],
     errors:[],
@@ -81,12 +79,12 @@ export default {
 
   }),
   created() {
-    axios.get('https://aos-twitch-api.herokuapp.com/twitch/top-games')
+    GamesService.getTopGames()
         .then( topGames => {
           this.topGames = topGames.data.data;
 
         })
-    axios.get(`https://xempre.com/request.php?theme=Gamer`)
+    NewsService.getGeneralList()
         .then(response => {
           this.articles = response.data.articles;
           this.tempArticles = response.data.articles
@@ -98,7 +96,7 @@ export default {
   },
   methods:{
     searchArticles(theme){
-      axios.get(`https://xempre.com/request.php?theme=${theme}`)
+      NewsService.getListByTheme(theme)
           .then(response => {
             this.articles = response.data.articles;
             this.tempArticles = response.data.articles
