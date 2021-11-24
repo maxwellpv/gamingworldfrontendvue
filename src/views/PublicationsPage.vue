@@ -75,10 +75,6 @@
                           ></v-text-field>
                           <v-img v-if="newPublication.urlToImage!==''" :src="this.newPublication.urlToImage"></v-img>
                         </v-col>
-                        <v-file-input
-                            accept="image/*"
-                            label="File input"
-                        ></v-file-input>
                       </v-row>
                     </v-container>
                   </v-card-text>
@@ -152,10 +148,6 @@
                             ></v-text-field>
                             <v-img v-if="newPublication.urlToImage!==''" :src="this.newPublication.urlToImage"></v-img>
                           </v-col>
-                          <v-file-input
-                              accept="image/*"
-                              label="File input"
-                          ></v-file-input>
                         </v-row>
                       </v-container>
                     </v-card-text>
@@ -218,12 +210,6 @@
                                 v-model="newPublication.urlToImage"
                             ></v-text-field>
                             <v-img :src="this.newPublication.urlToImage"></v-img>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-file-input
-                                accept="image/*"
-                                label="File input"
-                            ></v-file-input>
                           </v-col>
 
                           <find-game @gameSelected="currentFavoriteGameSelected = $event"></find-game>
