@@ -20,9 +20,9 @@
                   {{publication.content}}
                   <div v-if="publication.publicationType===3">
                     <v-divider class="my-2"></v-divider>
-                    <h4 >Participant Limit: {{publication.participantLimit}}</h4>
-                    <h4 >Date: {{publication.tDate}} - Hour: {{publication.tHour}}</h4>
-                    <h4 >Prize Pool: {{publication.prizePool}} $</h4>
+                    <h4 >Participant Limit: {{publication.tournament.participantLimit}}</h4>
+                    <h4 >Date: {{publication.tournament.tournamentDate}} - Hour: {{publication.tournament.tournamentHour}}</h4>
+                    <h4 >Prize Pool: {{publication.tournament.prizePool}} $</h4>
                   </div>
                 </v-card-text>
                 <v-card-actions>
