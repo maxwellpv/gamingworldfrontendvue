@@ -2,7 +2,7 @@
   <!--  Navigation Bar  -->
   <v-container>
     <v-app-bar app color="primary" flat dark>
-      <v-app-bar-title @click="showGamerProfile" class="white--text">GamingWorld</v-app-bar-title>
+      <v-app-bar-title @click="showNewsPage" class="white--text">GamingWorld</v-app-bar-title>
       <v-spacer></v-spacer>
       <template class="d-flex justify-center red">
         <v-text-field class="d-flex mt-auto" style="max-width: 250px"
@@ -29,17 +29,14 @@
         </template>
 
         <v-list>
-          <v-list-item @click="showMyProfile">
+          <v-list-item v-if="isLogged" @click="showMyProfile">
             <v-list-item-title>My Profile</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="showMyStreamerProfile">
-            <v-list-item-title>My Streamer Profile</v-list-item-title>
+          <v-list-item v-if="!isLogged" @click="showLogin">
+            <v-list-item-title>Log-In</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="showStreamerProfile">
-            <v-list-item-title>Gamer Profile - Streamer</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="showGamerProfile">
-            <v-list-item-title>Gamer Profile - Gamer</v-list-item-title>
+          <v-list-item v-else @click="signOut">
+            <v-list-item-title>Sign-Out</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -48,29 +45,43 @@
 </template>
 
 <script>
+import SessionService from "@/services/session.service";
+
 export default {
   name: "nav-bar",
+  data(){
+    return {
+      isLogged: false,
+      sessionData: null
+    }
+  },
   methods: {
     showNewsPage() {
       this.$router.push({path: '/news'})
-    },
-    showStreamerProfile() {
-      this.$router.push({ path: `/profile/${process.env.VUE_APP_CURRENT_USER_ID}/create/1` })
-    },
-    showGamerProfile() {
-      this.$router.push({ path: `/profile/${process.env.VUE_APP_CURRENT_USER_ID}/create/0` })
     },
     showPublicationsPage() {
       this.$router.push({path: '/publications'})
     },
     showMyProfile() {
-      this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/0` })
+      this.$router.push({ path: `/myprofile/${this.sessionData.id}` })
     },
-    showMyStreamerProfile() {
-      this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/1` })
+    showLogin() {
+      this.$router.push({path: '/login'})
     },
+    signOut(){
+      SessionService.destroySession();
+      this.isLogged = false;
+      this.sessionData = null;
+      this.$router.push({path: '/'})
+    },
+    checkSession() {
+      this.sessionData  = SessionService.getSession();
 
-
+      this.isLogged = this.sessionData  !== null && this.sessionData .id !== null;
+    }
+  },
+  created() {
+    this.checkSession();
   }
 }
 </script>

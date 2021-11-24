@@ -11,19 +11,14 @@ class UsersService{
         return http.get(`${this.endPoint}/${id}`);
     }
 
-    create(createUsersDto){
-        return http.post(this.endPoint, createUsersDto);
+    signUp(userData){
+        return http.post(`${this.endPoint}/auth/sign-up`, userData);
     }
 
-    update(id, updateUsersDto){
-        return http.put(`${this.endPoint}/${id}`, updateUsersDto)
+    signIn(userData){
+        console.log(userData)
+        return http.post(`${this.endPoint}/auth/sign-in`, userData);
     }
-
-    delete(id){
-        return http.delete(`${this.endPoint}/${id}`);
-    }
-
-
 }
 
 export default new UsersService();

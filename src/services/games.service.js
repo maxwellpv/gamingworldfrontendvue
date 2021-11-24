@@ -1,4 +1,4 @@
-import http, {xempreAPI} from '../core/http-common'
+import http from '../core/http-common'
 
 class GamesService{
     endPoint = '/games';
@@ -7,36 +7,18 @@ class GamesService{
         return http.get(this.endPoint);
     }
 
-    getList()
-    {
-        return xempreAPI().get("", {params: { limit: 10, where: "rating>95", orderby: "rating" }});
-    }
-
     getListByName(query)
     {
-        return xempreAPI().get("", {params: { limit: 10, searchby: query }});
+        return http.get(`${this.endPoint}/find?name=${query}`);
     }
 
     getById(id){
         return http.get(`${this.endPoint}/${id}`);
     }
 
-    create(createGamesDto){
-        return http.post(this.endPoint, createGamesDto);
+    getTopGames(){
+        return http.get(`${this.endPoint}/top`);
     }
-
-    update(id, updateGamesDto){
-        return http.put(`${this.endPoint}/${id}`, updateGamesDto)
-    }
-
-    delete(id){
-        return http.delete(`${this.endPoint}/${id}`);
-    }
-
-    findByTittle(title){
-        return http.get(`${this.endPoint}?title=${title}`);
-    }
-
 }
 
 export default new GamesService();

@@ -4,23 +4,24 @@
     <v-row no-gutters>
       <v-col xs="12" sm="9">
         <v-card  class="mr-2">
-          <v-img height="350px" v-bind:src="this.publication.urlToImage"></v-img>
-          <v-container fluid>
-            <v-layout>
-              <v-flex xs12 align-end d-flex>
+          <v-img v-if="this.publication.urlToImage" height="350px" v-bind:src="this.publication.urlToImage"></v-img>
+              <v-card-title>
                 <span class="headline">{{this.publication.title}}</span>
-              </v-flex>
-            </v-layout>
-          </v-container>
+              </v-card-title>
           <v-spacer></v-spacer>
-
           <v-card-text>
             {{this.publication.content}}
             <div v-if="this.publication.publicationType===3">
               <v-divider class="my-2"></v-divider>
-              <h4 >Participant Limit: {{this.publication.participantLimit}}</h4>
-              <h4 >Date: {{this.publication.tDate}} - Hour: {{this.publication.tHour}}</h4>
-              <h4 >Prize Pool: {{this.publication.prizePool}} $</h4>
+              <h4 >Participant Limit: {{this.publication.tournament.participantLimit}}</h4>
+              <h4 >Date: {{this.publication.tournament.tournamentDate}} - Hour: {{this.publication.tournament.tournamentHour}}</h4>
+              <h4 >Prize Pool: {{this.publication.tournament.prizePool}}$</h4>
+              <v-chip-group>
+
+                <v-chip v-if="!compareDates() && this.publication.tournament.tournamentStatus" color="primary">Stand By</v-chip>
+                <v-chip v-if="this.publication.tournament.tournamentStatus && compareDates()" color="green" text-color="white">Active</v-chip>
+                <v-chip v-if="!this.publication.tournament.tournamentStatus" color="warning">Ended</v-chip>
+              </v-chip-group>
             </div>
           </v-card-text>
 
@@ -35,14 +36,16 @@
             </template>
 
             <v-spacer></v-spacer>
-            <div v-if="this.publication.publicationType===3">
+            <div v-if="publication.publicationType===3">
               <v-dialog
                   v-model="dialog"
                   persistent
                   max-width="300"
               >
                 <template v-slot:activator="{ on, attrs }">
+                  <v-spacer></v-spacer>
               <v-btn
+                  v-if="publication.tournament.tournamentStatus"
                   color="warning"
                   dark
                   v-bind="attrs"
@@ -66,9 +69,10 @@
                       Cancel
                     </v-btn>
                     <v-btn
+
                         color="primary"
                         dark
-                        @click="dialog = false"
+                        @click="endTournament(publication.tournament.id)"
                     >
                       Confirm
                     </v-btn>
@@ -82,15 +86,18 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
+                      v-if="publication.tournament.tournamentStatus"
                       color="primary"
                       dark
                       v-bind="attrs"
                       v-on="on"
-                      class="ml-2"
+                      class="ml-2 v-btn"
+                      :disabled="participants.length<1"
                   >
                     Set Scores
                   </v-btn>
                 </template>
+
                 <v-card color="secondary">
                   <v-card-title class="text-h5 white--text" >
                     Register new match points
@@ -99,9 +106,9 @@
                     <v-row no-gutters>
                       <v-col xs="12" sm="8">
                         <v-card  color="white" class="mr-2" min-height="400">
-                          <v-list-item class="d-flex text-justify" v-for="participant in participantsMatchPoints" v-bind:key="participant.name">
+                          <v-list-item class="d-flex text-justify" v-for="participant in participantsMatchPoints" v-bind:key="participant.user.username">
                             <v-list-item-content>
-                              <v-list-item-title>{{participant.name}}<span class="float-right">{{participant.points}}</span></v-list-item-title>
+                              <v-list-item-title>{{participant.user.username}}<span class="float-right">{{participant.points}}</span></v-list-item-title>
                             </v-list-item-content>
                           </v-list-item>
                         </v-card>
@@ -112,13 +119,25 @@
                             class=""
                             v-model="searchParticipant"
                             :items="participants"
-                            item-text="name"
+                            item-text="user.username"
                             dense
                             solo
                             filled
                             label="Filled"
                             return-object
                         ></v-autocomplete>
+
+
+                        <div  class="mt-6">
+                            <h3 class="white--text">
+                              Extra Points
+                            </h3>
+                        </div>
+
+                        <v-text-field
+                            type="number"
+                            v-model="extraPoints"
+                            label="Add extra points to the user..." solo  background-color="white"></v-text-field>
 
                         <v-btn
                             block
@@ -134,16 +153,7 @@
                             mdi-plus-circle
                           </v-icon>Add participant
                         </v-btn>
-                        <div  class="mt-6">
-                            <h3 class="white--text">
-                              Extra Points
-                            </h3>
-                        </div>
 
-                        <v-text-field
-                            type="number"
-                            v-model="extraPoints"
-                            label="Add extra points to the user..." solo  background-color="white"></v-text-field>
                       </v-col>
 
                     </v-row>
@@ -180,7 +190,7 @@
               <template>
                   <v-list-item class="d-flex text-justify" v-for="participant in sortedArray" v-bind:key="participant.id">
                     <v-list-item-content>
-                      <v-list-item-title>{{participant.name}}<span class="float-right">{{participant.points}}</span></v-list-item-title>
+                      <v-list-item-title>{{participant.user.username}}<span class="float-right">{{participant.points}}</span></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
               </template>
@@ -195,6 +205,7 @@
 
 import NavBar from "../components/NavBar";
 import PublicationsService from '../services/publications.service'
+import TournamentsService from '../services/tournaments.service'
 
 export default {
   name: "TournamentPage",
@@ -207,12 +218,12 @@ export default {
     searchParticipant: null,
     extraPoints: 0,
     publication: {},
-    publicationId: {},
+    publicationId: 0,
 
     participants: [
-      {id: 1, name: "Manuel Garcia", points: 0},
-      {id: 2, name: "Javier Merino", points: 0},
-      {id: 3, name: "Paolo Pinzas", points: 10},
+      // {id: 1, name: "Manuel Garcia", points: 0},
+      // {id: 2, name: "Javier Merino", points: 0},
+      // {id: 3, name: "Paolo Pinzas", points: 10},
     ],
 
     participantsMatchPoints: [
@@ -223,9 +234,10 @@ export default {
   }),
 
   created(){
-    this.publicationId=this.$route.params.id
+    this.publicationId = this.$route.params.id
     this.getPublicationById(this.publicationId)
   },
+
 
   methods: {
     getDisplayPublication(publication) {
@@ -239,21 +251,35 @@ export default {
         gameName: publication.gameName,
         participantLimit: publication.participantLimit,
         prizePool: publication.prizePool,
-        tDate: publication.tDate,
-        tHour: publication.tHour,
-        publicatedAt: publication.publicatedAt,
+        tournament: publication.tournament,
+        tournamentDate: publication.tournamentDate,
+        tournamentHour: publication.tournamentHour,
+        createdAt: publication.createdAt,
+        tournamentId: publication.tournamentId,
 
       }
     },
+
+    getTournamentParticipants(tournamentId){
+      TournamentsService.getWithParticipantsById(tournamentId).then((response)=>{
+        this.participants = response.data;
+      })
+    },
+    async updateTournamentParticipantPoints(participantId, points){
+      await TournamentsService.updateTournamentParticipantPoints(this.publication.tournament.id, participantId, points ).then;
+    },
+
     getPublicationById(id) {
       PublicationsService.getById(id)
           .then((response) => {
             this.publication = response.data;
+            this.getTournamentParticipants(this.publication.tournament.id)
           })
           .catch(e => {
             console.log(e);
           })
     },
+
     addParticipant(){
 
       if(this.searchParticipant!= null){
@@ -273,17 +299,33 @@ export default {
     addParticipantPoints(){
       this.participants.forEach( (value) => {
         this.participantsMatchPoints.forEach( (value2) => {
-          if(value.id == value2.id){
+          if(value.id === value2.id){
             value.points += value2.points;
+            this.updateTournamentParticipantPoints(value.id, value.points);
           }
         } )
       } )
       this.searchParticipant= null;
-      this.extraPoints = 0,
+      this.extraPoints = 0;
       this.participantsMatchPoints = [];
+    },
+
+    endTournament(tournamentId){
+      TournamentsService.endTournament(tournamentId).then(data => this.publication.tournament.tournamentStatus = data.tournamentStatus);
+      this.dialog = false;
+    },
+
+    compareDates(){
+      let date1 = new Date();
+      let tournamentDate = this.publication.tournament.tournamentDate+" "+this.publication.tournament.tournamentHour;
+      let tDate = new Date(tournamentDate);
+      return (date1 > tDate);
     }
 
   },
+
+
+
 
   computed: {
     sortedArray: function() {

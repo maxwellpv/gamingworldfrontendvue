@@ -1,18 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import News from '../views/NewsPage.vue'
-import GamerProfile from '../components/UserProfileGamer'
-import StreamerProfile from '../components/UserProfileStreamer'
 import Publications from "@/views/PublicationsPage";
 import MyProfile from "../views/MyProfile";
 import ManageProfile from "@/views/ManageProfile";
 import GamerProfileCorrect from "@/components/GamerProfileCorrect";
 import TournamentPage from "../views/TournamentPage";
+import LoginPage from "../views/LoginPage";
+import RegisterPage from "../views/RegisterPage";
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginPage
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterPage
+  },
   {
     path: '/news',
     name: 'news',
@@ -21,16 +31,6 @@ const routes = [
   {
     path: '/',
     redirect: "/news"
-  },
-  {
-    path: '/gamer',
-    name: 'gamer',
-    component: GamerProfile
-  },
-  {
-    path: '/streamer',
-    name: 'streamer',
-    component: StreamerProfile
   },
   {
     path: '/publications',
@@ -43,20 +43,14 @@ const routes = [
     component: TournamentPage
   },
   {
-    path: '/myprofile/:id/:type',
+    path: '/myprofile/:id',
     name: 'myprofile',
     component: MyProfile
   },
   { path: '/success', component: GamerProfileCorrect, name: 'success'},
   {
-    path: '/profile/:id',
-    children: [
-      { path: '/:type', component: ManageProfile, name: 'view'},
-
-      { path: 'edit/:type', component: ManageProfile, name: 'edit'},
-
-      { path: 'create/:type', component: ManageProfile, name: 'create'},
-    ],
+    path: '/profile/edit/:id',
+    name: 'edit_profile',
     component: ManageProfile
   }
 ]
