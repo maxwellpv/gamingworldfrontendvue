@@ -49,14 +49,8 @@ const routes = [
   },
   { path: '/success', component: GamerProfileCorrect, name: 'success'},
   {
-    path: '/profile/:id',
-    children: [
-      { path: '/:type', component: ManageProfile, name: 'view'},
-
-      { path: 'edit/:type', component: ManageProfile, name: 'edit'},
-
-      { path: 'create/:type', component: ManageProfile, name: 'create'},
-    ],
+    path: '/profile/edit/:id',
+    name: 'edit_profile',
     component: ManageProfile
   }
 ]

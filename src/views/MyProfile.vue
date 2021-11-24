@@ -110,18 +110,27 @@ export default {
   data(){
     return {
       profileType: 0,
-      profileData: null,
+      profileData: {
+        id: null,
+        userId: null,
+        gamingLevel: null,
+        isStreamer: null,
+        gameExperiences: [],
+        streamingCategories: [],
+        streamerSponsors: [],
+        tournamentExperiences: [],
+        favoriteGames: []
+      },
       gamingLevelImg: "",
     }
   },
   methods:{
     showEditProfile() {
-      this.$router.push({ path: `/profile/${this.$route.params.id}/edit/${this.$route.params.type}` })
+      this.$router.push({ path: `/profile/edit/${this.profileData.userId}` })
     },
     retrieveData() {
         ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
           this.profileData = response.data;
-          console.log(this.gamingLevelImg)
           this.profileType = this.profileData.isStreamer;
         });
     }

@@ -63,7 +63,7 @@ export default {
       this.$router.push({path: '/publications'})
     },
     showMyProfile() {
-      this.$router.push({ path: `/myprofile/${process.env.VUE_APP_CURRENT_USER_ID}/0` })
+      this.$router.push({ path: `/myprofile/${this.sessionData.id}` })
     },
     showLogin() {
       this.$router.push({path: '/login'})

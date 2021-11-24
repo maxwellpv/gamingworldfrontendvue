@@ -12,8 +12,7 @@
         <v-col cols="12"  sm="10" md="8" lg="7" xl="6">
           <v-card class="pa-10">
             <v-card-title class="justify-center">
-              <h2 v-if="profileType === 'gamer'">AMATEUR GAMER</h2>
-              <h2 v-else-if="profileType === 'streamer'">AMATEUR STREAMER</h2>
+              <h2>EDIT MY PROFILE</h2>
             </v-card-title>
             <v-form
                 v-model="validForm"
@@ -21,11 +20,12 @@
                 @submit.prevent=""
             >
               <v-container fluid>
-                <h4 v-if="profileType === 'gamer'">Gaming Level</h4>
+                <h4>Gaming Level</h4>
                 <v-row justify="space-around" class="ma-5">
-                  <template v-if="profileType === 'gamer'">
+                  <template>
                     <v-radio-group
                         v-model="profileData.gamingLevel"
+                        :value="profileData.gamingLevel"
                         row
                         mandatory
                         justify="space-around"
@@ -56,7 +56,7 @@
                   </template>
                 </v-row>
               </v-container>
-              <v-container v-if="profileType === 'gamer'" class="my-5" fluid>
+              <v-container class="my-5" fluid>
                 <h4>Achievements</h4>
                   <template>
                     <v-row justify="center" class="my-5">
@@ -97,9 +97,9 @@
                 </template>
               </v-container>
               <v-container fluid>
-                <h4 v-if="profileType === 'gamer'">Videogames Experience</h4>
+                <h4>Videogames Experience</h4>
 
-                  <template v-if="profileType === 'gamer'">
+                  <template>
                     <v-row justify="space-around" class="ma-5">
                     <div
                         v-for="(gameExperience, i) in profileData.gameExperiences"
@@ -138,8 +138,7 @@
                   </template>
               </v-container>
               <v-container class="my-5" fluid>
-                <h4 v-if="profileType === 'gamer'">Favorites Videogames</h4>
-                <h4 v-else-if="profileType === 'streamer'">Favorite video games to stream </h4>
+                <h4>Favorites Videogames</h4>
                   <v-row class="ma-5" fluid
                          justify="center">
                     <find-game @gameSelected="currentFavoriteGameSelected = $event"></find-game>
@@ -159,8 +158,8 @@
 
               </v-container>
               <v-container fluid>
-                <h4 v-if="profileType === 'streamer'">Register Sponsor</h4>
-                <template v-if="profileType === 'streamer'">
+                <h4 v-if="profileData.isStreamer">Register Sponsor</h4>
+                <template v-if="profileData.isStreamer">
                   <v-row justify="space-around" class="ma-5">
                     <v-col
                         cols="12"
@@ -175,7 +174,7 @@
                             :rules="[v => !!v || 'Item is required']"
                             required
                         ></v-text-field>
-                        <v-btn @click="removeSponsor(i)" class="error" :disabled="$route.name === 'edit'">X</v-btn>
+                        <v-btn @click="removeSponsor(i)" class="error">X</v-btn>
                       </v-row>
                     </v-col>
                     <v-col
@@ -187,7 +186,8 @@
                 </template>
               </v-container>
               <v-container fluid>
-                <template v-if="profileType === 'streamer'">
+                <h4 v-if="profileData.isStreamer">Add streaming categories</h4>
+                <template v-if="profileData.isStreamer">
                   <v-col
                       cols="12"
                       md="6"
@@ -202,11 +202,11 @@
                           label="Select Category"
                           required
                       ></v-text-field>
-                      <v-btn v-if="i > 2" @click="removeStreamingCategory(i)" class="error" :disabled="this.$route.name === 'edit'">X</v-btn>
+                      <v-btn @click="removeStreamingCategory(i)" class="error">X</v-btn>
                     </v-row>
                   </v-col>
                   <v-col
-                      cols="12" md="6"
+                      cols="12"
                       align="center">
                     <v-btn @click="addStreamingCategory" class="primary">+ Add</v-btn>
                   </v-col>
@@ -215,13 +215,7 @@
             </v-form>
           </v-card>
           <v-container>
-            <h4 v-if="profileType === 'streamer'">Add streaming categories</h4>
-            <template v-if="$route.name === 'create'">
-              <v-btn class="ma-3 primary" @click="saveProfile" :disabled="!validForm">Create</v-btn>
-            </template>
-            <template v-else-if="$route.name === 'edit'">
-              <v-btn class="ma-3 primary" @click="saveProfile" :disabled="!validForm">Save</v-btn>
-            </template>
+            <v-btn class="ma-3 primary" @click="saveProfile" :disabled="!validForm">Save</v-btn>
             <v-btn class="ma-3 primary" @click="goToMain">Cancel </v-btn>
           </v-container>
         </v-col>
@@ -231,7 +225,6 @@
 </template>
 
 <script>
-import GamesService from "@/services/games.service";
 import ProfilesService from "@/services/profiles.service";
 import FindGame from "@/components/FindGame";
 
@@ -332,19 +325,10 @@ export default {
 
       this.profileData.gamingLevel = parseInt(this.profileData.gamingLevel);
 
-      if (this.$route.name === 'create')
-      {
-        ProfilesService.create(this.profileData).then(() => {
-          this.$router.push({name: 'success'});
-        });
-      }
-      else if (this.$route.name === 'edit')
-      {
-        console.log(this.profileData);
-        ProfilesService.update(this.profileData.id, this.profileData).then(() => {
-          //this.$router.push({name: 'success'});
-        });
-      }
+      console.log(this.profileData);
+      ProfilesService.update(this.profileData.id, this.profileData).then(() => {
+        this.$router.push({name: 'success'});
+      });
     },
     goToMain()
     {
@@ -357,18 +341,11 @@ export default {
 
     // Needed to instantiate the profile registration
     retrieveData() {
-
-      GamesService.getList().then((response) => {
-        this.gameList = response.data;
-      });
-
-      this.profileType = this.$route.params.type;
-
-      if (this.$route.name === "edit")
+      if (this.$route.name === "edit_profile")
       {
         ProfilesService.getProfileByUserId(this.$route.params.id).then((response) => {
-          console.log(response.data)
           this.profileData = response.data;
+          console.log(this.profileData);
           this.profileData.gamingLevel = (parseInt(this.gamingLevels.indexOf(this.profileData.gamingLevel)) + 1).toString();
         });
       }
